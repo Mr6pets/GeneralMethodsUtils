@@ -23,6 +23,7 @@ function getcookie(key) { //获取cookie方法
 	return tips;
 }
 
+/**获取URL地址栏参数*/
 
 
 
