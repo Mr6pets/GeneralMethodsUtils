@@ -22,9 +22,22 @@ function getcookie(key) { //获取cookie方法
 	}
 	return tips;
 }
-
 /**获取URL地址栏参数*/
-
-
-
+function GetQueryString(name){
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	if (r != null) return unescape(r[2]); return null;
+}
+/**运行设备的判断*/
+function equipmentType(){
+	var u = navigator.userAgent;
+	var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+	var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+	if (isAndroid) {
+		return 'android'
+	}
+	if (isiOS) {
+		return 'ios'
+	}
+}
 
