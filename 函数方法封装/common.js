@@ -40,4 +40,97 @@ function equipmentType(){
 		return 'ios'
 	}
 }
+/**********************************前端和APP交互*******************************************************/
+/*调用安卓APP调用方法(goBack为安卓提供的方法)**/
+window.android.goBack();
 
+/*调用IOS APP调用方法**/
+
+setupWebViewJavascriptBridge(function(bridge) {
+	bridge.callHandler('goBack', {}, function(resp) {});	
+})
+
+function setupWebViewJavascriptBridge(callback) {
+	if (window.WebViewJavascriptBridge) {
+		return callback(WebViewJavascriptBridge); 
+	}
+	if (window.WVJBCallbacks) { 
+		return window.WVJBCallbacks.push(callback); 
+	}
+  window.WVJBCallbacks = [callback];
+  var WVJBIframe = document.createElement('iframe');
+  WVJBIframe.style.display = 'none';
+  WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+  document.documentElement.appendChild(WVJBIframe);
+  setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+}
+
+/*注册监听事件（固定代码）使用时去掉BACK1**/
+function setupWebViewJavascriptBridgeBACK1(callback) {
+	if (window.WebViewJavascriptBridge) {//Android使用
+		callback(WebViewJavascriptBridge)
+	} else {//ios使用
+		document.addEventListener(
+			'WebViewJavascriptBridgeReady',
+			function() {
+				callback(WebViewJavascriptBridge)
+			},
+			false
+		);
+	}
+
+/*添加原生调起js方法**/
+setupWebViewJavascriptBridge(function(bridge) {
+     /* Initialize your app here */
+     //所有与iOS交互的JS代码放这里！
+    //js注册方法让原生调起（原生调用js）
+    //name： 和原生约定的调用方法名
+    //function(data,callback)：调用方法的具体内容，data为原生传过来的参数，callback为js给原生的回调函数             
+    bridge.registerHandler("jsFunction",function(data,responseCallback){
+        alert("do sth with"+data)
+        responseCallback("js calls back to oc");
+    });
+    
+    //js唤起原生的方法（js调用原生）
+    //name： 和原生约定的调用方法名
+    //data： 向原生传递的参数
+    //function： 原生调用后的回调函数（回调结果处理）
+    bridge.callHandler('ocFunction',data,function(res){
+         alert("js has received the result:"+res);
+    });
+});
+
+
+
+
+/*********************************BEGAIN******************************/
+//注册iOS事件
+// setupWebViewJavascriptBridge();
+//安卓注册事件监听
+// function connectWebViewJavascriptBridge(callback) {
+// 		if (window.WebViewJavascriptBridge) {
+// 				callback(WebViewJavascriptBridge)
+// 		} else {
+// 				document.addEventListener(
+// 						'WebViewJavascriptBridgeReady'
+// 						, function() {
+// 								callback(WebViewJavascriptBridge)
+// 						},
+// 						false
+// 				);
+// 		}
+// }
+
+//注册回调函数，第一次连接时调用 初始化函数
+	// connectWebViewJavascriptBridge(function(bridge) {
+ //       //初始化
+ //      bridge.init(function(message, responseCallback) {
+ //          //var data = {'Javascript Responds': 'Wee!'};
+ //          responseCallback(data);
+ //      });
+ //      //Android调用js方法：functionInJs方法名称需要保持一致 ，并返回给Android通知
+ //      bridge.registerHandler("functionInJs", function(data, responseCallback) {
+ //          responseCallback(data);
+ //      });
+ //  })
+/********************************END*******************************/
