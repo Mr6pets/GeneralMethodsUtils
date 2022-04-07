@@ -1,4 +1,4 @@
-/**设置cookie*/
+/***********************************设置cookie**********************************/
 function setCookie(name, value) {
 	var Days = 30;
 	var exp = new Date();
@@ -142,6 +142,7 @@ setupWebViewJavascriptBridge(function(bridge) {
 
 
 
+/**********************************Vant UI的下拉刷新 上拉加载*******************************************************/
 
 
 
