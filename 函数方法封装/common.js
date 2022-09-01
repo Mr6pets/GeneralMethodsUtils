@@ -145,6 +145,33 @@ setupWebViewJavascriptBridge(function(bridge) {
 /**********************************Vant UI的下拉刷新 上拉加载*******************************************************/
 
 
-
+/**********************************TinyMce富文本*******************************************************/
+//初始化tinymce富文本
+initTinymce() {
+   const _this = this
+   console.log('window.tinymce :>> ', window.tinymce.minorVersion);
+   console.log('object :>> ', document.querySelector(`#${this.tinymceId}`));
+   window.tinymce.init({
+     selector: `#${this.tinymceId}`,//挂载在那个dom节点下
+     branding: false,
+     language: 'zh_CN',
+     height: 550,
+     body_class: 'panel-body editor-content',
+     object_resizing: false,
+     toolbar: ['newdocument undo redo | textpattern formatpainter template pastetext selectall| forecolor backcolor bold italic underline | fontborder strikethrough anchor |ltr rtl | alignleft aligncenter alignright alignjustify indent2em lineheight predistance postdistance| \
+blockquote subscript superscript removeformat | styleselect formatselect | fontselect fontsizeselect | table image media link charmap emoticons hr pagebreak insertdatetime print preview | fullscreen |   savetooss addnewslink'],
+     plugins:['print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help paste emoticons autosave indent2em lineheight postdistance savetooss quickbars formatpainter predistance bdmap fontborder addnewslink axupimgs'],
+     init_instance_callback: editor => {
+       if (_this.value) {
+         editor.setContent(_this.value)
+       }
+       _this.hasInit = true
+       /****改成了只绑定keyup事件   要不然编辑的时候一进来就走这个方法了*/ 
+       editor.on('KeyUp', () => {
+         _this.hasChange = true
+         _this.$emit('input', editor.getContent())
+       })
+     },
+ })
 
 
