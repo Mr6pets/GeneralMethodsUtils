@@ -91,7 +91,7 @@ document.write("<link rel='stylesheet' type='text/css' href='/css/layout.css?v="
         "http://qr.liantu.com/api.php?text=http://test.qicheyitiao.com";
       window.open(target_url, "weixin", "height=320, width=320");
     },
-    
+
     sinaWeiBo(title, url, pic) {
       var param = {
         url: this.shareLink,
@@ -112,6 +112,8 @@ document.write("<link rel='stylesheet' type='text/css' href='/css/layout.css?v="
       var target_url ="http://service.weibo.com/share/share.php?" + temp.join("&");
       window.open(target_url, "sinaweibo", "height=430, width=400");
     },
+
+    
 ~~~
 
 
