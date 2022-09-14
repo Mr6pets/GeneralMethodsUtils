@@ -147,3 +147,89 @@ sinaWeiBo(title, url, pic) {
 
 ~~~
 
+### 下载func
+~~~js
+// a标签下载
+
+<body>
+    <button onClick="download()">a标签下载</button>
+    <script>
+        function download(url = 'http:www.xxx.com/download?name=file.pdf', fileName = '未知文件') {
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.setAttribute('target', '_blank');
+          /*
+           * download的属性是HTML5新增的属性
+           * href属性的地址必须是非跨域的地址，如果引用的是第三方的网站或者说是前后端分离的项目(调用后台的接口)，这时download就会不起作用。
+           * 此时，如果是下载浏览器无法解析的文件，例如.exe,.xlsx..那么浏览器会自动下载，但是如果使用浏览器可以解析的文件，比如.txt,.png,.pdf....浏览器就会采取预览模式
+           * 所以，对于.txt,.png,.pdf等的预览功能我们就可以直接不设置download属性(前提是后端响应头的Content-Type: application/octet-stream，如果为application/pdf浏览器则会判断文件为 pdf ，自动执行预览的策略)
+           */
+          fileName && a.setAttribute('download', fileName);
+          a.href = url;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+    </script>
+</body>
+
+
+
+// window.open下载
+
+<body>
+  <button onclick="download('http://www.xxx.com/download?name=file.pdf')">window.open下载</button>
+  <script>
+    function download(url) {
+      window.open(url, '_self');
+      /**
+       *  _blank：在新窗口显示目标网页
+       *  _self：在当前窗口显示目标网页
+       *  _top：框架网页中在上部窗口中显示目标网页
+      /**
+    }
+  </script>
+</body>
+
+
+
+// location.href 下载
+<body>
+  <button onclick="download('http://www.xxx.com/download?name=file.pdf')">location.href下载
+  </button>
+  <script>
+    function download(url) {
+      window.location.href = url;
+    }
+  </script>
+</body>
+
+// 文件流转blob对象下载
+
+ <button onclick="download()">文件流转blob对象下载</button>
+ <script>
+    download() {
+        axios({
+            url: 'http://www.xxx.com/download',
+            method: 'get',
+            responseType: 'blob',
+        }).then(res => {
+            const fileName = res.headers.content-disposition.split(';')[1].split('filename=')[1];
+            const filestream = res.data;  // 返回的文件流
+            // {type: 'application/vnd.ms-excel'}指定对应文件类型为.XLS (.XLS的缩写就为application/vnd.ms-excel)
+            const blob = new Blob([filestream], {type: 'application/vnd.ms-excel'});
+            const a = document.createElement('a');
+            const href = window.URL.createObjectURL(blob); // 创建下载连接
+            a.href = href;
+            a.download = decodeURL(fileName );
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a); // 下载完移除元素
+            window.URL.revokeObjectURL(href); // 释放掉blob对象
+        })
+    }
+ </script>
+
+~~~
+
+
