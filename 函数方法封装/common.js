@@ -175,8 +175,7 @@ blockquote subscript superscript removeformat | styleselect formatselect | fonts
  })
 
 
-/**********************************页面分享（QQ sina 等）*******************************************************/
-//分享大全
+/********************************** WEB页面分享（QQ QQ空间 sina 等）*******************************************************/
        fucntion shareQQ(title, url, pic){
             var p = {
                 url: this.shareLink /*获取URL，可加上来自分享到QQ标识，方便统计*/,
@@ -246,6 +245,114 @@ blockquote subscript superscript removeformat | styleselect formatselect | fonts
             var target_url ="http://service.weibo.com/share/share.php?" + temp.join("&");
             window.open(target_url, "sinaweibo", "height=430, width=400");
         };
+
+/********************************** 上传附件（Vue上传服务器取回请求）*******************************************************/
+
+<el-form-item label="上传附件：" :label-width="formLabelWidth">
+ <el-upload
+   class="upload-demo"
+   action="none"
+   multiple
+   :http-request="appendixHttpRequest" 
+   :on-change="handleChange"
+   :on-remove="handleRemoveAppendix"
+   :file-list="appendixList"
+   accept="image/png,image/jpg,image/jpeg,.doc,.docx,.wps,.wpt,.xls,.xlsx,.ppt,.pptx,.pdf,.txt"\>
+   <el-button size="mini" type="primary">点击上传</el-button>
+        <div slot="tip" class="el-upload__tip">支持文件类型:.jpg(.jpeg)、.png、.doc(.docx)、.ppt(.pptx)、.xls(.xlsx)、.pps、.wps、.pdf、.txt文件格式，且不超过500kb</div>
+  </el-upload>
+ </el-form-item>
+
+/**附件上传网络请求*/
+   appendixHttpRequest(param){
+    const { token } = useUserStore()
+    let file=param.file;
+    let formData = new FormData();
+    formData.append('filedata', file)
+    formData.append('api',this.extraParameters.api)
+    formData.append('urltype',this.extraParameters.urltype)
+    formData.append('token',token);
+    //发起axios请求
+    let that=this;
+    that.$axios({
+     method: 'post',
+     url: this.updateUrl,
+     headers:{'Content-Type': 'multipart/form-data'},
+     data: formData
+    })
+    .then(res=>{
+     var response=res.data;
+     if(response.code=="1"){//单个上传后台返回的是相对地址
+     let tempArr={
+      name:response.data.file_name,
+      url:response.data.url
+     }
+     //存入appendixList列表中
+      this.excellentWorkForm.appendixList.push(tempArr);
+      this.$message({
+       message: response.msg,
+       type: 'success'
+      })
+     }
+    })
+    .catch(error=>{
+     console.log(error)
+    })
+
+   },
+
+   /**文件上传*/
+   handleChange(file, fileList){
+    //限制文件大小
+    if(file.size/1024/1024>5){
+     this.$message({
+      message: '文件大小不能超过5M',
+      type: 'error'
+     })
+     return false;
+    }
+
+    // 开始上传
+    const { token } = useUserStore();
+    let formData=new FormData();
+    formData.append('api','json');
+    formData.append('token',token);
+    formData.append('filedata',file.raw);
+
+    let that=this;
+    that.$axios({
+     method: 'post',
+     url: this.updateUrl,
+     headers:{'Content-Type': 'multipart/form-data'},
+     data: formData
+    })
+    .then(res=>{
+     var response=res.data;
+     if(response.code=="1"){//单个上传后台返回的是相对地址
+     let tempArr={
+      name:response.data.file_name,
+      url:response.data.url
+     }
+
+     //存入appendixList列表中
+     this.appendixList.push(tempArr);
+      this.$message({
+       message: response.msg,
+       type: 'success'
+      })
+     }
+
+    }).catch(error=>{
+     console.log(error);
+    })
+   },
+
+   /**附件删除*/
+   handleRemoveAppendix(file, fileList){
+    var fileName=file.name;
+    this.appendixList=this.appendixList.filter(item => item.name !== fileName);
+   },
+
 
 
 
