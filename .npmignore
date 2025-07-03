@@ -1,0 +1,58 @@
+# Source files
+src/
+
+# Build configuration
+rollup.config.js
+.babelrc
+.eslintrc*
+.prettierrc*
+
+# Tests
+__tests__/
+*.test.js
+*.spec.js
+jest.config.js
+
+# Development files
+.vscode/
+.idea/
+
+# Documentation
+docs/
+examples/
+
+# Git
+.git/
+.gitignore
+
+# CI/CD
+.github/
+.travis.yml
+.circleci/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+node_modules/
+
+# Environment
+.env*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary
+tmp/
+temp/
+
+# Coverage
+coverage/
+.nyc_output
+
+# Lock files (optional, some prefer to include them)
+yarn.lock
+package-lock.json
