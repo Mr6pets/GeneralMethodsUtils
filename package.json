@@ -1,0 +1,40 @@
+{
+  "name": "general-method-utils",
+  "version": "1.0.0",
+  "description": "通用工具方法库，包含常用的前端开发工具函数",
+  "main": "dist/index.js",
+  "module": "src/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "jest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "utils",
+    "tools",
+    "javascript",
+    "frontend",
+    "common",
+    "methods"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Mr6pets/General-method-encapsulation.git"
+  },
+  "author": "Mr6pets <alvispets@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-babel": "^6.0.0",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "rollup": "^4.0.0"
+  }
+}
