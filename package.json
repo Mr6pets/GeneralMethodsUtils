@@ -48,12 +48,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mr6pets/General-method-encapsulation.git"
+    "url": "git+https://github.com/Mr6pets/GeneralMethodsUtils.git"
   },
   "bugs": {
-    "url": "https://github.com/Mr6pets/General-method-encapsulation/issues"
+    "url": "https://github.com/Mr6pets/GeneralMethodsUtils/issues"
   },
-  "homepage": "https://github.com/Mr6pets/General-method-encapsulation#readme",
+  "homepage": "https://github.com/Mr6pets/GeneralMethodsUtils#readme",
   "author": {
     "name": "Mr6pets",
     "email": "alvispets@gmail.com"
