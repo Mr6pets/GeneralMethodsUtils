@@ -68,7 +68,7 @@ const { setCookie, getCookie } = require('general-method-utils');
 
 ```
 ## 📚 API 文档
-### ### 🍪 Cookie 工具 (cookieUtils) setCookie(name, value, options)
+### 🍪 Cookie 工具 (cookieUtils) setCookie(name, value, options)
 
 设置 Cookie，支持完整的配置选项。
 
@@ -91,108 +91,42 @@ setCookie('token', 'abc123', {
 setCookie('oldStyle', 'value', 30);
 
 ```
-### 🔗 URL 工具 (urlUtils) getQueryString(name, url)
-获取 URL 参数。
- parseUrlParams(url)
-解析 URL 参数为对象。
- buildQueryString(params)
-构建查询字符串。
- updateUrlParams(params, url)
-更新 URL 参数。
- removeUrlParams(keys, url)
-移除 URL 参数。
- getBaseUrl(url)
-获取基础 URL。
-
-### 📱 设备检测 (deviceUtils) getDeviceType()
-检测设备类型。
- isMobile()
-检测是否为移动设备。
- isWeChat() / isAlipay() / isQQ()
-检测特定应用浏览器。
- getBrowserInfo()
-获取浏览器信息。
- getOS()
-获取操作系统。
- isTouchDevice()
-检测是否支持触摸。
-
-### 🌐 HTTP 请求 (requestUtils) request(url, options)
-基础请求方法。
- get(url, params, options)
-GET 请求。
- post(url, data, options)
-POST 请求。
- put(url, data, options) / del(url, options)
-PUT 和 DELETE 请求。
-
-### 📁 文件上传 (uploadUtils) uploadFile(url, files, options)
-文件上传。
- compressImage(file, options)
-图片压缩。
- validateFileType(file, allowedTypes)
-文件类型验证。
- validateFileSize(file, maxSize)
-文件大小验证。
-
-### ⚡ Promise 工具 (promiseUtils) delay(ms)
-延迟执行。
- withTimeout(promise, timeout)
-超时控制。
- retry(fn, retries, delay)
-重试机制。
- concurrentLimit(tasks, limit)
-并发控制。
- memoizePromise(fn, ttl)
-缓存 Promise 结果。
-
-### 📤 社交分享 (shareUtils) shareToQQ(options)
-分享到 QQ。
- shareToQZone(options)
-分享到 QQ 空间。
- shareToWeibo(options)
-分享到新浪微博。
-
-
-
-
-
-
-
-
-
-
-
-## 完善项目文档
-我看到你已经创建了所有必要的模块文件！现在让我们更新 README.md 文档，使其更加规范和完整：
-
-## 🚀 快速开始
-### ES6 模块导入
-### CommonJS 导入
-### 浏览器直接引入
-## 📚 API 文档
-### 🍪 Cookie 工具 (cookieUtils) setCookie(name, value, options)
-设置 Cookie，支持完整的配置选项。
-
-参数：
-
-- name (string): Cookie 名称
-- value (string): Cookie 值
-- options (object|number): 配置对象或过期天数
-  - days (number): 过期天数，默认 30
-  - path (string): 路径，默认 '/'
-  - domain (string): 域名
-  - secure (boolean): 是否仅 HTTPS
-  - sameSite (string): SameSite 策略 getCookie(key)
+getCookie(key)
 获取 Cookie 值。
- removeCookie(name, options)
+
+```
+const username = getCookie('username');
+console.log(username); // 'john' 或 null
+```
+
+removeCookie(name, options)
 删除 Cookie。
- getAllCookies()
+
+```
+removeCookie('username');
+// 删除特定域名下的 Cookie
+removeCookie('token', { domain: '.
+example.com' });
+```
+getAllCookies()
 获取所有 Cookie。
- hasCookie(name)
+
+```
+const allCookies = getAllCookies();
+console.log(allCookies); // { username: 
+'john', token: 'abc123' }
+``` hasCookie(name)
 检查 Cookie 是否存在。
 
-### 🔗 URL 工具 (urlUtils) getQueryString(name, url)
+```
+if (hasCookie('username')) {
+  console.log('用户已登录');
+}
+```
+
+### 🔗 URL 工具 (urlUtils)
+getQueryString(name, url)
+
 获取 URL 参数。
  parseUrlParams(url)
 解析 URL 参数为对象。
@@ -202,10 +136,26 @@ PUT 和 DELETE 请求。
 更新 URL 参数。
  removeUrlParams(keys, url)
 移除 URL 参数。
- getBaseUrl(url)
+
+```
+// 移除单个参数
+const url1 = removeUrlParams('temp');
+
+// 移除多个参数
+const url2 = removeUrlParams(['temp', 
+'debug']);
+``` getBaseUrl(url)
 获取基础 URL。
 
-### 📱 设备检测 (deviceUtils) getDeviceType()
+```
+const baseUrl = getBaseUrl('https://
+example.com/path?query=1#hash');
+console.log(baseUrl); // 'https://
+example.com/path'
+```
+
+### 📱 设备检测 (deviceUtils) 
+getDeviceType()
 检测设备类型。
  isMobile()
 检测是否为移动设备。
@@ -213,30 +163,80 @@ PUT 和 DELETE 请求。
 检测特定应用浏览器。
  getBrowserInfo()
 获取浏览器信息。
- getOS()
+
+```
+const browser = getBrowserInfo();
+console.log(browser); // { name: 
+'chrome', version: '91' }
+``` getOS()
 获取操作系统。
- isTouchDevice()
+
+```
+const os = getOS();
+console.log(os); // 'Windows' | 
+'macOS' | 'Linux' | 'Android' | 'iOS'
+``` isTouchDevice()
 检测是否支持触摸。
 
-### 🌐 HTTP 请求 (requestUtils) request(url, options)
+```
+if (isTouchDevice()) {
+  console.log('支持触摸操作');
+}
+```
+
+### 🌐 HTTP 请求 (requestUtils) 
+request(url, options)
 基础请求方法。
  get(url, params, options)
 GET 请求。
  post(url, data, options)
 POST 请求。
- put(url, data, options) / del(url, options)
+
+```
+const result = await post('/api/users', 
+{
+  name: 'John',
+  email: 'john@example.com'
+});
+``` put(url, data, options) / del(url, options)
 PUT 和 DELETE 请求。
 
-### 📁 文件上传 (uploadUtils) uploadFile(url, files, options)
+```
+// 更新用户
+const updated = await put('/api/users/
+1', { name: 'Jane' });
+
+// 删除用户
+const deleted = await del('/api/users/
+1');
+```
+
+### 📁 文件上传 (uploadUtils) 
+uploadFile(url, files, options)
 文件上传。
  compressImage(file, options)
 图片压缩。
  validateFileType(file, allowedTypes)
 文件类型验证。
- validateFileSize(file, maxSize)
+
+```
+const isValid = validateFileType(file, 
+['.jpg', '.png', 'image/']);
+if (!isValid) {
+  alert('请选择图片文件');
+}
+``` validateFileSize(file, maxSize)
 文件大小验证。
 
-### ⚡ Promise 工具 (promiseUtils) delay(ms)
+```
+const maxSize = 5 * 1024 * 1024; // 5MB
+if (!validateFileSize(file, maxSize)) {
+  alert('文件大小不能超过 5MB');
+}
+```
+
+### ⚡ Promise 工具 (promiseUtils) 
+delay(ms)
 延迟执行。
  withTimeout(promise, timeout)
 超时控制。
@@ -247,168 +247,169 @@ PUT 和 DELETE 请求。
  memoizePromise(fn, ttl)
 缓存 Promise 结果。
 
-### 📤 社交分享 (shareUtils) shareToQQ(options)
+```
+const cachedFetch = memoizePromise(
+  (url) => fetch(url).then(r => r.json
+  ()),
+  60000 // 缓存1分钟
+);
+
+const data1 = await cachedFetch('/api/
+data'); // 发起请求
+const data2 = await cachedFetch('/api/
+data'); // 使用缓存
+```
+
+### 📤 社交分享 (shareUtils) 
+shareToQQ(options)
 分享到 QQ。
  shareToQZone(options)
 分享到 QQ 空间。
- shareToWeibo(options)
+
+```
+shareToQZone({
+  title: '精彩内容',
+  url: 'https://example.com',
+  pic: 'https://example.com/image.jpg'
+});
+``` shareToWeibo(options)
 分享到新浪微博。
 
+```
+shareToWeibo({
+  title: '精彩内容 #话题#',
+  url: 'https://example.com',
+  pic: 'https://example.com/image.jpg'
+});
+```
 ## 🔧 完整示例
 ```
-import { 
-  setCookie, 
-  getCookie, 
-  getDeviceType, 
-  isMobile, 
-  getQueryString,
-  post,
-  uploadFile,
-  delay,
-  shareToQQ 
-} from 'general-method-utils';
+import { 
+  setCookie, 
+  getCookie, 
+  getDeviceType, 
+  isMobile, 
+  getQueryString,
+  post,
+  uploadFile,
+  delay,
+  shareToQQ 
+} from 'general-method-utils';
 
-// 用户登录示例
-async function handleLogin(username, 
-password) {
-  try {
-    // 发送登录请求
-    const result = await post('/api/
-    login', {
-      username,
-      password,
-      deviceType: getDeviceType()
-    });
-    
-    // 保存登录状态
-    setCookie('token', result.token, { 
-    days: 7 });
-    setCookie('user', JSON.stringify
-    (result.user));
-    
-    return result;
-  } catch (error) {
-    console.error('登录失败:', error);
-    throw error;
-  }
+// 用户登录示例
+async function handleLogin(username, password) {
+  try {
+    // 发送登录请求
+    const result = await post('/api/login', {
+      username,
+      password,
+      deviceType: getDeviceType()
+    });
+    
+    // 保存登录状态
+    setCookie('token', result.token, { days: 7 });
+    setCookie('user', JSON.stringify(result.user));
+    
+    return result;
+  } catch (error) {
+    console.error('登录失败:', error);
+    throw error;
+  }
 }
 
-// 文件上传示例
-async function handleFileUpload(file) {
-  // 验证文件
-  if (!validateFileType(file, ['.jpg', 
-  '.png', '.gif'])) {
-    throw new Error('请选择图片文件');
-  }
-  
-  if (!validateFileSize(file, 5 * 1024 
-  * 1024)) {
-    throw new Error('文件大小不能超过 
-    5MB');
-  }
-  
-  // 压缩图片
-  const compressedFile = await 
-  compressImage(file, {
-    quality: 0.8,
-    maxWidth: 1920
-  });
-  
-  // 上传文件
-  const result = await uploadFile('/api/
-  upload', compressedFile, {
-    onProgress: (percent) => {
-      console.log(`上传进度: ${percent}
-      %`);
-    }
-  });
-  
-  return result;
+// 文件上传示例
+async function handleFileUpload(file) {
+  // 验证文件
+  if (!validateFileType(file, ['.jpg', '.png', '.gif'])) {
+    throw new Error('请选择图片文件');
+  }
+  
+  if (!validateFileSize(file, 5 * 1024 * 1024)) {
+    throw new Error('文件大小不能超过 5MB');
+  }
+  
+  // 压缩图片
+  const compressedFile = await compressImage(file, {
+    quality: 0.8,
+    maxWidth: 1920
+  });
+  
+  // 上传文件
+  const result = await uploadFile('/api/upload', compressedFile, {
+    onProgress: (percent) => {
+      console.log(`上传进度: ${percent}%`);
+    }
+  });
+  
+  return result;
 }
 
-// 移动端适配示例
-function initApp() {
-  const deviceType = getDeviceType();
-  
-  if (isMobile()) {
-    // 移动端特殊处理
-    document.body.classList.add
-    ('mobile');
-    
-    if (isWeChat()) {
-      // 微信浏览器特殊处理
-      initWeChatShare();
-    }
-  }
-  
-  // 获取 URL 参数
-  const userId = getQueryString
-  ('userId');
-  if (userId) {
-    loadUserData(userId);
-  }
+// 移动端适配示例
+function initApp() {
+  const deviceType = getDeviceType();
+  
+  if (isMobile()) {
+    // 移动端特殊处理
+    document.body.classList.add('mobile');
+    
+    if (isWeChat()) {
+      // 微信浏览器特殊处理
+      initWeChatShare();
+    }
+  }
+  
+  // 获取 URL 参数
+  const userId = getQueryString('userId');
+  if (userId) {
+    loadUserData(userId);
+  }
 }
 
-// 分享功能示例
-function handleShare() {
-  const shareData = {
-    title: document.title,
-    url: window.location.href,
-    pic: document.querySelector('meta
-    [property="og:image"]')?.content,
-    desc: document.querySelector('meta
-    [name="description"]')?.content
-  };
-  
-  shareToQQ(shareData);
+// 分享功能示例
+function handleShare() {
+  const shareData = {
+    title: document.title,
+    url: window.location.href,
+    pic: document.querySelector('meta[property="og:image"]')?.content,
+    desc: document.querySelector('meta[name="description"]')?.content
+  };
+  
+  shareToQQ(shareData);
 }
 
-// 初始化应用
+// 初始化应用
 initApp();
-```
-## 📋 开发指南
-### 构建项目
-```
-npm run build
-```
-### 开发模式
-```
-npm run dev
-```
-### 代码检查
-```
-npm run lint
-```
-### 代码格式化
-```
-npm run format
-```
-### 运行测试
-```
-npm test
 ```
 
 ## 🌍 浏览器兼容性
 浏览器 版本 Chrome >= 60 Firefox >= 60 Safari >= 12 Edge >= 79 IE >= 11 (部分功能)
+|--|--|
+| 浏览器 | 版本 |
+| Chrome | >= 60 |
+| Firefox | >= 60 |
+| Safari | >= 12 |
+| Edge | >= 79 |
+| IE | >= 11 (部分功能) |
+
 
 ## 📦 包大小
 - 完整包: ~15KB (gzipped)
 - 按需导入: 根据使用的模块而定
+
 ## 🤝 贡献指南
 欢迎提交 Issue 和 Pull Request！
 
-1. Fork 本仓库
-2. 创建特性分支 ( git checkout -b feature/AmazingFeature )
-3. 提交更改 ( git commit -m 'Add some AmazingFeature' )
-4. 推送到分支 ( git push origin feature/AmazingFeature )
-5. 打开 Pull Request
+- Fork 本仓库
+- 创建特性分支 ( git checkout -b feature/AmazingFeature )
+- 提交更改 ( git commit -m 'Add some AmazingFeature' )
+- 推送到分支 ( git push origin feature/AmazingFeature )
+- 打开 Pull Request
+
 ## 📄 许可证
 MIT License
 
 ## 🙏 致谢
 感谢所有贡献者的支持！
-
-如果这个项目对你有帮助，请给个 ⭐️ 支持一下！
 
 
 
