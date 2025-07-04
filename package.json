@@ -1,11 +1,23 @@
 {
   "name": "general-method-utils",
-  "version": "1.1.1",
-  "description": "功能丰富的 JavaScript 工具库，提供 Cookie、URL、设备检测、HTTP 请求、文件上传、Promise 工具、社交分享等常用功能",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "browser": "dist/index.umd.js",
-  "types": "dist/index.d.ts",
+  "version": "1.2.0",
+  "description": "功能丰富的 JavaScript/TypeScript 工具库",
+  "main": "dist/js/index.js",
+  "module": "dist/js/index.esm.js",
+  "browser": "dist/js/index.umd.js",
+  "types": "dist/ts/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/ts/index.d.ts",
+      "import": "./dist/js/index.esm.js",
+      "require": "./dist/js/index.js"
+    },
+    "./ts": {
+      "types": "./dist/ts/index.d.ts",
+      "import": "./dist/ts/index.esm.js",
+      "require": "./dist/ts/index.js"
+    }
+  },
   "files": [
     "dist",
     "src",
@@ -13,63 +25,21 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "test": "jest",
-    "prepublishOnly": "npm run build",
-    "lint": "eslint src/**/*.js",
-    "format": "prettier --write src/**/*.js",
-    "install:fast": "nrm use taobao && npm install",
-    "publish:npm": "nrm use npm && npm publish && nrm use taobao",
-    "mirror:test": "nrm test",
-    "mirror:taobao": "nrm use taobao",
-    "mirror:npm": "nrm use npm"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
-  "keywords": [
-    "utils",
-    "tools",
-    "javascript",
-    "frontend",
-    "common",
-    "methods",
-    "cookie",
-    "url",
-    "device",
-    "share",
-    "request",
-    "upload",
-    "promise",
-    "browser",
-    "mobile",
-    "typescript"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Mr6pets/GeneralMethodsUtils.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Mr6pets/GeneralMethodsUtils/issues"
-  },
-  "homepage": "https://github.com/Mr6pets/GeneralMethodsUtils#readme",
-  "author": {
-    "name": "Mr6pets",
-    "email": "alvispets@gmail.com"
-  },
-  "license": "MIT",
-  "engines": {
-    "node": ">=12.0.0"
+    "build": "npm run build:js && npm run build:ts",
+    "build:js": "rollup -c rollup.config.js",
+    "build:ts": "rollup -c rollup.config.ts.js",
+    "dev:js": "rollup -c rollup.config.js -w",
+    "dev:ts": "rollup -c rollup.config.ts.js -w",
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@rollup/plugin-babel": "^6.0.0",
-    "@rollup/plugin-commonjs": "^25.0.0",
-    "@rollup/plugin-node-resolve": "^15.0.0",
-    "@rollup/plugin-terser": "^0.4.0",
-    "rollup": "^4.0.0",
-    "eslint": "^8.0.0",
-    "prettier": "^3.0.0",
-    "jest": "^29.0.0"
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "rollup": "^4.44.2",
+    "tslib": "^2.5.0",
+    "typescript": "^5.0.0"
   }
 }
