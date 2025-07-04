@@ -1,6 +1,6 @@
 {
   "name": "general-method-utils",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "功能丰富的 JavaScript 工具库，提供 Cookie、URL、设备检测、HTTP 请求、文件上传、Promise 工具、社交分享等常用功能",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
