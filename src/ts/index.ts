@@ -16,6 +16,11 @@ import * as validateUtils from './modules/validate';
 import * as imageUtils from './modules/image';
 import * as performanceUtils from './modules/performance';
 import * as utils from './modules/utils';
+import * as i18nUtils from './modules/i18n';
+import * as cryptoUtils from './modules/crypto';
+import * as animationUtils from './modules/animation';
+import * as geoUtils from './modules/geo';
+import * as formUtils from './modules/form';
 
 // 导出所有工具方法
 export {
@@ -35,7 +40,12 @@ export {
   validateUtils,
   imageUtils,
   performanceUtils,
-  utils
+  utils,
+  i18nUtils,
+  cryptoUtils,
+  animationUtils,
+  geoUtils,
+  formUtils
 };
 
 // 导出类型
@@ -78,5 +88,10 @@ export default {
   ...validateUtils,
   ...imageUtils,
   ...performanceUtils,
-  ...utils
+  ...utils,
+  ...i18nUtils,
+  ...cryptoUtils,
+  ...animationUtils,
+  ...geoUtils,
+  ...formUtils
 };

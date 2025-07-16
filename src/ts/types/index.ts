@@ -126,3 +126,94 @@ export type Throttled<T extends (...args: any[]) => any> = {
   (...args: Parameters<T>): void;
   cancel(): void;
 };
+
+
+// 国际化相关类型
+export interface I18nOptions {
+  locale?: string;
+  currency?: string;
+  timeZone?: string;
+}
+
+export interface NumberFormatOptions {
+  style?: 'decimal' | 'currency' | 'percent';
+  currency?: string;
+  minimumFractionDigits?: number;
+  maximumFractionDigits?: number;
+}
+
+export interface DateFormatOptions {
+  year?: 'numeric' | '2-digit';
+  month?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow';
+  day?: 'numeric' | '2-digit';
+  hour?: 'numeric' | '2-digit';
+  minute?: 'numeric' | '2-digit';
+  second?: 'numeric' | '2-digit';
+  timeZone?: string;
+}
+
+// 加密相关类型
+export type HashAlgorithm = 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512';
+
+export interface CryptoOptions {
+  algorithm?: HashAlgorithm;
+  encoding?: 'hex' | 'base64';
+}
+
+// 动画相关类型
+export interface AnimationOptions {
+  duration?: number;
+  easing?: 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out';
+  onComplete?: () => void;
+}
+
+export interface TransitionOptions extends AnimationOptions {
+  from?: number;
+  to?: number;
+}
+
+// 地理位置相关类型
+export interface Position {
+  latitude: number;
+  longitude: number;
+}
+
+export interface GeolocationOptions {
+  enableHighAccuracy?: boolean;
+  timeout?: number;
+  maximumAge?: number;
+}
+
+export interface DistanceOptions {
+  unit?: 'km' | 'miles' | 'meters';
+}
+
+// 表单相关类型
+export interface FormData {
+  [key: string]: string | number | boolean | File;
+}
+
+export interface FormValidationRule {
+  required?: boolean;
+  pattern?: RegExp;
+  min?: number;
+  max?: number;
+  minLength?: number;
+  maxLength?: number;
+  validator?: (value: any) => boolean | string;
+}
+
+export interface FormValidationRules {
+  [fieldName: string]: FormValidationRule;
+}
+
+export interface FormValidationResult {
+  isValid: boolean;
+  errors: { [fieldName: string]: string };
+}
+
+export interface AutoSaveOptions {
+  key: string;
+  interval?: number;
+  storage?: 'localStorage' | 'sessionStorage';
+}
