@@ -1,4 +1,4 @@
-# GeneralMethodUtils
+# general-method-utils
 
 > 一个功能丰富的 JavaScript/TypeScript 工具库，提供 Cookie 操作、URL 处理、设备检测、HTTP 请求等常用功能。
 
