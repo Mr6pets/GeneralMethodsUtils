@@ -81,7 +81,7 @@ setCookie('token', 'abc123', options);
 
 ### 中文文档
 - 📚 **[完整中文文档](./docs/README.full.md)** - 详细的 API 说明和使用示例
-- 🌐 **[在线中文文档](https://mr6pets.github.io/GeneralMethodsUtils/)**
+- 🌐 **[在线中文文档](https://mr6pets.github.io/GeneralMethodsUtils/zh/)**
 
 ### English Documentation
 - 📚 **[Full English Documentation](./docs/README.en.md)** - Detailed API reference and examples
@@ -89,8 +89,8 @@ setCookie('token', 'abc123', options);
 
 ### 其他资源
 - 📝 **[更新日志](./CHANGELOG.md)**
-- 🐛 **[问题反馈](https://github.com/Mr6pets/General-method-encapsulation/issues)**
-- 💡 **[功能建议](https://github.com/Mr6pets/General-method-encapsulation/discussions)**
+- 🐛 **[问题反馈](https://github.com/Mr6pets/GeneralMethodsUtils/issues)**
+- 💡 **[功能建议](https://github.com/Mr6pets/GeneralMethodsUtils/discussions)**
 
 ## 🤝 贡献
 
@@ -98,4 +98,4 @@ setCookie('token', 'abc123', options);
 
 ## 📄 许可证
 
-[MIT](https://github.com/Mr6pets/General-method-encapsulation/blob/main/LICENSE) © 2023
+[MIT](https://github.com/Mr6pets/GeneralMethodsUtils/blob/main/LICENSE) © 2023
