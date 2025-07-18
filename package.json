@@ -7,6 +7,23 @@
   "module": "dist/js/index.esm.js",
   "browser": "dist/js/index.umd.js",
   "types": "dist/ts/index.d.ts",
+  "homepage": "https://github.com/Mr6pets/GeneralMethodsUtils#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mr6pets/GeneralMethodsUtils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mr6pets/GeneralMethodsUtils/issues"
+  },
+  "author": {
+    "name": "Mr6pets",
+    "url": "https://github.com/Mr6pets"
+  },
+  "license": "MIT",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/Mr6pets"
+  },
   "exports": {
     ".": {
       "types": "./dist/ts/index.d.ts",
@@ -61,6 +78,14 @@
     "crypto",
     "animation",
     "geo",
-    "form"
-  ]
+    "form",
+    "utility",
+    "library",
+    "frontend",
+    "browser",
+    "nodejs"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  }
 }
