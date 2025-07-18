@@ -7,16 +7,16 @@ export default {
   input: 'src/js/index.js',
   output: [
     {
-      file: 'dist/index.js',
+      file: 'dist/js/index.js',        // ✅ 修正路径
       format: 'cjs',
       exports: 'auto'
     },
     {
-      file: 'dist/index.esm.js',
+      file: 'dist/js/index.esm.js',    // ✅ 修正路径
       format: 'es'
     },
     {
-      file: 'dist/index.umd.js',
+      file: 'dist/js/index.umd.js',    // ✅ 修正路径
       format: 'umd',
       name: 'GeneralUtils'
     }

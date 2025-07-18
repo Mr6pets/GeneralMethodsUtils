@@ -1,6 +1,7 @@
 {
   "name": "general-method-utils",
   "version": "1.3.2",
+  "type": "module",
   "description": "A feature-rich JavaScript/TypeScript utility library for web development",
   "main": "dist/js/index.js",
   "module": "dist/js/index.esm.js",
@@ -37,6 +38,9 @@
     "release:major": "npm version major && npm publish"
   },
   "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/plugin-transform-runtime": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
