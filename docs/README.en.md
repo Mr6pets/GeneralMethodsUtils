@@ -1,4 +1,4 @@
-# General Methods Utils
+# general-method-utils
 
 A comprehensive JavaScript utility library providing common methods for web development, including cookie management, URL handling, device detection, HTTP requests, and more. Supports both JavaScript and TypeScript.
 
