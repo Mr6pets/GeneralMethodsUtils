@@ -81,11 +81,11 @@ setCookie('token', 'abc123', options);
 
 ### 中文文档
 - 📚 **[完整中文文档](./docs/README.full.md)** - 详细的 API 说明和使用示例
-- 🌐 **[在线中文文档](https://mr6pets.github.io/General-method-encapsulation/zh/)**
+- 🌐 **[在线中文文档](https://mr6pets.github.io/GeneralMethodsUtils/)**
 
 ### English Documentation
 - 📚 **[Full English Documentation](./docs/README.en.md)** - Detailed API reference and examples
-- 🌐 **[Online English Documentation](https://mr6pets.github.io/General-method-encapsulation/en/)**
+- 🌐 **[Online English Documentation](https://mr6pets.github.io/GeneralMethodsUtils/en/)**
 
 ### 其他资源
 - 📝 **[更新日志](./CHANGELOG.md)**
