@@ -98,4 +98,4 @@ setCookie('token', 'abc123', options);
 
 ## 📄 许可证
 
-[MIT](https://github.com/Mr6pets/GeneralMethodsUtils/blob/main/LICENSE) © 2023
+[MIT](https://github.com/Mr6pets/GeneralMethodsUtils/blob/main/LICENSE) © 2025
