@@ -1,0 +1,11 @@
+{
+  "outputDirectory": "docs/demo",
+  "buildCommand": "",
+  "installCommand": "",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

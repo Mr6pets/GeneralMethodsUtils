@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "add-method": "node scripts/cli/add-method.js",
-    "check": "echo 'Checking project structure...' && node -e 'console.log(\"✅ Project structure is valid\")'"
+    "check": "echo 'Checking project structure...' && node -e 'console.log(\"✅ Project structure is valid\")',"
+    "build:dist": "node scripts/build-dist.js",
+    "deploy:package": "node scripts/deploy-package.js"
   },
   "bin": {
     "add-method": "./scripts/cli/add-method.js"
