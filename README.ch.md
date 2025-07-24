@@ -595,6 +595,382 @@ await sleep(2000);
 console.log('2秒后执行');
 ~~~
 
+### 🤖 AI/ML 集成工具 (aimlUtils)
+
+```js
+// AI 聊天对话
+chat(messages, options)
+const response = await aimlUtils.chat([
+  { role: 'user', content: '你好，请介绍一下人工智能' }
+], {
+  model: 'gpt-3.5-turbo',
+  temperature: 0.7,
+  maxTokens: 1000
+});
+console.log(response.content);
+
+// 图像分析
+analyzeImage(imageData, options)
+const analysis = await aimlUtils.analyzeImage(imageFile, {
+  features: ['objects', 'text', 'faces'],
+  confidence: 0.8
+});
+console.log('检测到的对象:', analysis.objects);
+console.log('识别的文本:', analysis.text);
+
+// 文本分析
+analyzeText(text, options)
+const textAnalysis = await aimlUtils.analyzeText('这是一段需要分析的文本', {
+  sentiment: true,
+  keywords: true,
+  language: true
+});
+console.log('情感分析:', textAnalysis.sentiment); // { score: 0.8, label: 'positive' }
+console.log('关键词:', textAnalysis.keywords);
+
+// 机器学习模型预测
+predict(modelConfig, inputData)
+const prediction = await aimlUtils.predict({
+  modelUrl: '/models/classifier.json',
+  inputShape: [1, 784]
+}, inputData);
+console.log('预测结果:', prediction.predictions);
+console.log('置信度:', prediction.confidence);
+```
+
+### 🔒 高级安全工具 (securityUtils)
+
+```js
+// 安全扫描
+scanSecurity(options)
+const scanResult = await securityUtils.scanSecurity({
+  checkXSS: true,
+  checkCSRF: true,
+  checkHeaders: true,
+  checkCookies: true
+});
+console.log('安全扫描结果:', scanResult);
+// { score: 85, issues: [...], recommendations: [...] }
+
+// 生成内容安全策略
+generateCSP(options)
+const csp = securityUtils.generateCSP({
+  defaultSrc: ["'self'"],
+  scriptSrc: ["'self'", "'unsafe-inline'"],
+  styleSrc: ["'self'", "'unsafe-inline'"],
+  imgSrc: ["'self'", "data:", "https:"]
+});
+console.log('CSP 策略:', csp);
+
+// 数据加密解密
+encrypt(data, options) / decrypt(encryptedData, options)
+const encrypted = await securityUtils.encrypt('敏感数据', {
+  algorithm: 'AES-GCM',
+  keyLength: 256
+});
+const decrypted = await securityUtils.decrypt(encrypted.data, {
+  key: encrypted.key,
+  iv: encrypted.iv
+});
+
+// 生成安全头部
+generateSecurityHeaders(options)
+const headers = securityUtils.generateSecurityHeaders({
+  hsts: true,
+  noSniff: true,
+  frameOptions: 'DENY',
+  xssProtection: true
+});
+console.log('安全头部:', headers);
+
+// 速率限制
+rateLimit(key, options)
+const allowed = securityUtils.rateLimit('user:123', {
+  maxRequests: 100,
+  windowMs: 60000 // 1分钟
+});
+if (!allowed.success) {
+  console.log('请求过于频繁，请稍后再试');
+}
+
+// 输入净化
+sanitizeInput(input, options)
+const cleanInput = securityUtils.sanitizeInput('<script>alert("xss")</script>用户输入', {
+  allowedTags: ['b', 'i', 'em', 'strong'],
+  stripScripts: true
+});
+console.log('净化后的输入:', cleanInput);
+```
+
+### 👥 实时协作工具 (collaborationUtils)
+
+```js
+// 建立实时连接
+connect(options)
+const connection = await collaborationUtils.connect({
+  url: 'ws://localhost:8080',
+  room: 'document-123',
+  user: { id: 'user1', name: '张三' }
+});
+
+// 协同编辑
+startCollaborativeEditing(element, options)
+const editor = collaborationUtils.startCollaborativeEditing(
+  document.getElementById('editor'),
+  {
+    connection: connection,
+    showCursors: true,
+    showSelections: true,
+    conflictResolution: 'operational-transform'
+  }
+);
+
+// 发送操作
+sendOperation(operation)
+editor.sendOperation({
+  type: 'insert',
+  position: 10,
+  content: '新插入的文本',
+  author: 'user1'
+});
+
+// 监听其他用户操作
+editor.onOperation((operation) => {
+  console.log('收到操作:', operation);
+  applyOperation(operation);
+});
+
+// 同步文档状态
+syncDocumentState(state)
+const syncManager = collaborationUtils.createSyncManager({
+  connection: connection,
+  conflictResolution: 'last-write-wins'
+});
+
+syncManager.syncState({
+  content: '文档内容',
+  version: 1,
+  lastModified: Date.now()
+});
+
+// 用户在线状态
+trackPresence(user)
+collaborationUtils.trackPresence({
+  id: 'user1',
+  name: '张三',
+  cursor: { line: 5, column: 10 },
+  selection: { start: 100, end: 150 }
+});
+
+// 监听用户状态变化
+collaborationUtils.onPresenceChange((users) => {
+  console.log('在线用户:', users);
+  updateUserList(users);
+});
+```
+
+### 📹 WebRTC 通信工具 (webrtcUtils)
+
+```js
+// 创建 WebRTC 连接
+createConnection(options)
+const rtc = await webrtcUtils.createConnection({
+  iceServers: [
+    { urls: 'stun:stun.l.google.com:19302' }
+  ],
+  video: true,
+  audio: true
+});
+
+// 发起通话
+startCall(targetUserId, options)
+const call = await rtc.startCall('user2', {
+  video: true,
+  audio: true,
+  onRemoteStream: (stream) => {
+    document.getElementById('remoteVideo').srcObject = stream;
+  }
+});
+
+// 接听通话
+answerCall(callId, options)
+await rtc.answerCall(callId, {
+  video: true,
+  audio: true
+});
+
+// 屏幕共享
+startScreenShare(options)
+const screenShare = await webrtcUtils.startScreenShare({
+  video: true,
+  audio: true,
+  onStream: (stream) => {
+    document.getElementById('screenVideo').srcObject = stream;
+  }
+});
+
+// 停止屏幕共享
+screenShare.stop();
+
+// 数据通道通信
+sendData(data)
+rtc.sendData({
+  type: 'message',
+  content: '你好，这是通过 WebRTC 发送的消息'
+});
+
+// 监听数据
+rtc.onData((data) => {
+  console.log('收到数据:', data);
+});
+
+// 控制音视频
+rtc.muteAudio(); // 静音
+rtc.unmuteAudio(); // 取消静音
+rtc.pauseVideo(); // 暂停视频
+rtc.resumeVideo(); // 恢复视频
+
+// 结束通话
+rtc.endCall();
+```
+
+### ⛓️ 区块链工具 (blockchainUtils)
+
+```js
+// 连接钱包
+connectWallet(options)
+const wallet = await blockchainUtils.connectWallet({
+  provider: 'metamask', // 或 'walletconnect'
+  chainId: 1 // 以太坊主网
+});
+console.log('钱包地址:', wallet.address);
+console.log('余额:', wallet.balance);
+
+// 调用智能合约
+callContract(contractAddress, abi, method, params)
+const result = await blockchainUtils.callContract(
+  '0x1234...', // 合约地址
+  contractABI,
+  'balanceOf',
+  [wallet.address]
+);
+console.log('代币余额:', result);
+
+// 发送交易
+sendTransaction(transaction)
+const txHash = await blockchainUtils.sendTransaction({
+  to: '0x5678...',
+  value: '0.1', // ETH
+  gasLimit: 21000
+});
+console.log('交易哈希:', txHash);
+
+// 监听交易状态
+watchTransaction(txHash, callback)
+blockchainUtils.watchTransaction(txHash, (status) => {
+  console.log('交易状态:', status);
+  if (status === 'confirmed') {
+    console.log('交易已确认');
+  }
+});
+
+// 获取网络信息
+getNetworkInfo()
+const networkInfo = await blockchainUtils.getNetworkInfo();
+console.log('网络信息:', networkInfo);
+// { chainId: 1, name: 'Ethereum Mainnet', gasPrice: '20000000000' }
+
+// 格式化地址
+formatAddress(address, options)
+const shortAddress = blockchainUtils.formatAddress(
+  '0x1234567890abcdef1234567890abcdef12345678',
+  { short: true }
+); // '0x1234...5678'
+
+// 验证地址
+isValidAddress(address)
+const isValid = blockchainUtils.isValidAddress('0x1234...');
+console.log('地址有效:', isValid);
+```
+
+### 🏗️ 微前端工具 (microfrontendUtils)
+
+```js
+// 注册微应用
+registerApp(appConfig)
+microfrontendUtils.registerApp({
+  name: 'user-center',
+  entry: 'http://localhost:3001',
+  container: '#user-app',
+  activeWhen: '/user',
+  props: {
+    token: 'abc123',
+    theme: 'dark'
+  }
+});
+
+// 启动微前端系统
+start(options)
+microfrontendUtils.start({
+  sandbox: true, // 启用沙箱隔离
+  prefetch: true, // 预加载应用
+  singular: false // 允许多个应用同时运行
+});
+
+// 手动加载应用
+loadApp(appName, options)
+const app = await microfrontendUtils.loadApp('user-center', {
+  container: document.getElementById('app-container'),
+  props: { userId: 123 }
+});
+
+// 卸载应用
+unloadApp(appName)
+await microfrontendUtils.unloadApp('user-center');
+
+// 应用间通信
+sendMessage(targetApp, message) / onMessage(callback)
+// 发送消息
+microfrontendUtils.sendMessage('user-center', {
+  type: 'USER_LOGIN',
+  data: { userId: 123, username: 'john' }
+});
+
+// 监听消息
+microfrontendUtils.onMessage((message) => {
+  console.log('收到消息:', message);
+  if (message.type === 'USER_LOGOUT') {
+    handleUserLogout();
+  }
+});
+
+// 共享状态管理
+setSharedState(key, value) / getSharedState(key)
+microfrontendUtils.setSharedState('user', {
+  id: 123,
+  name: 'John',
+  role: 'admin'
+});
+
+const user = microfrontendUtils.getSharedState('user');
+console.log('共享用户信息:', user);
+
+// 监听状态变化
+microfrontendUtils.onStateChange('user', (newUser) => {
+  console.log('用户信息更新:', newUser);
+  updateUI(newUser);
+});
+
+// 路由管理
+navigateToApp(appName, path)
+microfrontendUtils.navigateToApp('user-center', '/profile');
+
+// 获取应用状态
+getAppStatus(appName)
+const status = microfrontendUtils.getAppStatus('user-center');
+console.log('应用状态:', status); // 'loading', 'mounted', 'unmounted'
+```
+
 ### 🌐 国际化工具 (i18nUtils)
 
 ~~~js
@@ -951,7 +1327,13 @@ import {
   cryptoUtils,
   animationUtils,
   geoUtils,
-  formUtils
+  formUtils,
+  aimlUtils,
+  securityUtils,
+  collaborationUtils,
+  webrtcUtils,
+  blockchainUtils,
+  microfrontendUtils
 } from 'general-method-utils';
 
 // 用户登录示例
@@ -1229,8 +1611,248 @@ function initApp() {
   showNotification('应用初始化完成', 'success');
 }
 
+// AI 智能客服示例
+async function initAICustomerService() {
+  const chatContainer = document.getElementById('chat-container');
+  
+  // 初始化 AI 聊天
+  const aiChat = {
+    messages: [],
+    async sendMessage(content) {
+      this.messages.push({ role: 'user', content });
+      
+      const response = await aimlUtils.chat(this.messages, {
+        model: 'gpt-3.5-turbo',
+        temperature: 0.7
+      });
+      
+      this.messages.push({ role: 'assistant', content: response.content });
+      return response.content;
+    }
+  };
+  
+  // 处理用户输入
+  document.getElementById('send-btn').addEventListener('click', async () => {
+    const input = document.getElementById('chat-input');
+    const message = input.value.trim();
+    
+    if (message) {
+      // 显示用户消息
+      appendMessage('user', message);
+      
+      // 获取 AI 回复
+      const reply = await aiChat.sendMessage(message);
+      appendMessage('assistant', reply);
+      
+      input.value = '';
+    }
+  });
+}
+
+// 区块链 DApp 示例
+async function initBlockchainDApp() {
+  try {
+    // 连接钱包
+    const wallet = await blockchainUtils.connectWallet({
+      provider: 'metamask'
+    });
+    
+    console.log('钱包已连接:', wallet.address);
+    
+    // 显示用户余额
+    document.getElementById('wallet-address').textContent = 
+      blockchainUtils.formatAddress(wallet.address, { short: true });
+    document.getElementById('wallet-balance').textContent = 
+      `${wallet.balance} ETH`;
+    
+    // 智能合约交互
+    const tokenBalance = await blockchainUtils.callContract(
+      '0x...', // 代币合约地址
+      tokenABI,
+      'balanceOf',
+      [wallet.address]
+    );
+    
+    document.getElementById('token-balance').textContent = 
+      `${tokenBalance} TOKEN`;
+    
+  } catch (error) {
+    console.error('区块链初始化失败:', error);
+  }
+}
+
+// 微前端应用示例
+function initMicrofrontendApp() {
+  // 注册子应用
+  microfrontendUtils.registerApp({
+    name: 'user-management',
+    entry: 'http://localhost:3001',
+    container: '#user-app',
+    activeWhen: '/user'
+  });
+  
+  microfrontendUtils.registerApp({
+    name: 'order-system',
+    entry: 'http://localhost:3002',
+    container: '#order-app',
+    activeWhen: '/order'
+  });
+  
+  // 启动微前端系统
+  microfrontendUtils.start({
+    sandbox: true,
+    prefetch: true
+  });
+  
+  // 设置全局状态
+  microfrontendUtils.setSharedState('user', {
+    id: 123,
+    name: 'John',
+    role: 'admin'
+  });
+  
+  // 监听应用间通信
+  microfrontendUtils.onMessage((message) => {
+    console.log('收到子应用消息:', message);
+    
+    if (message.type === 'NAVIGATE') {
+      microfrontendUtils.navigateToApp(message.app, message.path);
+    }
+  });
+}
+
+// WebRTC 视频会议示例
+async function initVideoConference() {
+  try {
+    // 创建 WebRTC 连接
+    const rtc = await webrtcUtils.createConnection({
+      iceServers: [
+        { urls: 'stun:stun.l.google.com:19302' }
+      ],
+      video: true,
+      audio: true
+    });
+    
+    // 获取本地视频流
+    const localVideo = document.getElementById('localVideo');
+    localVideo.srcObject = rtc.localStream;
+    
+    // 处理远程视频流
+    rtc.onRemoteStream = (stream) => {
+      const remoteVideo = document.getElementById('remoteVideo');
+      remoteVideo.srcObject = stream;
+    };
+    
+    // 发起通话按钮
+    document.getElementById('call-btn').addEventListener('click', async () => {
+      const targetUserId = document.getElementById('target-user').value;
+      await rtc.startCall(targetUserId);
+    });
+    
+    // 屏幕共享按钮
+    document.getElementById('share-screen-btn').addEventListener('click', async () => {
+      const screenShare = await webrtcUtils.startScreenShare({
+        onStream: (stream) => {
+          document.getElementById('screenVideo').srcObject = stream;
+        }
+      });
+    });
+    
+  } catch (error) {
+    console.error('WebRTC 初始化失败:', error);
+  }
+}
+
+// 实时协作编辑器示例
+async function initCollaborativeEditor() {
+  try {
+    // 建立实时连接
+    const connection = await collaborationUtils.connect({
+      url: 'ws://localhost:8080',
+      room: 'document-123',
+      user: { id: 'user1', name: '张三' }
+    });
+    
+    // 启动协同编辑
+    const editor = collaborationUtils.startCollaborativeEditing(
+      document.getElementById('editor'),
+      {
+        connection: connection,
+        showCursors: true,
+        showSelections: true
+      }
+    );
+    
+    // 监听其他用户操作
+    editor.onOperation((operation) => {
+      console.log('收到协作操作:', operation);
+    });
+    
+    // 显示在线用户
+    collaborationUtils.onPresenceChange((users) => {
+      const userList = document.getElementById('online-users');
+      userList.innerHTML = users.map(user => 
+        `<div class="user">${user.name}</div>`
+      ).join('');
+    });
+    
+  } catch (error) {
+    console.error('协作编辑器初始化失败:', error);
+  }
+}
+
+// 安全防护示例
+async function initSecurityProtection() {
+  // 执行安全扫描
+  const scanResult = await securityUtils.scanSecurity({
+    checkXSS: true,
+    checkCSRF: true,
+    checkHeaders: true
+  });
+  
+  if (scanResult.score < 80) {
+    console.warn('安全评分较低:', scanResult.score);
+    console.log('安全建议:', scanResult.recommendations);
+  }
+  
+  // 设置内容安全策略
+  const csp = securityUtils.generateCSP({
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", "'unsafe-inline'"],
+    styleSrc: ["'self'", "'unsafe-inline'"]
+  });
+  
+  // 应用安全头部
+  const securityHeaders = securityUtils.generateSecurityHeaders({
+    hsts: true,
+    noSniff: true,
+    frameOptions: 'DENY'
+  });
+  
+  // 输入净化
+  const userInput = document.getElementById('user-input').value;
+  const cleanInput = securityUtils.sanitizeInput(userInput, {
+    allowedTags: ['b', 'i', 'em'],
+    stripScripts: true
+  });
+  
+  console.log('净化后的输入:', cleanInput);
+}
+
+// 初始化所有高级功能
+async function initAdvancedFeatures() {
+  await initAICustomerService();
+  await initBlockchainDApp();
+  initMicrofrontendApp();
+  await initVideoConference();
+  await initCollaborativeEditor();
+  await initSecurityProtection();
+  
+  console.log('所有高级功能初始化完成');
+}
+
 // 启动应用
-initApp();
+initAdvancedFeatures();
 
 
 ~~~
