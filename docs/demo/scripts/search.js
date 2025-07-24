@@ -1,3 +1,6 @@
+import { getModuleData } from './data/index.js';
+import { Utils } from './utils.js';
+
 // 搜索功能模块
 class SearchManager {
     constructor() {
@@ -37,7 +40,7 @@ class SearchManager {
     }
 
     // 执行搜索
-    performSearch() {
+    async performSearch() {
         const query = this.currentQuery.toLowerCase();
         
         if (!query) {
@@ -45,13 +48,14 @@ class SearchManager {
             return;
         }
 
-        this.searchResults = this.findMatchingMethods(query);
+        const moduleData = await getModuleData();
+        this.searchResults = this.findMatchingMethods(query, moduleData);
         this.displaySearchResults();
         this.updateSearchStats();
     }
 
     // 查找匹配的方法
-    findMatchingMethods(query) {
+    findMatchingMethods(query, moduleData) {
         const results = [];
         
         Object.keys(moduleData).forEach(moduleKey => {
@@ -254,8 +258,8 @@ class SearchManager {
     }
 
     // 更新搜索统计
-    updateSearchStats() {
-        const totalMethods = this.getTotalMethodCount();
+    async updateSearchStats() {
+        const totalMethods = await this.getTotalMethodCount();
         const visibleMethods = this.getVisibleMethodCount();
         
         let statsElement = document.getElementById('searchStats');
@@ -279,7 +283,8 @@ class SearchManager {
     }
 
     // 获取总方法数
-    getTotalMethodCount() {
+    async getTotalMethodCount() {
+        const moduleData = await getModuleData();
         return Object.values(moduleData).reduce((total, module) => {
             return total + Object.keys(module.methods).length;
         }, 0);
@@ -300,9 +305,10 @@ class SearchManager {
     }
 
     // 获取搜索建议
-    getSearchSuggestions(query) {
+    async getSearchSuggestions(query) {
         const suggestions = [];
         const lowerQuery = query.toLowerCase();
+        const moduleData = await getModuleData();
         
         Object.values(moduleData).forEach(module => {
             Object.values(module.methods).forEach(method => {
@@ -317,4 +323,7 @@ class SearchManager {
 }
 
 // 导出搜索管理器
+export { SearchManager };
+
+// 为了向后兼容，也将类添加到全局对象
 window.SearchManager = SearchManager;

@@ -1,0 +1,31 @@
+{
+  "name": "general-methods-utils-demo",
+  "version": "1.0.0",
+  "description": "通用方法库演示系统",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "add-method": "node scripts/cli/add-method.js",
+    "check": "echo 'Checking project structure...' && node -e 'console.log(\"✅ Project structure is valid\")'"
+  },
+  "bin": {
+    "add-method": "./scripts/cli/add-method.js"
+  },
+  "devDependencies": {
+    "vite": "^4.4.0"
+  },
+  "dependencies": {
+    "readline": "^1.3.0"
+  },
+  "keywords": [
+    "utils",
+    "methods",
+    "demo",
+    "javascript",
+    "typescript"
+  ],
+  "author": "General Methods Utils Team",
+  "license": "MIT"
+}

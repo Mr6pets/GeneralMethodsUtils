@@ -1,17 +1,28 @@
+import { getModuleData } from './data/index.js';
+import { allDemos } from './demos/index.js';
+import { Utils, LoadingManager, ToastManager } from './utils.js';
+import { SearchManager } from './search.js';
+import { TabManager } from './tabs.js';
+import { ContentManager } from './content.js';
+import { SidebarManager } from './sidebar.js';
+import { EventManager } from './events.js';
+
 // 主应用类
 class DemoApp {
     constructor() {
         this.isInitialized = false;
         this.currentLanguage = 'javascript';
+        this.moduleData = null;
+        this.demoGenerators = allDemos;
         
-        // 初始化各个管理器（安全检查）
+        // 初始化各个管理器
         try {
-            this.utils = window.Utils ? new Utils() : null;
-            this.searchManager = window.SearchManager ? new SearchManager() : null;
-            this.tabManager = window.TabManager ? new TabManager() : null;
-            this.contentManager = window.ContentManager ? new ContentManager() : null;
-            this.sidebarManager = window.SidebarManager ? new SidebarManager() : null;
-            this.eventManager = window.EventManager ? new EventManager() : null;
+            this.utils = new Utils();
+            this.searchManager = new SearchManager();
+            this.tabManager = new TabManager();
+            this.contentManager = new ContentManager();
+            this.sidebarManager = new SidebarManager();
+            this.eventManager = new EventManager();
         } catch (error) {
             console.error('创建管理器实例时出错:', error);
             // 创建空对象以避免后续错误
@@ -35,12 +46,23 @@ class DemoApp {
         try {
             console.log('开始初始化演示应用...');
             
+            // 加载模块数据并确保全局可用
+            console.log('正在加载模块数据...');
+            this.moduleData = await getModuleData();
+            
+            // 确保全局 moduleData 可用
+            if (!window.moduleData) {
+                window.moduleData = this.moduleData;
+            }
+            
+            console.log('模块数据加载完成:', Object.keys(this.moduleData).length, '个模块');
+            
             // 检查依赖
             await this.checkDependencies();
             
             // 初始化主题
-            if (window.Utils && typeof Utils.initTheme === 'function') {
-                Utils.initTheme();
+            if (this.utils && typeof this.utils.initTheme === 'function') {
+                this.utils.initTheme();
             }
             
             // 初始化各个管理器
@@ -63,7 +85,7 @@ class DemoApp {
             console.log('演示应用初始化完成');
             
             // 显示加载完成提示
-            if (window.Utils && typeof Utils.showToast === 'function') {
+            if (Utils && typeof Utils.showToast === 'function') {
                 Utils.showToast('应用加载完成', 'success');
             }
             
@@ -75,17 +97,8 @@ class DemoApp {
 
     // 检查依赖
     async checkDependencies() {
-        // 等待 moduleData 加载
-        let retries = 0;
-        const maxRetries = 50; // 最多等待 5 秒
-        
-        while ((!window.moduleData || typeof window.moduleData !== 'object') && retries < maxRetries) {
-            await new Promise(resolve => setTimeout(resolve, 100));
-            retries++;
-        }
-        
-        // 检查最关键的依赖
-        if (!window.moduleData || typeof window.moduleData !== 'object') {
+        // 检查模块数据
+        if (!this.moduleData || typeof this.moduleData !== 'object') {
             throw new Error('模块数据 (moduleData) 无效或未加载');
         }
         
@@ -105,6 +118,8 @@ class DemoApp {
             console.warn(`以下类尚未定义: ${missing.join(', ')}`);
             // 不抛出错误，而是警告，因为类可能在后续脚本中定义
         }
+        
+        console.log('依赖检查完成');
     }
 
     // 初始化各个管理器
@@ -151,6 +166,10 @@ class DemoApp {
         window.app = {
             onMethodSelected: (moduleKey, methodKey) => {
                 this.handleMethodSelection(moduleKey, methodKey);
+            },
+            tabManager: this.tabManager,
+            selectMethod: (moduleKey, methodKey) => {
+                this.handleMethodSelection(moduleKey, methodKey);
             }
         };
         
@@ -175,7 +194,7 @@ class DemoApp {
             this.tabManager.initTabs(moduleKey, methodKey);
             
             // 更新页面标题
-            const method = moduleData[moduleKey]?.methods[methodKey];
+            const method = this.moduleData[moduleKey]?.methods[methodKey];
             if (method) {
                 document.title = `${method.name} - 通用方法库演示`;
             }
@@ -259,12 +278,12 @@ class DemoApp {
 
     // 切换主题
     toggleTheme() {
-        Utils.toggleTheme();
+        this.utils.toggleTheme();
     }
 
     // 复制代码
     copyCode(code) {
-        Utils.copyCode(code);
+        this.utils.copyCode(code);
     }
 
     // 运行代码
@@ -409,7 +428,7 @@ class DemoApp {
             errors: this.getErrorLog()
         };
         
-        Utils.copyCode(JSON.stringify(debugInfo, null, 2));
+        this.utils.copyCode(JSON.stringify(debugInfo, null, 2));
     }
 
     // 获取本地存储信息
@@ -467,8 +486,8 @@ window.addEventListener('error', (event) => {
     });
     
     // 显示用户友好的错误提示
-    if (window.Utils) {
-        Utils.showToast('发生了一个错误，请查看控制台获取详细信息', 'error');
+    if (window.app && window.app.utils) {
+        window.app.utils.showToast('发生了一个错误，请查看控制台获取详细信息', 'error');
     }
 });
 
@@ -487,8 +506,8 @@ window.addEventListener('unhandledrejection', (event) => {
     });
     
     // 显示用户友好的错误提示
-    if (window.Utils) {
-        Utils.showToast('异步操作失败，请重试', 'error');
+    if (window.app && window.app.utils) {
+        window.app.utils.showToast('异步操作失败，请重试', 'error');
     }
 });
 

@@ -1,4 +1,6 @@
 // 内容渲染模块
+import { Utils } from './utils.js';
+
 class ContentManager {
     constructor() {
         this.tabManager = new TabManager();
@@ -446,4 +448,7 @@ class ContentManager {
 }
 
 // 导出内容管理器
+export { ContentManager };
+
+// 为了向后兼容，也将类添加到全局对象
 window.ContentManager = ContentManager;

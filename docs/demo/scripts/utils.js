@@ -2,14 +2,19 @@
 class Utils {
     // 代码高亮
     static highlightCode(code, language) {
+        // 先转义HTML，避免标签冲突
+        let highlightedCode = Utils.escapeHtml(code);
+        
         // 简单的语法高亮实现
-        return code
+        highlightedCode = highlightedCode
             .replace(/\/\*[\s\S]*?\*\//g, '<span class="comment">$&</span>')
             .replace(/\/\/.*$/gm, '<span class="comment">$&</span>')
-            .replace(/\b(const|let|var|function|class|if|else|for|while|return|import|export|async|await)\b/g, '<span class="keyword">$1</span>')
+            .replace(/\b(const|let|var|function|class|if|else|for|while|return|import|export|async|await|interface|type|enum)\b/g, '<span class="keyword">$1</span>')
             .replace(/\b(true|false|null|undefined)\b/g, '<span class="literal">$1</span>')
-            .replace(/(['"`])(?:(?!\1)[^\\]|\\.)*\1/g, '<span class="string">$&</span>')
-            .replace(/\b\d+\b/g, '<span class="number">$&</span>');
+            .replace(/(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;|`[^`]*?`)/g, '<span class="string">$1</span>')
+            .replace(/\b\d+\b/g, '<span class="number">$1</span>');
+            
+        return highlightedCode;
     }
 
     // HTML 转义
@@ -242,7 +247,10 @@ class ToastManager {
     }
 }
 
-// 导出工具类
+// 导出类供其他模块使用
+export { Utils, LoadingManager, ToastManager };
+
+// 为了向后兼容，也将类添加到全局对象
 window.Utils = Utils;
 window.LoadingManager = LoadingManager;
 window.ToastManager = ToastManager;

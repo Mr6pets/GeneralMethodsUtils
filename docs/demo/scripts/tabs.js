@@ -1,4 +1,6 @@
 // 标签页管理模块
+import { Utils } from './utils.js';
+
 class TabManager {
     constructor() {
         this.currentTab = 'usage';
@@ -8,6 +10,22 @@ class TabManager {
     // 初始化标签页
     init() {
         this.bindEvents();
+    }
+
+    // 初始化标签页内容
+    initTabs(moduleKey, methodKey) {
+        // 这个方法用于初始化特定方法的标签页内容
+        // 可以在这里进行标签页的初始化逻辑
+        console.log(`初始化标签页: ${moduleKey}.${methodKey}`);
+        
+        // 确保默认显示第一个标签页
+        this.switchTab(this.currentTab);
+        
+        // 恢复用户的语言偏好
+        const savedLanguage = localStorage.getItem('preferredLanguage');
+        if (savedLanguage && (savedLanguage === 'js' || savedLanguage === 'ts')) {
+            this.switchLanguage(savedLanguage);
+        }
     }
 
     // 绑定标签页事件
@@ -147,7 +165,7 @@ class TabManager {
                                         data-code="${Utils.escapeHtml(method.examples.js)}">
                                     <i class="fas fa-copy"></i> 复制代码
                                 </button>
-                                <button class="run-btn" onclick="TabManager.runCode('${method.examples.js}', 'js')">
+                                <button class="run-btn" onclick="window.app.tabManager.runCode('${Utils.escapeHtml(method.examples.js)}', 'js')">
                                     <i class="fas fa-play"></i> 运行
                                 </button>
                             </div>
@@ -166,7 +184,7 @@ class TabManager {
                                         data-code="${Utils.escapeHtml(method.examples.ts)}">
                                     <i class="fas fa-copy"></i> 复制代码
                                 </button>
-                                <button class="run-btn" onclick="TabManager.runCode('${method.examples.ts}', 'ts')">
+                                <button class="run-btn" onclick="window.app.tabManager.runCode('${Utils.escapeHtml(method.examples.ts)}', 'ts')">
                                     <i class="fas fa-play"></i> 运行
                                 </button>
                             </div>
@@ -178,7 +196,7 @@ class TabManager {
                 <div class="example-output" id="exampleOutput" style="display: none;">
                     <div class="output-header">
                         <h4>运行结果</h4>
-                        <button class="clear-output" onclick="TabManager.clearOutput()">
+                        <button class="clear-output" onclick="window.app.tabManager.clearOutput()">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
@@ -190,7 +208,8 @@ class TabManager {
 
     // 渲染演示标签页
     renderDemoTab(methodKey) {
-        const demoGenerator = demoGenerators[methodKey];
+        // 检查是否有可用的演示生成器
+        const demoGenerator = window.allDemos && window.allDemos[methodKey];
         if (!demoGenerator) {
             return `
                 <div class="demo-placeholder">
@@ -281,7 +300,7 @@ class TabManager {
     }
 
     // 运行代码示例
-    static runCode(code, language) {
+    runCode(code, language) {
         const outputElement = document.getElementById('exampleOutput');
         const contentElement = document.getElementById('outputContent');
         
@@ -309,7 +328,7 @@ class TabManager {
     }
 
     // 清除输出
-    static clearOutput() {
+    clearOutput() {
         const outputElement = document.getElementById('exampleOutput');
         if (outputElement) {
             outputElement.style.display = 'none';
@@ -345,4 +364,7 @@ class TabManager {
 }
 
 // 导出标签页管理器
+export { TabManager };
+
+// 为了向后兼容，也将类添加到全局对象
 window.TabManager = TabManager;

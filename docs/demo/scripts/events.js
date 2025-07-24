@@ -1,4 +1,6 @@
 // 事件管理模块
+import { Utils } from './utils.js';
+
 class EventManager {
     constructor() {
         this.shortcuts = new Map();
@@ -504,4 +506,5 @@ class EventManager {
 }
 
 // 导出事件管理器
+export { EventManager };
 window.EventManager = EventManager;

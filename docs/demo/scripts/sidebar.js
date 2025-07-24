@@ -1,3 +1,7 @@
+import { getModuleData, userState } from './data/index.js';
+import { DemoGenerator } from './demos/index.js';
+import { Utils } from './utils.js';
+
 // 侧边栏管理模块
 class SidebarManager {
     constructor() {
@@ -6,7 +10,10 @@ class SidebarManager {
     }
 
     // 初始化侧边栏
-    init() {
+    async init() {
+        // 获取模块数据
+        this.moduleData = await getModuleData();
+        
         this.renderSidebar();
         this.bindEvents();
     }
@@ -51,7 +58,7 @@ class SidebarManager {
                     </div>
                     <div class="stat-item">
                         <i class="fas fa-cube"></i>
-                        <span>${Object.keys(moduleData).length} 个模块</span>
+                        <span>${Object.keys(this.moduleData).length} 个模块</span>
                     </div>
                 </div>
             </div>
@@ -62,8 +69,8 @@ class SidebarManager {
 
     // 构建方法树
     buildMethodTree() {
-        return Object.keys(moduleData).map(moduleKey => {
-            const module = moduleData[moduleKey];
+        return Object.keys(this.moduleData).map(moduleKey => {
+            const module = this.moduleData[moduleKey];
             const isExpanded = this.expandedModules.has(moduleKey);
             const methodCount = Object.keys(module.methods).length;
             
@@ -120,6 +127,10 @@ class SidebarManager {
     bindEvents() {
         // 模块头部点击事件
         document.addEventListener('click', (e) => {
+            if (!e.target || typeof e.target.closest !== 'function') {
+                return;
+            }
+            
             const moduleHeader = e.target.closest('.module-header');
             if (moduleHeader) {
                 e.preventDefault();
@@ -152,16 +163,20 @@ class SidebarManager {
 
         // 模块悬停效果
         document.addEventListener('mouseenter', (e) => {
-            const moduleHeader = e.target.closest('.module-header');
-            if (moduleHeader) {
-                moduleHeader.classList.add('hover');
+            if (e.target && typeof e.target.closest === 'function') {
+                const moduleHeader = e.target.closest('.module-header');
+                if (moduleHeader) {
+                    moduleHeader.classList.add('hover');
+                }
             }
         }, true);
 
         document.addEventListener('mouseleave', (e) => {
-            const moduleHeader = e.target.closest('.module-header');
-            if (moduleHeader) {
-                moduleHeader.classList.remove('hover');
+            if (e.target && typeof e.target.closest === 'function') {
+                const moduleHeader = e.target.closest('.module-header');
+                if (moduleHeader) {
+                    moduleHeader.classList.remove('hover');
+                }
             }
         }, true);
     }
@@ -266,7 +281,7 @@ class SidebarManager {
 
     // 展开所有模块
     expandAllModules() {
-        Object.keys(moduleData).forEach(moduleKey => {
+        Object.keys(this.moduleData).forEach(moduleKey => {
             this.expandModule(moduleKey);
         });
         Utils.showToast('已展开所有模块', 'info');
@@ -274,7 +289,7 @@ class SidebarManager {
 
     // 收起所有模块
     collapseAllModules() {
-        Object.keys(moduleData).forEach(moduleKey => {
+        Object.keys(this.moduleData).forEach(moduleKey => {
             this.collapseModule(moduleKey);
         });
         Utils.showToast('已收起所有模块', 'info');
@@ -297,7 +312,7 @@ class SidebarManager {
         const hash = window.location.hash.slice(1);
         if (hash && hash.includes('.')) {
             const [moduleKey, methodKey] = hash.split('.');
-            if (moduleData[moduleKey] && moduleData[moduleKey].methods[methodKey]) {
+            if (this.moduleData[moduleKey] && this.moduleData[moduleKey].methods[methodKey]) {
                 this.selectMethod(moduleKey, methodKey);
                 return true;
             }
@@ -307,7 +322,7 @@ class SidebarManager {
 
     // 获取总方法数
     getTotalMethodCount() {
-        return Object.values(moduleData).reduce((total, module) => {
+        return Object.values(this.moduleData).reduce((total, module) => {
             return total + Object.keys(module.methods).length;
         }, 0);
     }
@@ -389,4 +404,7 @@ class SidebarManager {
 }
 
 // 导出侧边栏管理器
+export { SidebarManager };
+
+// 为了向后兼容，也将类添加到全局对象
 window.SidebarManager = SidebarManager;
