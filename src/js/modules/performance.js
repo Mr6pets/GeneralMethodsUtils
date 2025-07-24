@@ -1,160 +1,342 @@
 /**
- * 性能监控相关工具方法
+ * 性能监控与分析模块
+ * 提供性能指标收集、用户行为追踪、错误监控等功能
  */
-
-const timers = new Map();
 
 /**
- * 开始计时
- * @param {string} name - 计时器名称
+ * 性能监控器类
  */
-export function startTimer(name) {
-  timers.set(name, performance.now());
-}
-
-/**
- * 结束计时
- * @param {string} name - 计时器名称
- * @returns {number} 耗时（毫秒）
- */
-export function endTimer(name) {
-  const startTime = timers.get(name);
-  if (!startTime) {
-    console.warn(`计时器 ${name} 不存在`);
-    return 0;
-  }
-  
-  const duration = performance.now() - startTime;
-  timers.delete(name);
-  console.log(`${name}: ${duration.toFixed(2)}ms`);
-  return duration;
-}
-
-/**
- * 防抖函数
- * @param {Function} fn - 要防抖的函数
- * @param {number} delay - 延迟时间
- * @returns {Function} 防抖后的函数
- */
-export function debounce(fn, delay = 300) {
-  let timeoutId;
-  return function(...args) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn.apply(this, args), delay);
-  };
-}
-
-/**
- * 节流函数
- * @param {Function} fn - 要节流的函数
- * @param {number} delay - 延迟时间
- * @returns {Function} 节流后的函数
- */
-export function throttle(fn, delay = 300) {
-  let lastTime = 0;
-  return function(...args) {
-    const now = Date.now();
-    if (now - lastTime >= delay) {
-      lastTime = now;
-      fn.apply(this, args);
+class PerformanceMonitor {
+    constructor() {
+        this.metrics = {};
+        this.observers = {};
+        this.errorHandlers = [];
+        this.init();
     }
-  };
+    
+    init() {
+        this.setupErrorHandling();
+        this.setupPerformanceObserver();
+    }
+    
+    /**
+     * 设置错误处理
+     */
+    setupErrorHandling() {
+        window.addEventListener('error', (event) => {
+            this.recordError({
+                type: 'javascript',
+                message: event.message,
+                filename: event.filename,
+                lineno: event.lineno,
+                colno: event.colno,
+                stack: event.error?.stack,
+                timestamp: Date.now()
+            });
+        });
+        
+        window.addEventListener('unhandledrejection', (event) => {
+            this.recordError({
+                type: 'promise',
+                message: event.reason?.message || 'Unhandled Promise Rejection',
+                stack: event.reason?.stack,
+                timestamp: Date.now()
+            });
+        });
+    }
+    
+    /**
+     * 设置性能观察器
+     */
+    setupPerformanceObserver() {
+        if ('PerformanceObserver' in window) {
+            // 观察导航性能
+            const navObserver = new PerformanceObserver((list) => {
+                list.getEntries().forEach(entry => {
+                    this.recordNavigationMetrics(entry);
+                });
+            });
+            navObserver.observe({ entryTypes: ['navigation'] });
+            
+            // 观察资源加载性能
+            const resourceObserver = new PerformanceObserver((list) => {
+                list.getEntries().forEach(entry => {
+                    this.recordResourceMetrics(entry);
+                });
+            });
+            resourceObserver.observe({ entryTypes: ['resource'] });
+            
+            // 观察长任务
+            if ('longtask' in PerformanceObserver.supportedEntryTypes) {
+                const longTaskObserver = new PerformanceObserver((list) => {
+                    list.getEntries().forEach(entry => {
+                        this.recordLongTask(entry);
+                    });
+                });
+                longTaskObserver.observe({ entryTypes: ['longtask'] });
+            }
+        }
+    }
+    
+    /**
+     * 记录导航性能指标
+     */
+    recordNavigationMetrics(entry) {
+        this.metrics.navigation = {
+            dns: entry.domainLookupEnd - entry.domainLookupStart,
+            tcp: entry.connectEnd - entry.connectStart,
+            ssl: entry.secureConnectionStart > 0 ? entry.connectEnd - entry.secureConnectionStart : 0,
+            ttfb: entry.responseStart - entry.requestStart,
+            download: entry.responseEnd - entry.responseStart,
+            domParse: entry.domContentLoadedEventStart - entry.responseEnd,
+            domReady: entry.domContentLoadedEventEnd - entry.domContentLoadedEventStart,
+            loadComplete: entry.loadEventEnd - entry.loadEventStart,
+            total: entry.loadEventEnd - entry.navigationStart
+        };
+    }
+    
+    /**
+     * 记录资源性能指标
+     */
+    recordResourceMetrics(entry) {
+        if (!this.metrics.resources) {
+            this.metrics.resources = [];
+        }
+        
+        this.metrics.resources.push({
+            name: entry.name,
+            type: this.getResourceType(entry.name),
+            size: entry.transferSize,
+            duration: entry.duration,
+            startTime: entry.startTime
+        });
+    }
+    
+    /**
+     * 记录长任务
+     */
+    recordLongTask(entry) {
+        if (!this.metrics.longTasks) {
+            this.metrics.longTasks = [];
+        }
+        
+        this.metrics.longTasks.push({
+            duration: entry.duration,
+            startTime: entry.startTime,
+            attribution: entry.attribution
+        });
+    }
+    
+    /**
+     * 记录错误
+     */
+    recordError(error) {
+        if (!this.metrics.errors) {
+            this.metrics.errors = [];
+        }
+        
+        this.metrics.errors.push(error);
+        
+        // 触发错误处理器
+        this.errorHandlers.forEach(handler => {
+            try {
+                handler(error);
+            } catch (e) {
+                console.error('Error in error handler:', e);
+            }
+        });
+    }
+    
+    /**
+     * 获取资源类型
+     */
+    getResourceType(url) {
+        const extension = url.split('.').pop().toLowerCase();
+        const typeMap = {
+            'js': 'script',
+            'css': 'stylesheet',
+            'png': 'image',
+            'jpg': 'image',
+            'jpeg': 'image',
+            'gif': 'image',
+            'svg': 'image',
+            'woff': 'font',
+            'woff2': 'font',
+            'ttf': 'font'
+        };
+        return typeMap[extension] || 'other';
+    }
+    
+    /**
+     * 添加错误处理器
+     */
+    onError(handler) {
+        this.errorHandlers.push(handler);
+    }
+    
+    /**
+     * 获取所有性能指标
+     */
+    getMetrics() {
+        return { ...this.metrics };
+    }
+    
+    /**
+     * 清除指标
+     */
+    clearMetrics() {
+        this.metrics = {};
+    }
+}
+
+// 创建全局实例
+const performanceMonitor = new PerformanceMonitor();
+
+/**
+ * 获取页面性能指标
+ * @returns {Object}
+ */
+export function getPagePerformance() {
+    return performanceMonitor.getMetrics();
+}
+
+/**
+ * 监听错误
+ * @param {Function} handler - 错误处理函数
+ */
+export function onError(handler) {
+    performanceMonitor.onError(handler);
+}
+
+/**
+ * 记录用户行为
+ * @param {string} action - 行为类型
+ * @param {Object} data - 行为数据
+ */
+export function trackUserAction(action, data = {}) {
+    const event = {
+        action,
+        data,
+        timestamp: Date.now(),
+        url: window.location.href,
+        userAgent: navigator.userAgent
+    };
+    
+    // 存储到本地或发送到服务器
+    const actions = JSON.parse(localStorage.getItem('userActions') || '[]');
+    actions.push(event);
+    
+    // 只保留最近1000条记录
+    if (actions.length > 1000) {
+        actions.splice(0, actions.length - 1000);
+    }
+    
+    localStorage.setItem('userActions', JSON.stringify(actions));
+}
+
+/**
+ * 获取用户行为记录
+ * @returns {Array}
+ */
+export function getUserActions() {
+    return JSON.parse(localStorage.getItem('userActions') || '[]');
+}
+
+/**
+ * 清除用户行为记录
+ */
+export function clearUserActions() {
+    localStorage.removeItem('userActions');
+}
+
+/**
+ * 测量函数执行时间
+ * @param {Function} fn - 要测量的函数
+ * @param {string} name - 测量名称
+ * @returns {any}
+ */
+export function measureFunction(fn, name = 'function') {
+    const start = performance.now();
+    const result = fn();
+    const end = performance.now();
+    
+    console.log(`${name} execution time: ${end - start} milliseconds`);
+    
+    if (result instanceof Promise) {
+        return result.then(res => {
+            const asyncEnd = performance.now();
+            console.log(`${name} async completion time: ${asyncEnd - start} milliseconds`);
+            return res;
+        });
+    }
+    
+    return result;
 }
 
 /**
  * 获取内存使用情况
- * @returns {object|null} 内存信息
+ * @returns {Object|null}
  */
 export function getMemoryUsage() {
-  if ('memory' in performance) {
-    return {
-      used: Math.round(performance.memory.usedJSHeapSize / 1048576), // MB
-      total: Math.round(performance.memory.totalJSHeapSize / 1048576), // MB
-      limit: Math.round(performance.memory.jsHeapSizeLimit / 1048576) // MB
-    };
-  }
-  return null;
+    if ('memory' in performance) {
+        return {
+            used: performance.memory.usedJSHeapSize,
+            total: performance.memory.totalJSHeapSize,
+            limit: performance.memory.jsHeapSizeLimit
+        };
+    }
+    return null;
 }
 
 /**
- * FPS 监控
- * @param {Function} callback - 回调函数
- * @returns {Function} 停止监控函数
+ * FPS 监控器
  */
-export function startFPSMonitor(callback) {
-  let frames = 0;
-  let lastTime = performance.now();
-  let animationId;
-  
-  function tick() {
-    frames++;
-    const now = performance.now();
-    
-    if (now >= lastTime + 1000) {
-      const fps = Math.round((frames * 1000) / (now - lastTime));
-      callback(fps);
-      frames = 0;
-      lastTime = now;
+class FPSMonitor {
+    constructor() {
+        this.fps = 0;
+        this.frames = 0;
+        this.lastTime = performance.now();
+        this.isRunning = false;
     }
     
-    animationId = requestAnimationFrame(tick);
-  }
-  
-  tick();
-  
-  return () => {
-    if (animationId) {
-      cancelAnimationFrame(animationId);
+    start() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+        this.tick();
     }
-  };
-}
-
-/**
- * 页面加载性能
- * @returns {object} 性能指标
- */
-export function getPagePerformance() {
-  const timing = performance.timing;
-  
-  return {
-    // DNS 查询时间
-    dns: timing.domainLookupEnd - timing.domainLookupStart,
-    // TCP 连接时间
-    tcp: timing.connectEnd - timing.connectStart,
-    // 请求时间
-    request: timing.responseEnd - timing.requestStart,
-    // 响应时间
-    response: timing.responseEnd - timing.responseStart,
-    // DOM 解析时间
-    domParse: timing.domInteractive - timing.responseEnd,
-    // 资源加载时间
-    resourceLoad: timing.loadEventStart - timing.domContentLoadedEventEnd,
-    // 总加载时间
-    total: timing.loadEventEnd - timing.navigationStart
-  };
-}
-
-/**
- * 长任务监控
- * @param {Function} callback - 回调函数
- * @returns {PerformanceObserver|null} 观察器
- */
-export function observeLongTasks(callback) {
-  if ('PerformanceObserver' in window) {
-    const observer = new PerformanceObserver((list) => {
-      list.getEntries().forEach(entry => {
-        if (entry.duration > 50) { // 超过 50ms 的任务
-          callback({
-            name: entry.name,
-            duration: entry.duration,
-            startTime: entry.startTime
-          });
+    
+    stop() {
+        this.isRunning = false;
+    }
+    
+    tick() {
+        if (!this.isRunning) return;
+        
+        this.frames++;
+        const currentTime = performance.now();
+        
+        if (currentTime >= this.lastTime + 1000) {
+            this.fps = Math.round((this.frames * 1000) / (currentTime - this.lastTime));
+            this.frames = 0;
+            this.lastTime = currentTime;
         }
-      });
-    });
+        
+        requestAnimationFrame(() => this.tick());
+    }
     
-    observer.observe({ entryTypes: ['longtask'] });
-    return observer;
-  }
-  return null;
+    getFPS() {
+        return this.fps;
+    }
 }
+
+/**
+ * 开始 FPS 监控
+ * @returns {FPSMonitor}
+ */
+export function startFPSMonitor() {
+    const monitor = new FPSMonitor();
+    monitor.start();
+    return monitor;
+}
+
+export { PerformanceMonitor };

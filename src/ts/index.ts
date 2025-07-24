@@ -21,8 +21,16 @@ import * as cryptoUtils from './modules/crypto';
 import * as animationUtils from './modules/animation';
 import * as geoUtils from './modules/geo';
 import * as formUtils from './modules/form';
+import webrtcUtils from './modules/webrtc';
+import blockchainUtils from './modules/blockchain';
+import microfrontendUtils from './modules/microfrontend';
 
-// 导出所有工具方法
+// 新增模块导入
+import * as pwaUtils from './modules/pwa';
+import * as dataProcessorUtils from './modules/dataProcessor';
+import * as advancedPerformanceUtils from './modules/advancedPerformance';
+
+// 导出新模块
 export {
   cookieUtils,
   urlUtils,
@@ -45,7 +53,13 @@ export {
   cryptoUtils,
   animationUtils,
   geoUtils,
-  formUtils
+  formUtils,
+  pwaUtils,
+  dataProcessorUtils,
+  advancedPerformanceUtils,
+  webrtcUtils,
+  blockchainUtils,
+  microfrontendUtils
 };
 
 // 导出类型
@@ -93,5 +107,11 @@ export default {
   ...cryptoUtils,
   ...animationUtils,
   ...geoUtils,
-  ...formUtils
+  ...formUtils,
+  ...pwaUtils,
+  ...dataProcessorUtils,
+  ...advancedPerformanceUtils,
+  webrtcUtils,
+  blockchainUtils,
+  microfrontendUtils
 };

@@ -16,6 +16,19 @@ import * as validateUtils from './modules/validate';
 import * as imageUtils from './modules/image';
 import * as performanceUtils from './modules/performance';
 import * as utils from './modules/utils';
+import webrtcUtils from './modules/webrtc';
+import blockchainUtils from './modules/blockchain';
+import microfrontendUtils from './modules/microfrontend';
+
+// 新增模块导入
+import * as i18nUtils from './modules/i18n';
+import * as cryptoUtils from './modules/crypto';
+import * as animationUtils from './modules/animation';
+import * as geoUtils from './modules/geo';
+import * as formUtils from './modules/form';
+import * as pwaUtils from './modules/pwa';
+import * as dataProcessorUtils from './modules/dataProcessor';
+import * as advancedPerformanceUtils from './modules/performance';
 
 // 导出所有工具方法
 export {
@@ -35,7 +48,19 @@ export {
   validateUtils,
   imageUtils,
   performanceUtils,
-  utils
+  utils,
+  // 新增模块导出
+  i18nUtils,
+  cryptoUtils,
+  animationUtils,
+  geoUtils,
+  formUtils,
+  pwaUtils,
+  dataProcessorUtils,
+  advancedPerformanceUtils,
+  webrtcUtils,
+  blockchainUtils,
+  microfrontendUtils
 };
 
 // 默认导出所有方法的集合
@@ -56,5 +81,14 @@ export default {
   ...validateUtils,
   ...imageUtils,
   ...performanceUtils,
-  ...utils
+  ...utils,
+  // 新增模块方法
+  ...i18nUtils,
+  ...cryptoUtils,
+  ...animationUtils,
+  ...geoUtils,
+  ...formUtils,
+  ...pwaUtils,
+  ...dataProcessorUtils,
+  ...advancedPerformanceUtils
 };
