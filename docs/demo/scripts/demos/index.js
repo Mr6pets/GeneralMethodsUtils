@@ -14,9 +14,19 @@ export const cookieDemos = {
             <div class="demo-output" id="setCookieOutput"></div>
             <script>
                 function setCookieDemo() {
-                    const name = document.getElementById('cookieName').value;
-                    const value = document.getElementById('cookieValue').value;
-                    const expires = parseInt(document.getElementById('cookieExpires').value);
+                    const nameElement = document.getElementById('cookieName');
+                    const valueElement = document.getElementById('cookieValue');
+                    const expiresElement = document.getElementById('cookieExpires');
+                    
+                    if (!nameElement || !valueElement || !expiresElement) {
+                        document.getElementById('setCookieOutput').innerHTML = 
+                            '<div class="error">错误：找不到必需的输入元素</div>';
+                        return;
+                    }
+                    
+                    const name = nameElement.value;
+                    const value = valueElement.value;
+                    const expires = parseInt(expiresElement.value);
                     
                     // 模拟 setCookie 方法
                     const date = new Date();
@@ -42,7 +52,13 @@ export const cookieDemos = {
             <div class="demo-output" id="getCookieOutput"></div>
             <script>
                 function getCookieDemo() {
-                    const name = document.getElementById('getCookieName').value;
+                    const nameElement = document.getElementById('getCookieName');
+                    if (!nameElement) {
+                        document.getElementById('getCookieOutput').innerHTML = 
+                            '<div class="error">错误：找不到输入元素</div>';
+                        return;
+                    }
+                    const name = nameElement.value;
                     const cookies = document.cookie.split(';');
                     let result = null;
                     
@@ -93,8 +109,17 @@ export const urlDemos = {
             <div class="demo-output" id="urlOutput"></div>
             <script>
                 function getQueryStringDemo() {
-                    const url = document.getElementById('testUrl').value;
-                    const paramName = document.getElementById('paramName').value;
+                    const urlElement = document.getElementById('testUrl');
+                    const paramNameElement = document.getElementById('paramName');
+                    
+                    if (!urlElement || !paramNameElement) {
+                        document.getElementById('urlOutput').innerHTML = 
+                            '<div class="error">错误：找不到必需的输入元素</div>';
+                        return;
+                    }
+                    
+                    const url = urlElement.value;
+                    const paramName = paramNameElement.value;
                     
                     try {
                         const urlObj = new URL(url);
@@ -110,7 +135,13 @@ export const urlDemos = {
                 }
                 
                 function getAllParamsDemo() {
-                    const url = document.getElementById('testUrl').value;
+                    const urlElement = document.getElementById('testUrl');
+                    if (!urlElement) {
+                        document.getElementById('urlOutput').innerHTML = 
+                            '<div class="error">错误：找不到输入元素</div>';
+                        return;
+                    }
+                    const url = urlElement.value;
                     
                     try {
                         const urlObj = new URL(url);
@@ -141,7 +172,13 @@ export const urlDemos = {
             <div class="demo-output" id="parseUrlOutput"></div>
             <script>
                 function parseUrlDemo() {
-                    const url = document.getElementById('parseUrl').value;
+                    const urlElement = document.getElementById('parseUrl');
+                    if (!urlElement) {
+                        document.getElementById('parseUrlOutput').innerHTML = 
+                            '<div class="error">错误：找不到输入元素</div>';
+                        return;
+                    }
+                    const url = urlElement.value;
                     
                     try {
                         const urlObj = new URL(url);
@@ -182,9 +219,19 @@ export const securityDemos = {
             <div class="demo-output" id="securityOutput"></div>
             <script>
                 function scanSecurityDemo() {
-                    const checkXSS = document.getElementById('checkXSS').checked;
-                    const checkCSRF = document.getElementById('checkCSRF').checked;
-                    const checkHeaders = document.getElementById('checkHeaders').checked;
+                    const checkXSSElement = document.getElementById('checkXSS');
+                    const checkCSRFElement = document.getElementById('checkCSRF');
+                    const checkHeadersElement = document.getElementById('checkHeaders');
+                    
+                    if (!checkXSSElement || !checkCSRFElement || !checkHeadersElement) {
+                        document.getElementById('securityOutput').innerHTML = 
+                            '<div class="error">错误：找不到必需的输入元素</div>';
+                        return;
+                    }
+                    
+                    const checkXSS = checkXSSElement.checked;
+                    const checkCSRF = checkCSRFElement.checked;
+                    const checkHeaders = checkHeadersElement.checked;
                     
                     // 模拟安全扫描
                     const issues = [];
@@ -234,9 +281,19 @@ export const securityDemos = {
             <div class="demo-output" id="sanitizeOutput"></div>
             <script>
                 function sanitizeInputDemo() {
-                    const input = document.getElementById('userInput').value;
-                    const allowP = document.getElementById('allowP').checked;
-                    const allowStrong = document.getElementById('allowStrong').checked;
+                    const inputElement = document.getElementById('userInput');
+                    const allowPElement = document.getElementById('allowP');
+                    const allowStrongElement = document.getElementById('allowStrong');
+                    
+                    if (!inputElement || !allowPElement || !allowStrongElement) {
+                        document.getElementById('sanitizeOutput').innerHTML = 
+                            '<div class="error">错误：找不到必需的输入元素</div>';
+                        return;
+                    }
+                    
+                    const input = inputElement.value;
+                    const allowP = allowPElement.checked;
+                    const allowStrong = allowStrongElement.checked;
                     
                     // 简单的 HTML 清理模拟
                     let sanitized = input;
@@ -286,8 +343,17 @@ export const dataDemos = {
             <div class="demo-output" id="formatOutput"></div>
             <script>
                 function formatDataDemo() {
-                    const type = document.getElementById('dataType').value;
-                    const input = document.getElementById('inputData').value;
+                    const typeElement = document.getElementById('dataType');
+                    const inputElement = document.getElementById('inputData');
+                    
+                    if (!typeElement || !inputElement) {
+                        document.getElementById('formatOutput').innerHTML = 
+                            '<div class="error">错误：找不到必需的输入元素</div>';
+                        return;
+                    }
+                    
+                    const type = typeElement.value;
+                    const input = inputElement.value;
                     let formatted = '';
                     
                     try {
@@ -339,9 +405,19 @@ export const dataDemos = {
             <div class="demo-output" id="validateOutput"></div>
             <script>
                 function validateDataDemo() {
-                    const name = document.getElementById('userName').value;
-                    const email = document.getElementById('userEmail').value;
-                    const age = parseInt(document.getElementById('userAge').value);
+                    const nameElement = document.getElementById('userName');
+                    const emailElement = document.getElementById('userEmail');
+                    const ageElement = document.getElementById('userAge');
+                    
+                    if (!nameElement || !emailElement || !ageElement) {
+                        document.getElementById('validateOutput').innerHTML = 
+                            '<div class="error">错误：找不到必需的输入元素</div>';
+                        return;
+                    }
+                    
+                    const name = nameElement.value;
+                    const email = emailElement.value;
+                    const age = parseInt(ageElement.value);
                     
                     const errors = [];
                     
@@ -387,7 +463,13 @@ export const performanceDemos = {
             <div class="demo-output" id="performanceOutput"></div>
             <script>
                 function measurePerformanceDemo() {
-                    const iterations = parseInt(document.getElementById('iterations').value);
+                    const iterationsElement = document.getElementById('iterations');
+                    if (!iterationsElement) {
+                        document.getElementById('performanceOutput').innerHTML = 
+                            '<div class="error">错误：找不到输入元素</div>';
+                        return;
+                    }
+                    const iterations = parseInt(iterationsElement.value);
                     
                     // 测量函数执行时间
                     const startTime = performance.now();
@@ -517,4 +599,304 @@ export default DemoGenerator;
 if (typeof window !== 'undefined') {
     window.allDemos = allDemos;
     window.demoGenerator = demoGenerator;
+    
+    // 手动暴露所有演示函数到全局作用域
+    // Cookie 演示函数
+    window.setCookieDemo = function() {
+        const nameElement = document.getElementById('cookieName');
+        const valueElement = document.getElementById('cookieValue');
+        const daysElement = document.getElementById('cookieDays');
+        
+        if (!nameElement || !valueElement) {
+            const outputElement = document.getElementById('cookieOutput') || document.getElementById('setCookieOutput');
+            if (outputElement) {
+                outputElement.innerHTML = '<div class="error">错误：找不到必需的输入元素</div>';
+            }
+            return;
+        }
+        
+        const name = nameElement.value;
+        const value = valueElement.value;
+        const days = daysElement ? parseInt(daysElement.value) || 7 : 7;
+        
+        const expires = new Date();
+        expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+        
+        document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';path=/';
+        
+        const outputElement = document.getElementById('cookieOutput') || document.getElementById('setCookieOutput');
+        if (outputElement) {
+            outputElement.innerHTML = '<div class="success">Cookie 已设置: ' + name + '=' + value + '</div>';
+        }
+    };
+    
+    window.getCookieDemo = function() {
+        const nameElement = document.getElementById('getCookieName');
+        if (!nameElement) {
+            const outputElement = document.getElementById('getCookieOutput');
+            if (outputElement) {
+                outputElement.innerHTML = '<div class="error">错误：找不到输入元素</div>';
+            }
+            return;
+        }
+        
+        const name = nameElement.value;
+        const cookies = document.cookie.split(';');
+        
+        for (let cookie of cookies) {
+            const [cookieName, cookieValue] = cookie.trim().split('=');
+            if (cookieName === name) {
+                const outputElement = document.getElementById('getCookieOutput');
+                if (outputElement) {
+                    outputElement.innerHTML = '<div class="success">Cookie 值: ' + cookieValue + '</div>';
+                }
+                return;
+            }
+        }
+        
+        const outputElement = document.getElementById('getCookieOutput');
+        if (outputElement) {
+            outputElement.innerHTML = '<div class="error">未找到 Cookie: ' + name + '</div>';
+        }
+    };
+    
+    window.getAllCookiesDemo = function() {
+        const cookies = document.cookie.split(';').map(cookie => {
+            const [name, value] = cookie.trim().split('=');
+            return { name, value };
+        }).filter(cookie => cookie.name);
+        
+        const outputElement = document.getElementById('getAllCookiesOutput') || document.getElementById('getCookieOutput');
+        if (outputElement) {
+            outputElement.innerHTML = '<div class="info">所有 Cookies: <pre>' + JSON.stringify(cookies, null, 2) + '</pre></div>';
+        }
+    };
+    
+    // URL 演示函数
+    window.getQueryStringDemo = function() {
+        const urlElement = document.getElementById('testUrl');
+        const paramNameElement = document.getElementById('paramName');
+        
+        if (!urlElement || !paramNameElement) {
+            const outputElement = document.getElementById('urlOutput');
+            if (outputElement) {
+                outputElement.innerHTML = '<div class="error">错误：找不到必需的输入元素</div>';
+            }
+            return;
+        }
+        
+        const url = urlElement.value;
+        const paramName = paramNameElement.value;
+        
+        try {
+            const urlObj = new URL(url);
+            const paramValue = urlObj.searchParams.get(paramName);
+            
+            const outputElement = document.getElementById('urlOutput');
+            if (outputElement) {
+                outputElement.innerHTML = 
+                    paramValue ? '<div class="success">参数值: ' + paramValue + '</div>' 
+                              : '<div class="error">未找到参数: ' + paramName + '</div>';
+            }
+        } catch (e) {
+            const outputElement = document.getElementById('urlOutput');
+            if (outputElement) {
+                outputElement.innerHTML = '<div class="error">URL 格式错误: ' + e.message + '</div>';
+            }
+        }
+    };
+    
+    window.getAllParamsDemo = function() {
+        const url = document.getElementById('testUrl2').value;
+        
+        try {
+            const urlObj = new URL(url);
+            const params = {};
+            urlObj.searchParams.forEach((value, key) => {
+                params[key] = value;
+            });
+            
+            document.getElementById('allParamsOutput').innerHTML = 
+                '<div class="info">所有参数: <pre>' + JSON.stringify(params, null, 2) + '</pre></div>';
+        } catch (e) {
+            document.getElementById('allParamsOutput').innerHTML = 
+                '<div class="error">URL 格式错误: ' + e.message + '</div>';
+        }
+    };
+    
+    window.parseUrlDemo = function() {
+        const url = document.getElementById('parseUrl').value;
+        
+        try {
+            const urlObj = new URL(url);
+            const result = {
+                protocol: urlObj.protocol,
+                hostname: urlObj.hostname,
+                port: urlObj.port,
+                pathname: urlObj.pathname,
+                search: urlObj.search,
+                hash: urlObj.hash
+            };
+            
+            document.getElementById('parseOutput').innerHTML = 
+                '<div class="info">URL 解析结果: <pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+        } catch (e) {
+            document.getElementById('parseOutput').innerHTML = 
+                '<div class="error">URL 格式错误: ' + e.message + '</div>';
+        }
+    };
+    
+    // 安全演示函数
+    window.scanSecurityDemo = function() {
+        const input = document.getElementById('securityInput').value;
+        const issues = [];
+        
+        // 检查XSS
+        if (/<script|javascript:|on\w+=/i.test(input)) {
+            issues.push('检测到潜在的XSS攻击');
+        }
+        
+        // 检查SQL注入
+        if (/('|(\-\-)|(;)|(\||\|)|(\*|\*))/i.test(input)) {
+            issues.push('检测到潜在的SQL注入');
+        }
+        
+        // 检查路径遍历
+        if (/\.\.\/|\.\.\\/i.test(input)) {
+            issues.push('检测到潜在的路径遍历攻击');
+        }
+        
+        const result = {
+            input: input,
+            safe: issues.length === 0,
+            issues: issues
+        };
+        
+        document.getElementById('securityOutput').innerHTML = 
+            '<div class="' + (result.safe ? 'success' : 'error') + '">安全扫描结果: <pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+    };
+    
+    window.sanitizeInputDemo = function() {
+        const input = document.getElementById('sanitizeInput').value;
+        
+        // 简单的输入清理
+        const sanitized = input
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#x27;')
+            .replace(/\//g, '&#x2F;');
+        
+        const result = {
+            original: input,
+            sanitized: sanitized
+        };
+        
+        document.getElementById('sanitizeOutput').innerHTML = 
+            '<div class="info">输入清理结果: <pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+    };
+    
+    // 数据演示函数
+    window.formatDataDemo = function() {
+        const input = document.getElementById('formatInput').value;
+        const format = document.getElementById('formatType').value;
+        
+        try {
+            let result;
+            
+            switch (format) {
+                case 'json':
+                    const parsed = JSON.parse(input);
+                    result = JSON.stringify(parsed, null, 2);
+                    break;
+                case 'minify':
+                    const minified = JSON.parse(input);
+                    result = JSON.stringify(minified);
+                    break;
+                case 'base64':
+                    result = btoa(input);
+                    break;
+                case 'decode64':
+                    result = atob(input);
+                    break;
+                default:
+                    result = input;
+            }
+            
+            document.getElementById('formatOutput').innerHTML = 
+                '<div class="success">格式化结果: <pre>' + result + '</pre></div>';
+        } catch (e) {
+            document.getElementById('formatOutput').innerHTML = 
+                '<div class="error">格式化失败: ' + e.message + '</div>';
+        }
+    };
+    
+    window.validateDataDemo = function() {
+        const name = document.getElementById('userName').value;
+        const email = document.getElementById('userEmail').value;
+        const age = parseInt(document.getElementById('userAge').value);
+        
+        const errors = [];
+        
+        // 验证姓名
+        if (!name || name.length < 2) {
+            errors.push('姓名至少需要2个字符');
+        }
+        
+        // 验证邮箱
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+            errors.push('邮箱格式不正确');
+        }
+        
+        // 验证年龄
+        if (!age || age < 0 || age > 120) {
+            errors.push('年龄必须在0-120之间');
+        }
+        
+        const result = {
+            isValid: errors.length === 0,
+            errors: errors,
+            data: { name, email, age }
+        };
+        
+        document.getElementById('validateOutput').innerHTML = 
+            '<div class="info">验证结果: <pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+    };
+    
+    // 性能演示函数
+    window.measurePerformanceDemo = function() {
+        const iterationsElement = document.getElementById('iterations');
+        if (!iterationsElement) {
+            const outputElement = document.getElementById('performanceOutput');
+            if (outputElement) {
+                outputElement.innerHTML = '<div class="error">错误：找不到输入元素</div>';
+            }
+            return;
+        }
+        const iterations = parseInt(iterationsElement.value);
+        
+        // 测量函数执行时间
+        const startTime = performance.now();
+        
+        let sum = 0;
+        for (let i = 0; i < iterations; i++) {
+            sum += i;
+        }
+        
+        const endTime = performance.now();
+        const executionTime = endTime - startTime;
+        
+        const result = {
+            iterations: iterations,
+            result: sum,
+            executionTime: executionTime.toFixed(2) + ' ms',
+            averageTime: (executionTime / iterations * 1000).toFixed(6) + ' μs/iteration'
+        };
+        
+        const outputElement = document.getElementById('performanceOutput');
+        if (outputElement) {
+            outputElement.innerHTML = '<div class="info">性能测试结果: <pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+        }
+    };
 }

@@ -1,0 +1,560 @@
+/* 响应式设计 */
+
+/* 大屏幕 (1200px+) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+    }
+    
+    .sidebar {
+        width: 320px;
+    }
+    
+    .main-content {
+        margin-left: 340px;
+    }
+    
+    .method-item {
+        padding: 1.5rem;
+    }
+    
+    .demo-container {
+        padding: 2.5rem;
+    }
+}
+
+/* 中等屏幕 (768px - 1199px) */
+@media (max-width: 1199px) and (min-width: 768px) {
+    .container {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .sidebar {
+        width: 280px;
+    }
+    
+    .main-content {
+        margin-left: 300px;
+    }
+    
+    .method-item {
+        padding: 1.25rem;
+    }
+    
+    .demo-container {
+        padding: 2rem;
+    }
+    
+    .demo-controls {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    
+    .demo-controls input,
+    .demo-controls select,
+    .demo-controls textarea {
+        min-width: 100px;
+    }
+}
+
+/* 小屏幕 (481px - 767px) */
+@media (max-width: 767px) and (min-width: 481px) {
+    .container {
+        padding: 0 0.75rem;
+    }
+    
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        background: #ffffff;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .sidebar.active {
+        left: 0;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding-top: 80px;
+    }
+    
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-links {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: #1e293b;
+        cursor: pointer;
+        padding: 0.5rem;
+    }
+    
+    .method-item {
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .method-item h3 {
+        font-size: 1.1rem;
+    }
+    
+    .method-item .description {
+        font-size: 0.85rem;
+    }
+    
+    .demo-container {
+        padding: 1.5rem;
+        margin: 0.75rem 0;
+    }
+    
+    .demo-controls {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1.25rem;
+    }
+    
+    .demo-controls input,
+    .demo-controls select,
+    .demo-controls textarea,
+    .demo-controls button {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .demo-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1.25rem;
+    }
+    
+    .run-demo-btn,
+    .reset-demo-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .demo-inputs {
+        padding: 1.5rem;
+    }
+    
+    .demo-output {
+        padding: 1.25rem;
+        font-size: 0.85rem;
+    }
+    
+    .tab-buttons {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .tab-button {
+        flex: 1;
+        min-width: 120px;
+        font-size: 0.85rem;
+        padding: 0.75rem 1rem;
+    }
+    
+    .search-container {
+        padding: 1rem;
+    }
+    
+    .search-input {
+        font-size: 0.9rem;
+        padding: 0.75rem 1rem;
+    }
+    
+    .feature-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .feature-card {
+        padding: 1.5rem;
+    }
+    
+    .welcome-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .welcome-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* 超小屏幕 (480px及以下) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 0.5rem;
+    }
+    
+    .sidebar {
+        width: 100%;
+        left: -100%;
+    }
+    
+    .main-content {
+        padding-top: 70px;
+    }
+    
+    .header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .logo {
+        font-size: 1.25rem;
+    }
+    
+    .method-item {
+        padding: 0.75rem;
+        margin-bottom: 0.5rem;
+        border-radius: 8px;
+    }
+    
+    .method-item h3 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .method-item .description {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+    
+    .method-item .badges {
+        gap: 0.25rem;
+        margin-top: 0.5rem;
+    }
+    
+    .badge {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .demo-container {
+        padding: 1rem;
+        margin: 0.5rem 0;
+        border-radius: 12px;
+    }
+    
+    .demo-header h3 {
+        font-size: 1.25rem;
+    }
+    
+    .demo-header h4 {
+        font-size: 1.1rem;
+    }
+    
+    .demo-controls {
+        padding: 1rem;
+        gap: 0.5rem;
+    }
+    
+    .demo-controls input,
+    .demo-controls select,
+    .demo-controls textarea {
+        padding: 0.625rem 0.75rem;
+        font-size: 0.85rem;
+    }
+    
+    .demo-controls button {
+        padding: 0.625rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .demo-actions {
+        padding: 1rem;
+        gap: 0.5rem;
+    }
+    
+    .run-demo-btn,
+    .reset-demo-btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .demo-inputs {
+        padding: 1rem;
+    }
+    
+    .demo-input-group {
+        margin-bottom: 0.75rem;
+    }
+    
+    .demo-input-group label {
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .demo-input-group input,
+    .demo-input-group select,
+    .demo-input-group textarea {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+    
+    .demo-output {
+        padding: 1rem;
+        font-size: 0.8rem;
+        min-height: 100px;
+    }
+    
+    .demo-notes,
+    .demo-tips {
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .demo-notes h4 {
+        font-size: 0.85rem;
+    }
+    
+    .demo-notes li {
+        font-size: 0.8rem;
+    }
+    
+    .tab-buttons {
+        gap: 0.25rem;
+        padding: 0.5rem;
+    }
+    
+    .tab-button {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.75rem;
+        min-width: 100px;
+    }
+    
+    .tab-content {
+        padding: 1rem;
+    }
+    
+    .search-container {
+        padding: 0.75rem;
+    }
+    
+    .search-input {
+        font-size: 0.85rem;
+        padding: 0.625rem 0.75rem;
+    }
+    
+    .feature-cards {
+        gap: 0.75rem;
+    }
+    
+    .feature-card {
+        padding: 1.25rem;
+    }
+    
+    .feature-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .feature-card p {
+        font-size: 0.85rem;
+    }
+    
+    .welcome-section {
+        padding: 2rem 1rem;
+    }
+    
+    .welcome-section h1 {
+        font-size: 2rem;
+    }
+    
+    .welcome-section p {
+        font-size: 1rem;
+    }
+    
+    .info-section {
+        padding: 2rem 1rem;
+    }
+    
+    .usage-steps {
+        gap: 1rem;
+    }
+    
+    .step {
+        padding: 1.25rem;
+    }
+    
+    .step h3 {
+        font-size: 1.1rem;
+    }
+    
+    .step p {
+        font-size: 0.85rem;
+    }
+}
+
+/* 横屏模式优化 */
+@media (max-height: 500px) and (orientation: landscape) {
+    .sidebar {
+        height: 100vh;
+        overflow-y: auto;
+    }
+    
+    .main-content {
+        padding-top: 60px;
+    }
+    
+    .header {
+        padding: 0.5rem 1rem;
+    }
+    
+    .demo-container {
+        padding: 1rem;
+    }
+    
+    .demo-controls {
+        padding: 1rem;
+    }
+    
+    .demo-actions {
+        padding: 1rem;
+    }
+    
+    .demo-inputs {
+        padding: 1rem;
+    }
+    
+    .demo-output {
+        min-height: 80px;
+    }
+}
+
+/* 打印样式 */
+@media print {
+    .sidebar,
+    .header,
+    .demo-actions,
+    .mobile-menu-btn {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .demo-container {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .method-item {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    body {
+        background: white !important;
+    }
+    
+    * {
+        color: black !important;
+        background: white !important;
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    .method-item,
+    .demo-container {
+        border: 2px solid #000;
+    }
+    
+    .btn,
+    .tab-button,
+    .run-demo-btn,
+    .reset-demo-btn {
+        border: 2px solid #000;
+    }
+    
+    .search-input {
+        border: 2px solid #000;
+    }
+}
+
+/* 减少动画模式 */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .float {
+        animation: none;
+    }
+}
+
+/* 暗色模式偏好 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --text-primary: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --border-color: #334155;
+        --accent-color: #3b82f6;
+    }
+    
+    body {
+        background: var(--bg-primary);
+        color: var(--text-primary);
+    }
+    
+    .method-item,
+    .demo-container {
+        background: var(--bg-secondary);
+        border-color: var(--border-color);
+        color: var(--text-primary);
+    }
+    
+    .sidebar {
+        background: var(--bg-secondary);
+        border-color: var(--border-color);
+    }
+    
+    .header {
+        background: rgba(15, 23, 42, 0.95);
+        border-color: var(--border-color);
+    }
+    
+    .search-input {
+        background: var(--bg-secondary);
+        border-color: var(--border-color);
+        color: var(--text-primary);
+    }
+    
+    .search-input::placeholder {
+        color: var(--text-secondary);
+    }
+}
