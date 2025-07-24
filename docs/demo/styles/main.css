@@ -561,9 +561,14 @@ body {
     font-weight: 600;
 }
 
+.method-title h1 {
+    margin-bottom: 1rem;
+}
+
 .method-badges {
     display: flex;
     gap: 0.25rem;
+    margin-bottom: 1.5rem;
 }
 
 .badge {

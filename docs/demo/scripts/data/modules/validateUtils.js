@@ -1,0 +1,97 @@
+// 验证工具模块
+export default {
+    title: '验证工具',
+    icon: 'fas fa-check-circle',
+    methods: {
+        isEmail: {
+            name: 'isEmail',
+            description: '验证邮箱地址',
+            params: [
+                { name: 'email', type: 'string', required: true, description: '邮箱地址' }
+            ],
+            examples: {
+                js: `// 基本邮箱验证\nconst result1 = isEmail('user@example.com');\nconsole.log(result1); // true\n\nconst result2 = isEmail('invalid-email');\nconsole.log(result2); // false\n\nconst result3 = isEmail('user@domain');\nconsole.log(result3); // false\n\n// 验证各种邮箱格式\nconst emails = [\n  'test@gmail.com',\n  'user.name@domain.co.uk',\n  'user+tag@example.org',\n  'user@subdomain.example.com',\n  'invalid@',\n  '@invalid.com',\n  'no-at-sign.com'\n];\n\nemails.forEach(email => {\n  console.log(\`\${email}: \${isEmail(email)}\`);\n});\n\n// 在表单验证中使用\nconst emailInput = document.getElementById('email');\nemailInput.addEventListener('blur', () => {\n  const email = emailInput.value;\n  if (!isEmail(email)) {\n    showError('请输入有效的邮箱地址');\n    emailInput.classList.add('error');\n  } else {\n    hideError();\n    emailInput.classList.remove('error');\n  }\n});`,
+                ts: `import { isEmail } from 'general-method-utils';\n\n// 基本邮箱验证\nconst result1: boolean = isEmail('user@example.com');\nconsole.log(result1); // true\n\nconst result2: boolean = isEmail('invalid-email');\nconsole.log(result2); // false\n\n// 验证各种邮箱格式\nconst emails: string[] = [\n  'test@gmail.com',\n  'user.name@domain.co.uk',\n  'user+tag@example.org',\n  'invalid@',\n  '@invalid.com'\n];\n\nemails.forEach((email: string) => {\n  console.log(\`\${email}: \${isEmail(email)}\`);\n});`
+            },
+            demo: true
+        },
+        isPhone: {
+            name: 'isPhone',
+            description: '验证手机号码',
+            params: [
+                { name: 'phone', type: 'string', required: true, description: '手机号码' },
+                { name: 'region', type: 'string', required: false, description: '地区代码，默认为CN' }
+            ],
+            examples: {
+                js: `// 验证中国手机号\nconst result1 = isPhone('13812345678');\nconsole.log(result1); // true\n\nconst result2 = isPhone('12345678901');\nconsole.log(result2); // false\n\n// 验证不同地区手机号\nconst result3 = isPhone('+1-555-123-4567', 'US');\nconsole.log(result3); // true\n\nconst result4 = isPhone('+44 20 7946 0958', 'UK');\nconsole.log(result4); // true\n\n// 验证多种格式\nconst phones = [\n  '138-1234-5678',\n  '138 1234 5678',\n  '(138) 1234-5678',\n  '+86 138 1234 5678',\n  '86-138-1234-5678'\n];\n\nphones.forEach(phone => {\n  console.log(\`\${phone}: \${isPhone(phone, 'CN')}\`);\n});\n\n// 在表单中使用\nconst phoneInput = document.getElementById('phone');\nphoneInput.addEventListener('input', () => {\n  const phone = phoneInput.value;\n  const isValid = isPhone(phone);\n  \n  if (isValid) {\n    phoneInput.classList.add('valid');\n    phoneInput.classList.remove('invalid');\n  } else {\n    phoneInput.classList.add('invalid');\n    phoneInput.classList.remove('valid');\n  }\n});`,
+                ts: `import { isPhone } from 'general-method-utils';\n\ntype Region = 'CN' | 'US' | 'UK' | 'JP' | 'KR';\n\n// 验证中国手机号\nconst result1: boolean = isPhone('13812345678');\nconsole.log(result1); // true\n\n// 验证不同地区手机号\nconst result3: boolean = isPhone('+1-555-123-4567', 'US');\nconsole.log(result3); // true\n\nconst result4: boolean = isPhone('+44 20 7946 0958', 'UK');\nconsole.log(result4); // true\n\n// 验证多种格式\nconst phones: string[] = [\n  '138-1234-5678',\n  '138 1234 5678',\n  '+86 138 1234 5678'\n];\n\nphones.forEach((phone: string) => {\n  console.log(\`\${phone}: \${isPhone(phone, 'CN')}\`);\n});`
+            },
+            demo: true
+        },
+        isUrl: {
+            name: 'isUrl',
+            description: '验证URL地址',
+            params: [
+                { name: 'url', type: 'string', required: true, description: 'URL地址' },
+                { name: 'options', type: 'object', required: false, description: '验证选项' }
+            ],
+            examples: {
+                js: `// 基本URL验证\nconst result1 = isUrl('https://www.example.com');\nconsole.log(result1); // true\n\nconst result2 = isUrl('http://localhost:3000');\nconsole.log(result2); // true\n\nconst result3 = isUrl('not-a-url');\nconsole.log(result3); // false\n\n// 带选项的验证\nconst result4 = isUrl('https://example.com', {\n  requireProtocol: true,\n  allowedProtocols: ['https'],\n  requireTld: true\n});\nconsole.log(result4); // true\n\nconst result5 = isUrl('http://example.com', {\n  allowedProtocols: ['https'] // 只允许https\n});\nconsole.log(result5); // false\n\n// 验证各种URL格式\nconst urls = [\n  'https://www.google.com',\n  'http://localhost:8080/path',\n  'ftp://files.example.com',\n  'mailto:user@example.com',\n  'www.example.com',\n  'example.com/path?query=value',\n  'invalid url with spaces'\n];\n\nurls.forEach(url => {\n  console.log(\`\${url}: \${isUrl(url)}\`);\n});\n\n// 在表单中使用\nconst urlInput = document.getElementById('website');\nurlInput.addEventListener('blur', () => {\n  const url = urlInput.value;\n  if (url && !isUrl(url)) {\n    showError('请输入有效的网址');\n  } else {\n    hideError();\n  }\n});`,
+                ts: `import { isUrl } from 'general-method-utils';\n\ninterface UrlValidationOptions {\n  requireProtocol?: boolean;\n  allowedProtocols?: string[];\n  requireTld?: boolean;\n  allowLocalhost?: boolean;\n}\n\n// 基本URL验证\nconst result1: boolean = isUrl('https://www.example.com');\nconsole.log(result1); // true\n\nconst result2: boolean = isUrl('http://localhost:3000');\nconsole.log(result2); // true\n\n// 带选项的验证\nconst result4: boolean = isUrl('https://example.com', {\n  requireProtocol: true,\n  allowedProtocols: ['https'],\n  requireTld: true\n} as UrlValidationOptions);\nconsole.log(result4); // true\n\n// 验证各种URL格式\nconst urls: string[] = [\n  'https://www.google.com',\n  'http://localhost:8080/path',\n  'www.example.com'\n];\n\nurls.forEach((url: string) => {\n  console.log(\`\${url}: \${isUrl(url)}\`);\n});`
+            },
+            demo: true
+        },
+        isIdCard: {
+            name: 'isIdCard',
+            description: '验证身份证号码',
+            params: [
+                { name: 'idCard', type: 'string', required: true, description: '身份证号码' },
+                { name: 'region', type: 'string', required: false, description: '地区，默认为CN' }
+            ],
+            examples: {
+                js: `// 验证中国身份证号\nconst result1 = isIdCard('110101199003077777');\nconsole.log(result1); // true (示例号码)\n\nconst result2 = isIdCard('12345678901234567');\nconsole.log(result2); // false\n\n// 验证15位身份证号\nconst result3 = isIdCard('110101900307777');\nconsole.log(result3); // true (15位格式)\n\n// 批量验证\nconst idCards = [\n  '110101199003077777',\n  '110101900307777',\n  '12345678901234567',\n  '110101199003077778' // 校验位错误\n];\n\nidCards.forEach(id => {\n  const isValid = isIdCard(id);\n  console.log(\`\${id}: \${isValid ? '有效' : '无效'}\`);\n});\n\n// 在表单中使用\nconst idInput = document.getElementById('idCard');\nidInput.addEventListener('blur', () => {\n  const idCard = idInput.value.trim();\n  if (idCard && !isIdCard(idCard)) {\n    showError('请输入有效的身份证号码');\n    idInput.classList.add('error');\n  } else {\n    hideError();\n    idInput.classList.remove('error');\n  }\n});\n\n// 提取身份证信息\nfunction extractIdCardInfo(idCard) {\n  if (!isIdCard(idCard)) return null;\n  \n  const year = idCard.length === 18 ? idCard.substr(6, 4) : '19' + idCard.substr(6, 2);\n  const month = idCard.substr(idCard.length === 18 ? 10 : 8, 2);\n  const day = idCard.substr(idCard.length === 18 ? 12 : 10, 2);\n  const gender = parseInt(idCard.substr(idCard.length === 18 ? 16 : 14, 1)) % 2 === 0 ? '女' : '男';\n  \n  return {\n    birthday: \`\${year}-\${month}-\${day}\`,\n    gender: gender,\n    age: new Date().getFullYear() - parseInt(year)\n  };\n}`,
+                ts: `import { isIdCard } from 'general-method-utils';\n\ntype Region = 'CN' | 'HK' | 'TW';\n\ninterface IdCardInfo {\n  birthday: string;\n  gender: '男' | '女';\n  age: number;\n}\n\n// 验证中国身份证号\nconst result1: boolean = isIdCard('110101199003077777');\nconsole.log(result1); // true\n\nconst result2: boolean = isIdCard('12345678901234567');\nconsole.log(result2); // false\n\n// 批量验证\nconst idCards: string[] = [\n  '110101199003077777',\n  '110101900307777',\n  '12345678901234567'\n];\n\nidCards.forEach((id: string) => {\n  const isValid: boolean = isIdCard(id);\n  console.log(\`\${id}: \${isValid ? '有效' : '无效'}\`);\n});\n\n// 提取身份证信息\nfunction extractIdCardInfo(idCard: string): IdCardInfo | null {\n  if (!isIdCard(idCard)) return null;\n  \n  const year = idCard.length === 18 ? idCard.substr(6, 4) : '19' + idCard.substr(6, 2);\n  const month = idCard.substr(idCard.length === 18 ? 10 : 8, 2);\n  const day = idCard.substr(idCard.length === 18 ? 12 : 10, 2);\n  const gender = parseInt(idCard.substr(idCard.length === 18 ? 16 : 14, 1)) % 2 === 0 ? '女' : '男';\n  \n  return {\n    birthday: \`\${year}-\${month}-\${day}\`,\n    gender: gender,\n    age: new Date().getFullYear() - parseInt(year)\n  };\n}`
+            },
+            demo: true
+        },
+        isPassword: {
+            name: 'isPassword',
+            description: '验证密码强度',
+            params: [
+                { name: 'password', type: 'string', required: true, description: '密码' },
+                { name: 'rules', type: 'object', required: false, description: '密码规则' }
+            ],
+            examples: {
+                js: `// 基本密码验证\nconst result1 = isPassword('Password123!');\nconsole.log(result1); // { valid: true, strength: 'strong' }\n\nconst result2 = isPassword('123456');\nconsole.log(result2); // { valid: false, strength: 'weak', errors: [...] }\n\n// 自定义密码规则\nconst customRules = {\n  minLength: 8,\n  maxLength: 20,\n  requireUppercase: true,\n  requireLowercase: true,\n  requireNumbers: true,\n  requireSpecialChars: true,\n  forbiddenPatterns: ['123456', 'password', 'qwerty']\n};\n\nconst result3 = isPassword('MySecurePass123!', customRules);\nconsole.log(result3);\n\n// 密码强度检测\nconst passwords = [\n  '123456',\n  'password',\n  'Password1',\n  'Password123',\n  'Password123!',\n  'MyVerySecurePassword123!'\n];\n\npasswords.forEach(pwd => {\n  const result = isPassword(pwd);\n  console.log(\`\${pwd}: \${result.strength} (\${result.valid ? '有效' : '无效'})\`);\n});\n\n// 在表单中使用\nconst passwordInput = document.getElementById('password');\nconst strengthIndicator = document.getElementById('strength');\n\npasswordInput.addEventListener('input', () => {\n  const password = passwordInput.value;\n  const result = isPassword(password);\n  \n  // 更新强度指示器\n  strengthIndicator.className = \`strength-\${result.strength}\`;\n  strengthIndicator.textContent = result.strength;\n  \n  // 显示错误信息\n  if (!result.valid && result.errors) {\n    showPasswordErrors(result.errors);\n  } else {\n    hidePasswordErrors();\n  }\n});`,
+                ts: `import { isPassword } from 'general-method-utils';\n\ninterface PasswordRules {\n  minLength?: number;\n  maxLength?: number;\n  requireUppercase?: boolean;\n  requireLowercase?: boolean;\n  requireNumbers?: boolean;\n  requireSpecialChars?: boolean;\n  forbiddenPatterns?: string[];\n}\n\ninterface PasswordValidationResult {\n  valid: boolean;\n  strength: 'weak' | 'medium' | 'strong' | 'very-strong';\n  errors?: string[];\n  score?: number;\n}\n\n// 基本密码验证\nconst result1: PasswordValidationResult = isPassword('Password123!');\nconsole.log(result1); // { valid: true, strength: 'strong' }\n\n// 自定义密码规则\nconst customRules: PasswordRules = {\n  minLength: 8,\n  maxLength: 20,\n  requireUppercase: true,\n  requireLowercase: true,\n  requireNumbers: true,\n  requireSpecialChars: true\n};\n\nconst result3: PasswordValidationResult = isPassword('MySecurePass123!', customRules);\nconsole.log(result3);\n\n// 密码强度检测\nconst passwords: string[] = [\n  '123456',\n  'Password1',\n  'Password123!',\n  'MyVerySecurePassword123!'\n];\n\npasswords.forEach((pwd: string) => {\n  const result: PasswordValidationResult = isPassword(pwd);\n  console.log(\`\${pwd}: \${result.strength}\`);\n});`
+            },
+            demo: true
+        },
+        isCreditCard: {
+            name: 'isCreditCard',
+            description: '验证信用卡号码',
+            params: [
+                { name: 'cardNumber', type: 'string', required: true, description: '信用卡号码' },
+                { name: 'cardType', type: 'string', required: false, description: '卡类型' }
+            ],
+            examples: {
+                js: `// 验证信用卡号码\nconst result1 = isCreditCard('4111111111111111'); // Visa测试号\nconsole.log(result1); // { valid: true, type: 'visa' }\n\nconst result2 = isCreditCard('5555555555554444'); // MasterCard测试号\nconsole.log(result2); // { valid: true, type: 'mastercard' }\n\nconst result3 = isCreditCard('1234567890123456');\nconsole.log(result3); // { valid: false, type: 'unknown' }\n\n// 验证特定卡类型\nconst result4 = isCreditCard('4111111111111111', 'visa');\nconsole.log(result4); // { valid: true, type: 'visa' }\n\nconst result5 = isCreditCard('4111111111111111', 'mastercard');\nconsole.log(result5); // { valid: false, type: 'visa' }\n\n// 批量验证\nconst cardNumbers = [\n  '4111111111111111', // Visa\n  '5555555555554444', // MasterCard\n  '378282246310005',  // American Express\n  '6011111111111117', // Discover\n  '1234567890123456'  // Invalid\n];\n\ncardNumbers.forEach(card => {\n  const result = isCreditCard(card);\n  console.log(\`\${card}: \${result.type} (\${result.valid ? '有效' : '无效'})\`);\n});\n\n// 在表单中使用\nconst cardInput = document.getElementById('cardNumber');\nconst cardTypeDisplay = document.getElementById('cardType');\n\ncardInput.addEventListener('input', () => {\n  let cardNumber = cardInput.value.replace(/\\s/g, ''); // 移除空格\n  const result = isCreditCard(cardNumber);\n  \n  // 显示卡类型\n  cardTypeDisplay.textContent = result.type;\n  cardTypeDisplay.className = \`card-type \${result.type}\`;\n  \n  // 格式化显示\n  if (result.type === 'amex') {\n    // American Express: 4-6-5 格式\n    cardNumber = cardNumber.replace(/(\\d{4})(\\d{6})(\\d{5})/, '$1 $2 $3');\n  } else {\n    // 其他卡: 4-4-4-4 格式\n    cardNumber = cardNumber.replace(/(\\d{4})(?=\\d)/g, '$1 ');\n  }\n  \n  cardInput.value = cardNumber;\n  \n  // 验证状态\n  if (result.valid) {\n    cardInput.classList.add('valid');\n    cardInput.classList.remove('invalid');\n  } else if (cardInput.value.length > 0) {\n    cardInput.classList.add('invalid');\n    cardInput.classList.remove('valid');\n  }\n});`,
+                ts: `import { isCreditCard } from 'general-method-utils';\n\ntype CardType = 'visa' | 'mastercard' | 'amex' | 'discover' | 'jcb' | 'diners' | 'unknown';\n\ninterface CreditCardValidationResult {\n  valid: boolean;\n  type: CardType;\n  luhnValid?: boolean;\n}\n\n// 验证信用卡号码\nconst result1: CreditCardValidationResult = isCreditCard('4111111111111111');\nconsole.log(result1); // { valid: true, type: 'visa' }\n\nconst result2: CreditCardValidationResult = isCreditCard('5555555555554444');\nconsole.log(result2); // { valid: true, type: 'mastercard' }\n\n// 验证特定卡类型\nconst result4: CreditCardValidationResult = isCreditCard('4111111111111111', 'visa');\nconsole.log(result4); // { valid: true, type: 'visa' }\n\n// 批量验证\nconst cardNumbers: string[] = [\n  '4111111111111111', // Visa\n  '5555555555554444', // MasterCard\n  '378282246310005',  // American Express\n  '1234567890123456'  // Invalid\n];\n\ncardNumbers.forEach((card: string) => {\n  const result: CreditCardValidationResult = isCreditCard(card);\n  console.log(\`\${card}: \${result.type} (\${result.valid ? '有效' : '无效'})\`);\n});`
+            },
+            demo: true
+        },
+        validateForm: {
+            name: 'validateForm',
+            description: '表单验证',
+            params: [
+                { name: 'formData', type: 'object', required: true, description: '表单数据' },
+                { name: 'rules', type: 'object', required: true, description: '验证规则' }
+            ],
+            examples: {
+                js: `// 定义验证规则\nconst validationRules = {\n  username: {\n    required: true,\n    minLength: 3,\n    maxLength: 20,\n    pattern: /^[a-zA-Z0-9_]+$/,\n    message: '用户名只能包含字母、数字和下划线'\n  },\n  email: {\n    required: true,\n    type: 'email',\n    message: '请输入有效的邮箱地址'\n  },\n  password: {\n    required: true,\n    minLength: 8,\n    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]/,\n    message: '密码必须包含大小写字母、数字和特殊字符'\n  },\n  confirmPassword: {\n    required: true,\n    equalTo: 'password',\n    message: '两次输入的密码不一致'\n  },\n  age: {\n    required: true,\n    type: 'number',\n    min: 18,\n    max: 100,\n    message: '年龄必须在18-100之间'\n  },\n  phone: {\n    required: false,\n    type: 'phone',\n    region: 'CN'\n  }\n};\n\n// 表单数据\nconst formData = {\n  username: 'john_doe',\n  email: 'john@example.com',\n  password: 'Password123!',\n  confirmPassword: 'Password123!',\n  age: 25,\n  phone: '13812345678'\n};\n\n// 验证表单\nconst validation = validateForm(formData, validationRules);\nconsole.log(validation);\n// 输出: {\n//   valid: true,\n//   errors: {},\n//   fieldErrors: {}\n// }\n\n// 验证失败的例子\nconst invalidData = {\n  username: 'a',\n  email: 'invalid-email',\n  password: '123',\n  confirmPassword: '456',\n  age: 15\n};\n\nconst invalidValidation = validateForm(invalidData, validationRules);\nconsole.log(invalidValidation);\n// 输出: {\n//   valid: false,\n//   errors: ['用户名长度不能少于3个字符', '请输入有效的邮箱地址', ...],\n//   fieldErrors: {\n//     username: ['用户名长度不能少于3个字符'],\n//     email: ['请输入有效的邮箱地址'],\n//     ...\n//   }\n// }\n\n// 在实际表单中使用\nconst form = document.getElementById('registrationForm');\nform.addEventListener('submit', (e) => {\n  e.preventDefault();\n  \n  const formData = new FormData(form);\n  const data = Object.fromEntries(formData.entries());\n  \n  const validation = validateForm(data, validationRules);\n  \n  if (validation.valid) {\n    // 提交表单\n    submitForm(data);\n  } else {\n    // 显示错误\n    displayFormErrors(validation.fieldErrors);\n  }\n});`,
+                ts: `import { validateForm } from 'general-method-utils';\n\ninterface ValidationRule {\n  required?: boolean;\n  type?: 'email' | 'phone' | 'url' | 'number' | 'date';\n  minLength?: number;\n  maxLength?: number;\n  min?: number;\n  max?: number;\n  pattern?: RegExp;\n  equalTo?: string;\n  custom?: (value: any, formData: any) => boolean | string;\n  message?: string;\n  region?: string;\n}\n\ninterface ValidationRules {\n  [fieldName: string]: ValidationRule;\n}\n\ninterface ValidationResult {\n  valid: boolean;\n  errors: string[];\n  fieldErrors: { [fieldName: string]: string[] };\n}\n\n// 定义验证规则\nconst validationRules: ValidationRules = {\n  username: {\n    required: true,\n    minLength: 3,\n    maxLength: 20,\n    pattern: /^[a-zA-Z0-9_]+$/,\n    message: '用户名只能包含字母、数字和下划线'\n  },\n  email: {\n    required: true,\n    type: 'email',\n    message: '请输入有效的邮箱地址'\n  },\n  password: {\n    required: true,\n    minLength: 8\n  }\n};\n\n// 表单数据\nconst formData: any = {\n  username: 'john_doe',\n  email: 'john@example.com',\n  password: 'Password123!'\n};\n\n// 验证表单\nconst validation: ValidationResult = validateForm(formData, validationRules);\nconsole.log(validation);`
+            },
+            demo: true
+        }
+    }
+};

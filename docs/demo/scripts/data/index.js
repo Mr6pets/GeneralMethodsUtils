@@ -201,6 +201,129 @@ moduleDataManager.registerModule('microfrontendUtils', {
     methodCount: 2
 });
 
+// 新增的21个模块
+moduleDataManager.registerModule('animationUtils', {
+    title: '动画工具',
+    icon: 'fas fa-magic',
+    methodCount: 7
+});
+
+moduleDataManager.registerModule('collaborationUtils', {
+    title: '协作工具',
+    icon: 'fas fa-users',
+    methodCount: 5
+});
+
+moduleDataManager.registerModule('cryptoUtils', {
+    title: '加密工具',
+    icon: 'fas fa-lock',
+    methodCount: 6
+});
+
+moduleDataManager.registerModule('dataProcessorUtils', {
+    title: '数据处理器',
+    icon: 'fas fa-cogs',
+    methodCount: 5
+});
+
+moduleDataManager.registerModule('dateUtils', {
+    title: '日期工具',
+    icon: 'fas fa-calendar',
+    methodCount: 6
+});
+
+moduleDataManager.registerModule('deviceUtils', {
+    title: '设备检测工具',
+    icon: 'fas fa-mobile-alt',
+    methodCount: 7
+});
+
+moduleDataManager.registerModule('domUtils', {
+    title: 'DOM 工具',
+    icon: 'fas fa-code',
+    methodCount: 7
+});
+
+moduleDataManager.registerModule('formUtils', {
+    title: '表单工具',
+    icon: 'fas fa-wpforms',
+    methodCount: 7
+});
+
+moduleDataManager.registerModule('geoUtils', {
+    title: '地理位置工具',
+    icon: 'fas fa-map-marker-alt',
+    methodCount: 6
+});
+
+moduleDataManager.registerModule('i18nUtils', {
+    title: '国际化工具',
+    icon: 'fas fa-globe',
+    methodCount: 7
+});
+
+moduleDataManager.registerModule('imageUtils', {
+    title: '图片工具',
+    icon: 'fas fa-image',
+    methodCount: 6
+});
+
+moduleDataManager.registerModule('numberUtils', {
+    title: '数字工具',
+    icon: 'fas fa-calculator',
+    methodCount: 7
+});
+
+moduleDataManager.registerModule('promiseUtils', {
+    title: 'Promise 工具',
+    icon: 'fas fa-hourglass-half',
+    methodCount: 7
+});
+
+moduleDataManager.registerModule('pwaUtils', {
+    title: 'PWA 工具',
+    icon: 'fas fa-mobile',
+    methodCount: 6
+});
+
+moduleDataManager.registerModule('requestUtils', {
+    title: '网络请求工具',
+    icon: 'fas fa-exchange-alt',
+    methodCount: 7
+});
+
+moduleDataManager.registerModule('shareUtils', {
+    title: '分享工具',
+    icon: 'fas fa-share-alt',
+    methodCount: 6
+});
+
+moduleDataManager.registerModule('storageUtils', {
+    title: '存储工具',
+    icon: 'fas fa-database',
+    methodCount: 7
+});
+
+moduleDataManager.registerModule('stringUtils', {
+    title: '字符串工具',
+    icon: 'fas fa-font',
+    methodCount: 10
+});
+
+moduleDataManager.registerModule('uploadUtils', {
+    title: '文件上传工具',
+    icon: 'fas fa-upload',
+    methodCount: 6
+});
+
+moduleDataManager.registerModule('validateUtils', {
+    title: '验证工具',
+    icon: 'fas fa-check-circle',
+    methodCount: 7
+});
+
+// 注意：utils.js 模块包含通用工具方法，但由于与现有的工具类重复，暂不添加单独的模块
+
 // 兼容性函数：模拟原始的moduleData
 let cachedModuleData = null;
 

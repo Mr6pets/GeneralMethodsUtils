@@ -1,6 +1,76 @@
+# Dependencies
 node_modules
+
+# Build outputs
 build
 dist
+
+# Git
 .git
+.gitignore
+
+# IDE and logs
 .trae
 .log
+*.log
+
+# Source files (not needed for deployment)
+src/
+rollup.config.js
+rollup.config.ts.js
+tsconfig.json
+
+# Development files
+.vscode/
+.idea/
+.eslintrc*
+.prettierrc*
+.babelrc
+
+# Tests
+__tests__/
+*.test.js
+*.spec.js
+jest.config.js
+
+# Documentation (keep only demo)
+docs/README.en.md
+docs/README.full.md
+docs/en/
+docs/zh/
+docs/index.html
+
+# Test app
+my-test-app/
+
+# Package files
+yarn.lock
+package-lock.json
+
+# Environment
+.env*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary
+tmp/
+temp/
+
+# Coverage
+coverage/
+.nyc_output
+
+# CI/CD
+.github/
+.travis.yml
+.circleci/
+
+# Spell check
+.cspell.json
+
+# Large files
+*.zip
+*.tar.gz
+*.tgz

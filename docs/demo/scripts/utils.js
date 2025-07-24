@@ -77,18 +77,33 @@ class Utils {
     }
 
     // 复制代码
-    static async copyCode(button) {
-        const code = button.dataset.code;
+    static async copyCode(codeOrButton) {
+        let code;
+        let button = null;
+        
+        // 判断传入的是代码文本还是按钮元素
+        if (typeof codeOrButton === 'string') {
+            code = codeOrButton;
+        } else if (codeOrButton && codeOrButton.dataset && codeOrButton.dataset.code) {
+            code = codeOrButton.dataset.code;
+            button = codeOrButton;
+        } else {
+            Utils.showToast('复制失败，无效的代码内容', 'error');
+            return;
+        }
+        
         try {
             await navigator.clipboard.writeText(code);
             Utils.showToast('代码已复制到剪贴板', 'success');
             
-            // 临时改变按钮文本
-            const originalText = button.innerHTML;
-            button.innerHTML = '✅ 已复制';
-            setTimeout(() => {
-                button.innerHTML = originalText;
-            }, 2000);
+            // 如果有按钮，临时改变按钮文本
+            if (button) {
+                const originalText = button.innerHTML;
+                button.innerHTML = '✅ 已复制';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 2000);
+            }
         } catch (err) {
             Utils.showToast('复制失败，请手动复制', 'error');
         }
