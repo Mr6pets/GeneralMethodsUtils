@@ -5,14 +5,66 @@ class Utils {
         // 先转义HTML，避免标签冲突
         let highlightedCode = Utils.escapeHtml(code);
         
-        // 简单的语法高亮实现
-        highlightedCode = highlightedCode
-            .replace(/\/\*[\s\S]*?\*\//g, '<span class="comment">$&</span>')
-            .replace(/\/\/.*$/gm, '<span class="comment">$&</span>')
-            .replace(/\b(const|let|var|function|class|if|else|for|while|return|import|export|async|await|interface|type|enum)\b/g, '<span class="keyword">$1</span>')
-            .replace(/\b(true|false|null|undefined)\b/g, '<span class="literal">$1</span>')
-            .replace(/(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;|`[^`]*?`)/g, '<span class="string">$1</span>')
-            .replace(/\b\d+\b/g, '<span class="number">$1</span>');
+        // 简单的语法高亮实现 - 修复标签嵌套问题
+        // 使用临时占位符避免重复处理
+        const placeholders = {
+            comment: '___COMMENT___',
+            keyword: '___KEYWORD___',
+            literal: '___LITERAL___',
+            string: '___STRING___',
+            number: '___NUMBER___'
+        };
+        
+        // 第一步：标记所有需要高亮的部分
+        const tokens = [];
+        
+        // 处理注释（优先级最高）
+        highlightedCode = highlightedCode.replace(/\/\*[\s\S]*?\*\//g, (match) => {
+            const id = tokens.length;
+            tokens.push({ type: 'comment', content: match });
+            return `${placeholders.comment}${id}`;
+        });
+        
+        highlightedCode = highlightedCode.replace(/\/\/.*$/gm, (match) => {
+            const id = tokens.length;
+            tokens.push({ type: 'comment', content: match });
+            return `${placeholders.comment}${id}`;
+        });
+        
+        // 处理字符串
+        highlightedCode = highlightedCode.replace(/(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;|`[^`]*?`)/g, (match) => {
+            const id = tokens.length;
+            tokens.push({ type: 'string', content: match });
+            return `${placeholders.string}${id}`;
+        });
+        
+        // 处理关键字
+        highlightedCode = highlightedCode.replace(/\b(const|let|var|function|class|if|else|for|while|return|import|export|async|await|interface|type|enum)\b/g, (match, p1) => {
+            const id = tokens.length;
+            tokens.push({ type: 'keyword', content: p1 });
+            return `${placeholders.keyword}${id}`;
+        });
+        
+        // 处理字面量
+        highlightedCode = highlightedCode.replace(/\b(true|false|null|undefined)\b/g, (match, p1) => {
+            const id = tokens.length;
+            tokens.push({ type: 'literal', content: p1 });
+            return `${placeholders.literal}${id}`;
+        });
+        
+        // 处理数字
+        highlightedCode = highlightedCode.replace(/\b\d+\b/g, (match) => {
+            const id = tokens.length;
+            tokens.push({ type: 'number', content: match });
+            return `${placeholders.number}${id}`;
+        });
+        
+        // 第二步：替换占位符为实际的HTML标签
+        tokens.forEach((token, index) => {
+            const placeholder = `${placeholders[token.type]}${index}`;
+            const replacement = `<span class="${token.type}">${token.content}</span>`;
+            highlightedCode = highlightedCode.replace(placeholder, replacement);
+        });
             
         return highlightedCode;
     }

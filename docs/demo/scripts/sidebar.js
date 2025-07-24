@@ -36,14 +36,6 @@ class SidebarManager {
                     </h2>
                     <div class="version-info">v2.0.0</div>
                 </div>
-                <div class="sidebar-actions">
-                    <button class="btn-icon" onclick="app.sidebarManager.expandAllModules()" title="展开所有">
-                        <i class="fas fa-expand-alt"></i>
-                    </button>
-                    <button class="btn-icon" onclick="app.sidebarManager.collapseAllModules()" title="收起所有">
-                        <i class="fas fa-compress-alt"></i>
-                    </button>
-                </div>
             </div>
             
             <div class="method-tree">
@@ -104,7 +96,7 @@ class SidebarManager {
                     <div class="module-header ${isExpanded ? 'expanded' : ''}">
                         <div class="module-info">
                             <span class="expand-icon">
-                                <i class="fas fa-chevron-${isExpanded ? 'down' : 'right'}"></i>
+                                <i class="fas fa-${isExpanded ? 'minus' : 'plus'}"></i>
                             </span>
                             <span class="module-icon"><i class="${module.icon}"></i></span>
                             <span class="module-title">${module.title}</span>
@@ -275,7 +267,7 @@ class SidebarManager {
         }
         
         if (expandIcon) {
-            expandIcon.className = `fas fa-chevron-${isExpanded ? 'down' : 'right'}`;
+            expandIcon.className = `fas fa-${isExpanded ? 'minus' : 'plus'}`;
         }
     }
 

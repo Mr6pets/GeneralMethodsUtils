@@ -165,7 +165,8 @@ class TabManager {
                                         data-code="${Utils.escapeHtml(method.examples.js)}">
                                     <i class="fas fa-copy"></i> 复制代码
                                 </button>
-                                <button class="run-btn" onclick="window.app.tabManager.runCode('${Utils.escapeHtml(method.examples.js)}', 'js')">
+                                <button class="run-btn" onclick="window.app.tabManager.runCode(this.dataset.code, 'js')" 
+                                        data-code="${Utils.escapeHtml(method.examples.js)}">
                                     <i class="fas fa-play"></i> 运行
                                 </button>
                             </div>
@@ -184,7 +185,8 @@ class TabManager {
                                         data-code="${Utils.escapeHtml(method.examples.ts)}">
                                     <i class="fas fa-copy"></i> 复制代码
                                 </button>
-                                <button class="run-btn" onclick="window.app.tabManager.runCode('${Utils.escapeHtml(method.examples.ts)}', 'ts')">
+                                <button class="run-btn" onclick="window.app.tabManager.runCode(this.dataset.code, 'ts')" 
+                                        data-code="${Utils.escapeHtml(method.examples.ts)}">
                                     <i class="fas fa-play"></i> 运行
                                 </button>
                             </div>
@@ -307,18 +309,18 @@ class TabManager {
         if (!outputElement || !contentElement) return;
         
         try {
-            // 简单的代码执行模拟
-            const result = eval(code);
+            // 显示代码执行提示
             contentElement.innerHTML = `
-                <div class="output-success">
-                    <strong>执行成功:</strong>
-                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                <div class="output-info">
+                    <strong>代码演示:</strong>
+                    <pre>${Utils.escapeHtml(code)}</pre>
+                    <p><em>注意：为了安全考虑，此处仅显示代码内容，不执行实际代码。</em></p>
                 </div>
             `;
         } catch (error) {
             contentElement.innerHTML = `
                 <div class="output-error">
-                    <strong>执行错误:</strong>
+                    <strong>显示错误:</strong>
                     <pre>${error.message}</pre>
                 </div>
             `;

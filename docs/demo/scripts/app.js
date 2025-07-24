@@ -17,7 +17,8 @@ class DemoApp {
         
         // 初始化各个管理器
         try {
-            this.utils = new Utils();
+            // Utils是静态类，不需要实例化
+            this.utils = Utils;
             this.searchManager = new SearchManager();
             this.tabManager = new TabManager();
             this.contentManager = new ContentManager();
@@ -26,7 +27,7 @@ class DemoApp {
         } catch (error) {
             console.error('创建管理器实例时出错:', error);
             // 创建空对象以避免后续错误
-            this.utils = {};
+            this.utils = Utils; // 即使出错也保持Utils的引用
             this.searchManager = {};
             this.tabManager = {};
             this.contentManager = {};
@@ -61,8 +62,8 @@ class DemoApp {
             await this.checkDependencies();
             
             // 初始化主题
-            if (this.utils && typeof this.utils.initTheme === 'function') {
-                this.utils.initTheme();
+            if (Utils && typeof Utils.initTheme === 'function') {
+                Utils.initTheme();
             }
             
             // 初始化各个管理器
@@ -162,16 +163,8 @@ class DemoApp {
             this.handleMethodSelection(moduleKey, methodKey);
         };
         
-        // 设置全局回调供sidebar使用
-        window.app = {
-            onMethodSelected: (moduleKey, methodKey) => {
-                this.handleMethodSelection(moduleKey, methodKey);
-            },
-            tabManager: this.tabManager,
-            selectMethod: (moduleKey, methodKey) => {
-                this.handleMethodSelection(moduleKey, methodKey);
-            }
-        };
+        // 确保 window.app 指向完整的实例
+        // 不要重新定义 window.app，它已经在 initApp 中正确设置
         
         // 设置搜索结果回调
         this.searchManager.onSearchResults = (results) => {
@@ -254,6 +247,11 @@ class DemoApp {
         if (this.sidebarManager) {
             this.sidebarManager.selectMethod(moduleKey, methodKey);
         }
+    }
+
+    // 方法选择回调（兼容性方法）
+    onMethodSelected(moduleKey, methodKey) {
+        this.handleMethodSelection(moduleKey, methodKey);
     }
 
     // 搜索方法
@@ -385,8 +383,10 @@ class DemoApp {
             `;
         }
         
-        // 显示错误提示
-        Utils.showToast('应用初始化失败，请刷新页面重试', 'error');
+            // 显示错误提示
+        if (Utils && typeof Utils.showToast === 'function') {
+            Utils.showToast('应用初始化失败，请刷新页面重试', 'error');
+        }
     }
 
     // 显示调试信息
@@ -428,7 +428,7 @@ class DemoApp {
             errors: this.getErrorLog()
         };
         
-        this.utils.copyCode(JSON.stringify(debugInfo, null, 2));
+        Utils.copyCode(JSON.stringify(debugInfo, null, 2));
     }
 
     // 获取本地存储信息
