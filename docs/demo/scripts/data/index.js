@@ -322,6 +322,18 @@ moduleDataManager.registerModule('validateUtils', {
     methodCount: 7
 });
 
+moduleDataManager.registerModule('canvasUtils', {
+    title: 'Canvas工具',
+    icon: 'fas fa-palette',
+    methodCount: 3
+});
+
+moduleDataManager.registerModule('sqlUtils', {
+    title: 'SQL工具',
+    icon: 'fas fa-database',
+    methodCount: 3
+});
+
 // 注意：utils.js 模块包含通用工具方法，但由于与现有的工具类重复，暂不添加单独的模块
 
 // 兼容性函数：模拟原始的moduleData

@@ -29,6 +29,8 @@ import * as formUtils from './modules/form';
 import * as pwaUtils from './modules/pwa';
 import * as dataProcessorUtils from './modules/dataProcessor';
 import * as advancedPerformanceUtils from './modules/performance';
+import * as canvasUtils from './modules/canvas';
+import * as sqlUtils from './modules/sql';
 
 // 导出所有工具方法
 export {
@@ -58,6 +60,8 @@ export {
   pwaUtils,
   dataProcessorUtils,
   advancedPerformanceUtils,
+  canvasUtils,
+  sqlUtils,
   webrtcUtils,
   blockchainUtils,
   microfrontendUtils
@@ -90,5 +94,7 @@ export default {
   ...formUtils,
   ...pwaUtils,
   ...dataProcessorUtils,
-  ...advancedPerformanceUtils
+  ...advancedPerformanceUtils,
+  ...canvasUtils,
+  ...sqlUtils
 };

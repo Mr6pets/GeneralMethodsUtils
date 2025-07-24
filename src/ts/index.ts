@@ -29,6 +29,8 @@ import microfrontendUtils from './modules/microfrontend';
 import * as pwaUtils from './modules/pwa';
 import * as dataProcessorUtils from './modules/dataProcessor';
 import * as advancedPerformanceUtils from './modules/advancedPerformance';
+import * as canvasUtils from './modules/canvas';
+import * as sqlUtils from './modules/sql';
 
 // 导出新模块
 export {
@@ -57,6 +59,8 @@ export {
   pwaUtils,
   dataProcessorUtils,
   advancedPerformanceUtils,
+  canvasUtils,
+  sqlUtils,
   webrtcUtils,
   blockchainUtils,
   microfrontendUtils
@@ -83,6 +87,8 @@ export * from './modules/validate';
 export * from './modules/image';
 export * from './modules/performance';
 export * from './modules/utils';
+export * from './modules/canvas';
+export * from './modules/sql';
 
 // 默认导出所有方法的集合
 export default {
@@ -111,6 +117,8 @@ export default {
   ...pwaUtils,
   ...dataProcessorUtils,
   ...advancedPerformanceUtils,
+  ...canvasUtils,
+  ...sqlUtils,
   webrtcUtils,
   blockchainUtils,
   microfrontendUtils

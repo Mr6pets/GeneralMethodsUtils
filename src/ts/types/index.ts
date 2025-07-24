@@ -792,3 +792,81 @@ export interface PresenceInfo {
   lastActivity: number;
   metadata?: Record<string, any>;
 }
+
+// Canvas 相关类型
+export interface CanvasDrawOptions {
+  fillStyle?: string | CanvasGradient | CanvasPattern;
+  strokeStyle?: string | CanvasGradient | CanvasPattern;
+  lineWidth?: number;
+  lineCap?: CanvasLineCap;
+  lineJoin?: CanvasLineJoin;
+  globalAlpha?: number;
+  shadowColor?: string;
+  shadowBlur?: number;
+  shadowOffsetX?: number;
+  shadowOffsetY?: number;
+}
+
+export interface CanvasTextOptions extends CanvasDrawOptions {
+  font?: string;
+  textAlign?: CanvasTextAlign;
+  textBaseline?: CanvasTextBaseline;
+  maxWidth?: number;
+}
+
+export interface CanvasImageOptions {
+  sx?: number;
+  sy?: number;
+  sWidth?: number;
+  sHeight?: number;
+  dx?: number;
+  dy?: number;
+  dWidth?: number;
+  dHeight?: number;
+}
+
+export interface CanvasGradientStop {
+  offset: number;
+  color: string;
+}
+
+export interface CanvasSize {
+  width: number;
+  height: number;
+}
+
+// SQL 相关类型
+export interface JoinClause {
+  type: 'INNER' | 'LEFT' | 'RIGHT' | 'FULL';
+  table: string;
+  condition: string;
+}
+
+export interface OrderByClause {
+  column: string;
+  direction: 'ASC' | 'DESC';
+}
+
+export interface ParsedSQL {
+  type: 'SELECT' | 'INSERT' | 'UPDATE' | 'DELETE' | null;
+  table: string | null;
+  columns: string[];
+  conditions: string[];
+}
+
+export interface SQLValidationResult {
+  isValid: boolean;
+  errors: string[];
+  warnings: string[];
+}
+
+export type SQLValue = string | number | boolean | null;
+export type DataObject = Record<string, SQLValue>;
+
+export interface SQLQueryOptions {
+  limit?: number;
+  offset?: number;
+  orderBy?: OrderByClause[];
+  groupBy?: string[];
+  having?: string[];
+}

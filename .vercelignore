@@ -39,6 +39,9 @@ docs/README.full.md
 docs/en/
 docs/zh/
 docs/index.html
+README.ch.md
+README.en.md
+CHANGELOG.md
 
 # Test app
 my-test-app/
@@ -74,3 +77,49 @@ coverage/
 *.zip
 *.tar.gz
 *.tgz
+*.rar
+*.7z
+
+# Media files
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.mp3
+*.wav
+*.flac
+
+# Large design files
+*.psd
+*.ai
+*.sketch
+*.fig
+
+# Executables
+*.exe
+*.dmg
+*.pkg
+*.deb
+*.rpm
+*.msi
+
+# Database files
+*.db
+*.sqlite
+*.dump
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Demo CLI tools (not needed for web deployment)
+docs/demo/scripts/cli/
+docs/demo/scripts/build-dist.js
+docs/demo/scripts/deploy-package.js
+
+# Legacy data files
+docs/demo/scripts/data-legacy.js
+
+# Deployment documentation
+docs/demo/DEPLOYMENT.md
