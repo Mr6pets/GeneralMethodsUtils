@@ -101,3 +101,44 @@ jspm_packages/
 # Temporary folders
 tmp/
 temp/
+
+# Archive files
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.bz2
+*.xz
+
+# Large files
+*.iso
+*.dmg
+*.pkg
+*.deb
+*.rpm
+*.exe
+*.msi
+
+# Demo deployment package
+demo-deployment-package.zip
+
+# Media files
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.webm
+*.mp3
+*.wav
+*.flac
+*.aac
+*.ogg
+
+# Image files (large)
+*.psd
+*.ai
+*.sketch
+*.fig
+*.xcf
