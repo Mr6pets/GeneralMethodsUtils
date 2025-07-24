@@ -1,0 +1,28 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "Segoe",
+    "BlinkMacSystemFont",
+    "Roboto",
+    "aimlUtils",
+    "microfrontendUtils",
+    "securityUtils",
+    "urlUtils",
+    "GeneralMethodsUtils",
+    "githubStore",
+    "vercel",
+    "rollup",
+    "tsconfig",
+    "npmignore",
+    "vercelignore"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    ".git/**",
+    "*.min.js",
+    "*.min.css"
+  ]
+}
