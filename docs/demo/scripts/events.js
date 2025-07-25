@@ -82,6 +82,34 @@ class EventManager {
             });
         }
 
+        // 复制代码按钮
+        const copyBtn = document.getElementById('copyBtn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const activeTab = document.querySelector('.tab-panel.active');
+                if (activeTab) {
+                    const codeElement = activeTab.querySelector('code');
+                    if (codeElement && window.app && window.app.utils) {
+                        window.app.utils.copyCode(codeElement.textContent);
+                    }
+                }
+            });
+        }
+
+        // 运行示例按钮
+        const runBtn = document.getElementById('runBtn');
+        if (runBtn) {
+            runBtn.addEventListener('click', () => {
+                const activeTab = document.querySelector('.tab-panel.active');
+                if (activeTab) {
+                    const codeElement = activeTab.querySelector('code');
+                    if (codeElement && window.app && window.app.tabManager) {
+                        window.app.tabManager.runCode(codeElement.textContent);
+                    }
+                }
+            });
+        }
+
         // 模态框关闭事件
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('modal')) {
@@ -503,8 +531,24 @@ class EventManager {
         this.shortcuts.clear();
         this.isInitialized = false;
     }
+
+    // 添加showModalById方法到EventManager类内部
+    showModalById(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            this.showModal(modal);
+        }
+    }
 }
 
 // 导出事件管理器
 export { EventManager };
 window.EventManager = EventManager;
+
+// 创建全局showModal函数供向后兼容
+window.showModal = function(modalId) {
+    if (window.app && window.app.eventManager) {
+        window.app.eventManager.showModalById(modalId);
+    }
+};
+

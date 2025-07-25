@@ -111,22 +111,146 @@ class Utils {
 
     // 主题切换
     static toggleTheme() {
-        const isDark = document.body.classList.toggle('dark-theme');
-        localStorage.setItem('darkTheme', isDark);
-        Utils.showToast(`已切换到${isDark ? '深色' : '浅色'}主题`, 'info');
+        const currentTheme = localStorage.getItem('theme') || 'system';
+        let nextTheme;
+        
+        // 循环切换：system -> light -> dark -> system
+        switch (currentTheme) {
+            case 'system':
+                nextTheme = 'light';
+                break;
+            case 'light':
+                nextTheme = 'dark';
+                break;
+            case 'dark':
+                nextTheme = 'system';
+                break;
+            default:
+                nextTheme = 'system';
+        }
+        
+        Utils.setTheme(nextTheme);
+        Utils.updateThemeIcon(nextTheme);
+        Utils.showThemeTooltip(nextTheme);
+        
+        const themeNames = {
+            'system': '跟随系统',
+            'light': '浅色',
+            'dark': '深色'
+        };
+        
+        Utils.showToast(`已切换到${themeNames[nextTheme]}主题`, 'info');
+    }
+    
+    // 设置主题
+    static setTheme(theme) {
+        localStorage.setItem('theme', theme);
+        
+        // 移除所有主题类
+        document.body.classList.remove('dark-theme', 'light-theme');
+        
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        } else if (theme === 'light') {
+            document.body.classList.add('light-theme');
+        } else if (theme === 'system') {
+            // 跟随系统设置
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (prefersDark) {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.add('light-theme');
+            }
+        }
+    }
+    
+    // 更新主题图标
+    static updateThemeIcon(theme) {
+        const themeIcon = document.getElementById('themeIcon');
+        if (themeIcon) {
+            // 使用更直观的图标组合
+            const iconConfigs = {
+                'system': {
+                    icon: 'fas fa-circle-half-stroke',
+                    title: '跟随系统主题'
+                },
+                'light': {
+                    icon: 'fas fa-sun',
+                    title: '浅色主题'
+                },
+                'dark': {
+                    icon: 'fas fa-moon',
+                    title: '深色主题'
+                }
+            };
+            
+            const config = iconConfigs[theme] || iconConfigs.system;
+            
+            // 添加切换动画
+            themeIcon.style.transform = 'scale(0.8) rotate(180deg)';
+            themeIcon.style.opacity = '0.5';
+            
+            setTimeout(() => {
+                themeIcon.className = config.icon;
+                themeIcon.style.transform = 'scale(1) rotate(0deg)';
+                themeIcon.style.opacity = '1';
+            }, 150);
+            
+            // 更新按钮的title属性
+            const themeButton = document.getElementById('themeToggle');
+            if (themeButton) {
+                themeButton.title = config.title;
+            }
+        }
+    }
+    
+    // 显示主题切换提示
+    static showThemeTooltip(theme) {
+        const themeButton = document.getElementById('themeToggle');
+        if (!themeButton) return;
+        
+        const themeNames = {
+            'system': '跟随系统',
+            'light': '浅色模式',
+            'dark': '深色模式'
+        };
+        
+        // 创建提示元素
+        const tooltip = document.createElement('div');
+        tooltip.className = 'theme-tooltip';
+        tooltip.textContent = themeNames[theme];
+        
+        // 添加到按钮旁边
+        themeButton.appendChild(tooltip);
+        
+        // 显示动画
+        setTimeout(() => tooltip.classList.add('show'), 10);
+        
+        // 自动隐藏
+        setTimeout(() => {
+            tooltip.classList.remove('show');
+            setTimeout(() => tooltip.remove(), 300);
+        }, 1500);
     }
 
     // 初始化主题
     static initTheme() {
-        const savedTheme = localStorage.getItem('darkTheme');
+        const savedTheme = localStorage.getItem('theme') || 'system';
         const savedLanguage = localStorage.getItem('preferredLanguage');
         
-        if (savedTheme === 'true') {
-            document.body.classList.add('dark-theme');
-        }
+        Utils.setTheme(savedTheme);
+        Utils.updateThemeIcon(savedTheme);
+        
+        // 监听系统主题变化
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'system') {
+                Utils.setTheme('system'); // 重新应用系统主题
+            }
+        });
         
         return {
-            theme: savedTheme === 'true' ? 'dark' : 'light',
+            theme: savedTheme,
             language: savedLanguage || 'js'
         };
     }

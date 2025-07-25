@@ -4,24 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeneralMethodsUtils - 工具方法演示</title>
-    <!-- 基础样式 -->
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- 样式文件 -->
     <link rel="stylesheet" href="styles/base.css">
-    <!-- 布局样式 -->
     <link rel="stylesheet" href="styles/layout.css">
-    <!-- 头部样式 -->
     <link rel="stylesheet" href="styles/header.css">
-    <!-- 方法样式 -->
-    <link rel="stylesheet" href="styles/methods.css">
-    <!-- 标签页样式 -->
-    <link rel="stylesheet" href="styles/tabs.css">
-    <!-- 演示样式 -->
-    <link rel="stylesheet" href="styles/demo.css">
-    <!-- 组件样式 -->
     <link rel="stylesheet" href="styles/components.css">
-    <!-- 响应式样式 -->
+    <link rel="stylesheet" href="styles/methods.css">
+    <link rel="stylesheet" href="styles/demo.css">
+    <link rel="stylesheet" href="styles/tabs.css">
+    <link rel="stylesheet" href="styles/modal.css">
     <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="styles/toast.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/content.css">
 </head>
 <body>
     <!-- 顶部导航 -->
@@ -32,11 +30,10 @@
                 <span>GeneralMethodsUtils</span>
             </div>
             <nav class="nav">
-                <div class="language-switch">
-                    <button class="lang-btn active" data-lang="js">JavaScript</button>
-                    <button class="lang-btn" data-lang="ts">TypeScript</button>
-                </div>
                 <div class="user-actions">
+                    <button class="theme-toggle" id="themeToggle" title="切换主题">
+                        <i class="fas fa-sun" id="themeIcon"></i>
+                    </button>
                     <button class="btn btn-outline" id="loginBtn">登录</button>
                     <button class="btn btn-primary" id="upgradeBtn">升级会员</button>
                 </div>

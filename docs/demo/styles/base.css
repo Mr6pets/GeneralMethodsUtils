@@ -1,3 +1,38 @@
+/* CSS变量定义 */
+:root {
+    /* 暗色主题 */
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    --accent-color: #3b82f6;
+    --accent-hover: #2563eb;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* 浅色主题 */
+body.light-theme {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-tertiary: #e2e8f0;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --accent-color: #3b82f6;
+    --accent-hover: #2563eb;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
 /* 基础样式 */
 * {
     margin: 0;
@@ -8,8 +43,9 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background: #f8fafc;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -34,23 +70,24 @@ body {
 }
 
 .btn-primary {
-    background: #2563eb;
+    background: var(--accent-color);
     color: white;
 }
 
 .btn-primary:hover {
-    background: #1d4ed8;
+    background: var(--accent-hover);
 }
 
 .btn-outline {
     background: transparent;
-    color: #64748b;
-    border: 1px solid #e2e8f0;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
 }
 
 .btn-outline:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
+    background: var(--bg-tertiary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
 }
 
 .btn-sm {

@@ -535,37 +535,58 @@ async function initApp() {
     } catch (error) {
         console.error('应用启动失败:', error);
         
-        // 显示基本错误页面
-        document.body.innerHTML = `
-            <div style="
+        // 在现有页面上显示错误信息，而不是替换整个body
+        const errorOverlay = document.createElement('div');
+        errorOverlay.className = 'error-overlay';
+        errorOverlay.innerHTML = `
+            <div class="error-content">
+                <h1>应用启动失败</h1>
+                <p>${error.message}</p>
+                <button onclick="location.reload()" class="btn btn-primary">
+                    <i class="fas fa-refresh"></i>
+                    重新加载
+                </button>
+            </div>
+        `;
+        
+        // 添加错误覆盖层样式
+        const style = document.createElement('style');
+        style.textContent = `
+            .error-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.8);
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 100vh;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                background: #f5f5f5;
-            ">
-                <div style="
-                    text-align: center;
-                    padding: 2rem;
-                    background: white;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                ">
-                    <h1 style="color: #e74c3c; margin-bottom: 1rem;">应用启动失败</h1>
-                    <p style="color: #666; margin-bottom: 1.5rem;">${error.message}</p>
-                    <button onclick="location.reload()" style="
-                        background: #3498db;
-                        color: white;
-                        border: none;
-                        padding: 0.75rem 1.5rem;
-                        border-radius: 4px;
-                        cursor: pointer;
-                        font-size: 1rem;
-                    ">重新加载</button>
-                </div>
-            </div>
+                z-index: 10000;
+            }
+            .error-content {
+                background: white;
+                padding: 2rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                text-align: center;
+                max-width: 400px;
+                margin: 0 20px;
+            }
+            .error-content h1 {
+                color: #e74c3c;
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+            }
+            .error-content p {
+                color: #666;
+                margin-bottom: 1.5rem;
+                line-height: 1.5;
+            }
         `;
+        
+        document.head.appendChild(style);
+        document.body.appendChild(errorOverlay);
     }
 }
 

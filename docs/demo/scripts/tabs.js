@@ -49,17 +49,34 @@ class TabManager {
 
     // 切换标签页
     switchTab(tabName) {
+        console.log('Switching to tab:', tabName);
         this.currentTab = tabName;
         
-        // 更新标签按钮状态
+        // 移除所有标签的激活状态
         document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.tab === tabName);
+            btn.classList.remove('active');
         });
         
-        // 更新标签内容显示
+        // 隐藏所有标签面板
         document.querySelectorAll('.tab-panel').forEach(panel => {
-            panel.classList.toggle('active', panel.dataset.tab === tabName);
+            panel.classList.remove('active');
+            panel.style.display = 'none';
         });
+        
+        // 激活当前标签 - 修复选择器
+        const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
+        const activePanel = document.querySelector(`[data-tab="${tabName}"].tab-panel`);
+        
+        console.log('Active button:', activeBtn);
+        console.log('Active panel:', activePanel);
+        
+        if (activeBtn && activePanel) {
+            activeBtn.classList.add('active');
+            activePanel.classList.add('active');
+            activePanel.style.display = 'block';
+        } else {
+            console.error('Tab elements not found:', { tabName, activeBtn, activePanel });
+        }
         
         // 触发标签切换事件
         this.onTabSwitch(tabName);

@@ -14,8 +14,38 @@ const moduleData = {
                     { name: 'options', type: 'object', required: false, description: '配置选项' }
                 ],
                 examples: {
-                    js: `// 设置基础 Cookie\nsetCookie('username', 'john');\n\n// 设置带过期时间的 Cookie\nsetCookie('token', 'abc123', {\n  expires: 7, // 7天后过期\n  path: '/',\n  secure: true\n});\n\n// 设置会话 Cookie\nsetCookie('sessionId', 'xyz789', {\n  httpOnly: true,\n  sameSite: 'strict'\n});`,
-                    ts: `import { setCookie } from 'general-method-utils';\n\n// 设置基础 Cookie\nsetCookie('username', 'john');\n\n// 设置带过期时间的 Cookie\nsetCookie('token', 'abc123', {\n  expires: 7, // 7天后过期\n  path: '/',\n  secure: true\n});\n\n// 设置会话 Cookie\nsetCookie('sessionId', 'xyz789', {\n  httpOnly: true,\n  sameSite: 'strict'\n});`
+                    js: `// 设置基础 Cookie
+setCookie('username', 'john');
+
+// 设置带过期时间的 Cookie
+setCookie('token', 'abc123', {
+  expires: 7, // 7天后过期
+  path: '/',
+  secure: true
+});
+
+// 设置会话 Cookie
+setCookie('sessionId', 'xyz789', {
+  httpOnly: true,
+  sameSite: 'strict'
+});`,
+                    ts: `import { setCookie } from 'general-method-utils';
+
+// 设置基础 Cookie
+setCookie('username', 'john');
+
+// 设置带过期时间的 Cookie
+setCookie('token', 'abc123', {
+  expires: 7, // 7天后过期
+  path: '/',
+  secure: true
+});
+
+// 设置会话 Cookie
+setCookie('sessionId', 'xyz789', {
+  httpOnly: true,
+  sameSite: 'strict'
+});`
                 },
                 demo: true
             },
@@ -26,8 +56,26 @@ const moduleData = {
                     { name: 'name', type: 'string', required: true, description: 'Cookie 名称' }
                 ],
                 examples: {
-                    js: `// 获取 Cookie 值\nconst username = getCookie('username');\nconsole.log(username); // 'john'\n\n// 获取不存在的 Cookie\nconst nonExistent = getCookie('notFound');\nconsole.log(nonExistent); // null`,
-                    ts: `import { getCookie } from 'general-method-utils';\n\n// 获取 Cookie 值\nconst username: string | null = getCookie('username');\nconsole.log(username); // 'john'\n\n// 获取不存在的 Cookie\nconst nonExistent: string | null = getCookie('notFound');\nconsole.log(nonExistent); // null`
+                    js: `// 获取 Cookie 值
+const username = getCookie('username');
+console.log(username); // 'john'
+
+// 获取不存在的 Cookie
+const nonExistent = getCookie('notFound');
+console.log(nonExistent); // null
+
+// 获取不存在的 Cookie
+const nonExistent = getCookie('notFound');
+console.log(nonExistent); // null`,
+                    ts: `import { getCookie } from 'general-method-utils';
+
+// 获取 Cookie 值
+const username: string | null = getCookie('username');
+console.log(username); // 'john'
+
+// 获取不存在的 Cookie
+const nonExistent: string | null = getCookie('notFound');
+console.log(nonExistent); // null`
                 },
                 demo: true
             }
@@ -47,8 +95,43 @@ const moduleData = {
                     { name: 'url', type: 'string', required: false, description: '目标 URL，默认为当前页面' }
                 ],
                 examples: {
-                    js: `// 当前 URL: https://example.com?name=john&age=25\n\n// 获取查询参数\nconst name = getQueryString('name');\nconsole.log(name); // 'john'\n\nconst age = getQueryString('age');\nconsole.log(age); // '25'\n\n// 从指定 URL 获取参数\nconst id = getQueryString('id', 'https://api.com?id=123');\nconsole.log(id); // '123'`,
-                    ts: `import { getQueryString } from 'general-method-utils';\n\n// 当前 URL: https://example.com?name=john&age=25\n\n// 获取查询参数\nconst name: string | null = getQueryString('name');\nconsole.log(name); // 'john'\n\nconst age: string | null = getQueryString('age');\nconsole.log(age); // '25'\n\n// 从指定 URL 获取参数\nconst id: string | null = getQueryString('id', 'https://api.com?id=123');\nconsole.log(id); // '123'`
+                    js: `// 当前 URL: https://example.com?name=john&age=25
+
+// 获取查询参数
+const name = getQueryString('name');
+console.log(name); // 'john'
+
+const age = getQueryString('age');
+console.log(age); // '25'
+
+// 从指定 URL 获取参数
+const id = getQueryString('id', 'https://api.com?id=123');
+console.log(id); // '123'
+
+// 获取查询参数
+const name: string | null = getQueryString('name');
+console.log(name); // 'john'
+
+const age: string | null = getQueryString('age');
+console.log(age); // '25'
+
+// 从指定 URL 获取参数
+const id: string | null = getQueryString('id', 'https://api.com?id=123');
+console.log(id); // '123'`,
+                    ts: `import { getQueryString } from 'general-method-utils';
+
+// 当前 URL: https://example.com?name=john&age=25
+
+// 获取查询参数
+const name: string | null = getQueryString('name');
+console.log(name); // 'john'
+
+const age: string | null = getQueryString('age');
+console.log(age); // '25'
+
+// 从指定 URL 获取参数
+const id: string | null = getQueryString('id', 'https://api.com?id=123');
+console.log(id); // '123'`
                 },
                 demo: true
             }
@@ -68,8 +151,12 @@ const moduleData = {
                     { name: 'options', type: 'AIModelOptions', required: false, description: '模型配置选项' }
                 ],
                 examples: {
-                    js: `// 基础聊天对话\nconst response = await aimlUtils.chat([\n  { role: 'user', content: '你好，请介绍一下人工智能' }\n], {\n  model: 'gpt-3.5-turbo',\n  temperature: 0.7,\n  maxTokens: 1000\n});\n\nconsole.log(response.content);\n\n// 多轮对话\nconst conversation = [\n  { role: 'user', content: '什么是机器学习？' },\n  { role: 'assistant', content: '机器学习是人工智能的一个分支...' },\n  { role: 'user', content: '能举个例子吗？' }\n];\n\nconst reply = await aimlUtils.chat(conversation);`,
-                    ts: `import { aimlUtils, ChatMessage, AIModelOptions } from 'general-method-utils';\n\n// 基础聊天对话\nconst messages: ChatMessage[] = [\n  { role: 'user', content: '你好，请介绍一下人工智能' }\n];\n\nconst options: AIModelOptions = {\n  model: 'gpt-3.5-turbo',\n  temperature: 0.7,\n  maxTokens: 1000\n};\n\nconst response = await aimlUtils.chat(messages, options);\nconsole.log(response.content);`
+                    js: `// 基础聊天对话
+const response = await aimlUtils.chat([\n  { role: 'user', content: '你好，请介绍一下人工智能' }\n], {\n  model: 'gpt-3.5-turbo',\n  temperature: 0.7,\n  maxTokens: 1000\n});\n\nconsole.log(response.content);\n\n// 多轮对话\nconst conversation = [\n  { role: 'user', content: '什么是机器学习？' },\n  { role: 'assistant', content: '机器学习是人工智能的一个分支...' },\n  { role: 'user', content: '能举个例子吗？' }\n];\n\nconst reply = await aimlUtils.chat(conversation);`,
+                    ts: `import { aimlUtils, ChatMessage, AIModelOptions } from 'general-method-utils';
+
+// 基础聊天对话
+const messages: ChatMessage[] = [\n  { role: 'user', content: '你好，请介绍一下人工智能' }\n];\n\nconst options: AIModelOptions = {\n  model: 'gpt-3.5-turbo',\n  temperature: 0.7,\n  maxTokens: 1000\n};\n\nconst response = await aimlUtils.chat(messages, options);\nconsole.log(response.content);`
                 },
                 demo: true
             },
@@ -81,8 +168,20 @@ const moduleData = {
                     { name: 'options', type: 'ImageAnalysisOptions', required: false, description: '分析选项' }
                 ],
                 examples: {
-                    js: `// 分析上传的图片\nconst fileInput = document.getElementById('imageInput');\nconst file = fileInput.files[0];\n\nconst analysis = await aimlUtils.analyzeImage(file, {\n  features: ['objects', 'text', 'faces'],\n  confidence: 0.8\n});\n\nconsole.log('检测到的对象:', analysis.objects);\nconsole.log('识别的文本:', analysis.text);\nconsole.log('人脸信息:', analysis.faces);\n\n// 分析网络图片\nconst webImageAnalysis = await aimlUtils.analyzeImage(\n  'https://example.com/image.jpg',\n  { features: ['objects'] }\n);`,
-                    ts: `import { aimlUtils, ImageAnalysisOptions } from 'general-method-utils';\n\n// 分析上传的图片\nconst fileInput = document.getElementById('imageInput') as HTMLInputElement;\nconst file = fileInput.files?.[0];\n\nif (file) {\n  const options: ImageAnalysisOptions = {\n    features: ['objects', 'text', 'faces'],\n    confidence: 0.8\n  };\n  \n  const analysis = await aimlUtils.analyzeImage(file, options);\n  console.log('检测到的对象:', analysis.objects);\n}`
+                    js: `// 分析上传的图片
+const fileInput = document.getElementById('imageInput');
+const file = fileInput.files[0];
+
+const analysis = await aimlUtils.analyzeImage(file, {\n  features: ['objects', 'text', 'faces'],\n  confidence: 0.8\n});\n\nconsole.log('检测到的对象:', analysis.objects);\nconsole.log('识别的文本:', analysis.text);\nconsole.log('人脸信息:', analysis.faces);\n\n// 分析网络图片
+const webImageAnalysis = await aimlUtils.analyzeImage(\n  'https://example.com/image.jpg',\n  { features: ['objects'] }\n);`,
+                    ts: `import { aimlUtils, ImageAnalysisOptions } from 'general-method-utils';
+
+// 分析上传的图片
+const fileInput = document.getElementById('imageInput') as HTMLInputElement;
+const file = fileInput.files?.[0];
+
+if (file) {
+  const options: ImageAnalysisOptions = {\n    features: ['objects', 'text', 'faces'],\n    confidence: 0.8\n  };\n  \n  const analysis = await aimlUtils.analyzeImage(file, options);\n  console.log('检测到的对象:', analysis.objects);\n}`
                 },
                 demo: true
             }
@@ -101,8 +200,13 @@ const moduleData = {
                     { name: 'options', type: 'SecurityScanOptions', required: false, description: '扫描配置选项' }
                 ],
                 examples: {
-                    js: `// 执行全面安全扫描\nconst scanResult = await securityUtils.scanSecurity({\n  checkXSS: true,\n  checkCSRF: true,\n  checkHeaders: true,\n  checkCookies: true\n});\n\nconsole.log('安全评分:', scanResult.score);\nconsole.log('发现的问题:', scanResult.issues);\nconsole.log('安全建议:', scanResult.recommendations);\n\n// 检查特定安全问题\nconst xssCheck = await securityUtils.scanSecurity({\n  checkXSS: true,\n  checkCSRF: false\n});`,
-                    ts: `import { securityUtils, SecurityScanOptions } from 'general-method-utils';\n\n// 执行全面安全扫描\nconst options: SecurityScanOptions = {\n  checkXSS: true,\n  checkCSRF: true,\n  checkHeaders: true,\n  checkCookies: true\n};\n\nconst scanResult = await securityUtils.scanSecurity(options);\nconsole.log('安全评分:', scanResult.score);\nconsole.log('发现的问题:', scanResult.issues);`
+                    js: `// 执行全面安全扫描
+const scanResult = await securityUtils.scanSecurity({\n  checkXSS: true,\n  checkCSRF: true,\n  checkHeaders: true,\n  checkCookies: true\n});\n\nconsole.log('安全评分:', scanResult.score);\nconsole.log('发现的问题:', scanResult.issues);\nconsole.log('安全建议:', scanResult.recommendations);\n\n// 检查特定安全问题
+const xssCheck = await securityUtils.scanSecurity({\n  checkXSS: true,\n  checkCSRF: false\n});`,
+                    ts: `import { securityUtils, SecurityScanOptions } from 'general-method-utils';
+
+// 执行全面安全扫描
+const options: SecurityScanOptions = {\n  checkXSS: true,\n  checkCSRF: true,\n  checkHeaders: true,\n  checkCookies: true\n};\n\nconst scanResult = await securityUtils.scanSecurity(options);\nconsole.log('安全评分:', scanResult.score);\nconsole.log('发现的问题:', scanResult.issues);`
                 },
                 demo: true
             },
@@ -114,8 +218,12 @@ const moduleData = {
                     { name: 'options', type: 'EncryptionOptions', required: false, description: '加密选项' }
                 ],
                 examples: {
-                    js: `// 基础数据加密\nconst encrypted = await securityUtils.encrypt('敏感数据', {\n  algorithm: 'AES-GCM',\n  keyLength: 256\n});\n\nconsole.log('加密数据:', encrypted.data);\nconsole.log('密钥:', encrypted.key);\nconsole.log('初始向量:', encrypted.iv);\n\n// 解密数据\nconst decrypted = await securityUtils.decrypt(encrypted.data, {\n  key: encrypted.key,\n  iv: encrypted.iv\n});\n\nconsole.log('解密结果:', decrypted);`,
-                    ts: `import { securityUtils, EncryptionOptions } from 'general-method-utils';\n\n// 基础数据加密\nconst options: EncryptionOptions = {\n  algorithm: 'AES-GCM',\n  keyLength: 256\n};\n\nconst encrypted = await securityUtils.encrypt('敏感数据', options);\nconsole.log('加密数据:', encrypted.data);\n\n// 解密数据\nconst decrypted = await securityUtils.decrypt(encrypted.data, {\n  key: encrypted.key,\n  iv: encrypted.iv\n});`
+                    js: `// 基础数据加密
+const encrypted = await securityUtils.encrypt('敏感数据', {\n  algorithm: 'AES-GCM',\n  keyLength: 256\n});\n\nconsole.log('加密数据:', encrypted.data);\nconsole.log('密钥:', encrypted.key);\nconsole.log('初始向量:', encrypted.iv);\n\n// 解密数据
+const decrypted = await securityUtils.decrypt(encrypted.data, {\n  key: encrypted.key,\n  iv: encrypted.iv\n});\n\nconsole.log('解密结果:', decrypted);
+
+// 解密数据
+const decrypted = await securityUtils.decrypt(encrypted.data, {\n  key: encrypted.key,\n  iv: encrypted.iv\n});`
                 },
                 demo: false
             }
@@ -134,8 +242,16 @@ const moduleData = {
                     { name: 'options', type: 'WebRTCOptions', required: false, description: 'WebRTC 配置选项' }
                 ],
                 examples: {
-                    js: `// 创建 WebRTC 连接\nconst rtc = await webrtcUtils.createConnection({\n  iceServers: [\n    { urls: 'stun:stun.l.google.com:19302' }\n  ],\n  video: true,\n  audio: true\n});\n\n// 获取本地视频流\nconst localVideo = document.getElementById('localVideo');\nlocalVideo.srcObject = rtc.localStream;\n\n// 处理远程视频流\nrtc.onRemoteStream = (stream) => {\n  const remoteVideo = document.getElementById('remoteVideo');\n  remoteVideo.srcObject = stream;\n};\n\n// 发起通话\nconst call = await rtc.startCall('user2');`,
-                    ts: `import { webrtcUtils, WebRTCOptions } from 'general-method-utils';\n\n// 创建 WebRTC 连接\nconst options: WebRTCOptions = {\n  iceServers: [\n    { urls: 'stun:stun.l.google.com:19302' }\n  ],\n  video: true,\n  audio: true\n};\n\nconst rtc = await webrtcUtils.createConnection(options);\n\n// 获取本地视频流\nconst localVideo = document.getElementById('localVideo') as HTMLVideoElement;\nlocalVideo.srcObject = rtc.localStream;`
+                    js: `// 创建 WebRTC 连接
+const rtc = await webrtcUtils.createConnection({\n  iceServers: [\n    { urls: 'stun:stun.l.google.com:19302' }\n  ],\n  video: true,\n  audio: true\n});\n\n// 获取本地视频流
+const localVideo = document.getElementById('localVideo');\nlocalVideo.srcObject = rtc.localStream;\n\n// 处理远程视频流
+rtc.onRemoteStream = (stream) => {\n  const remoteVideo = document.getElementById('remoteVideo');\n  remoteVideo.srcObject = stream;\n};\n\n// 发起通话
+const call = await rtc.startCall('user2');`,
+                    ts: `import { webrtcUtils, WebRTCOptions } from 'general-method-utils';
+
+// 创建 WebRTC 连接
+const options: WebRTCOptions = {\n  iceServers: [\n    { urls: 'stun:stun.l.google.com:19302' }\n  ],\n  video: true,\n  audio: true\n};\n\nconst rtc = await webrtcUtils.createConnection(options);\n\n// 获取本地视频流
+const localVideo = document.getElementById('localVideo') as HTMLVideoElement;\nlocalVideo.srcObject = rtc.localStream;`
                 },
                 demo: true
             },
@@ -146,8 +262,13 @@ const moduleData = {
                     { name: 'options', type: 'ScreenShareOptions', required: false, description: '屏幕共享选项' }
                 ],
                 examples: {
-                    js: `// 开始屏幕共享\nconst screenShare = await webrtcUtils.startScreenShare({\n  video: true,\n  audio: true,\n  onStream: (stream) => {\n    const screenVideo = document.getElementById('screenVideo');\n    screenVideo.srcObject = stream;\n  },\n  onEnd: () => {\n    console.log('屏幕共享已结束');\n  }\n});\n\n// 停止屏幕共享\nscreenShare.stop();`,
-                    ts: `import { webrtcUtils, ScreenShareOptions } from 'general-method-utils';\n\n// 开始屏幕共享\nconst options: ScreenShareOptions = {\n  video: true,\n  audio: true,\n  onStream: (stream: MediaStream) => {\n    const screenVideo = document.getElementById('screenVideo') as HTMLVideoElement;\n    screenVideo.srcObject = stream;\n  }\n};\n\nconst screenShare = await webrtcUtils.startScreenShare(options);`
+                    js: `// 开始屏幕共享
+const screenShare = await webrtcUtils.startScreenShare({\n  video: true,\n  audio: true,\n  onStream: (stream) => {\n    const screenVideo = document.getElementById('screenVideo');\n    screenVideo.srcObject = stream;\n  },\n  onEnd: () => {\n    console.log('屏幕共享已结束');\n  }\n});\n\n// 停止屏幕共享
+screenShare.stop();`,
+                    ts: `import { webrtcUtils, ScreenShareOptions } from 'general-method-utils';
+
+// 开始屏幕共享
+const options: ScreenShareOptions = {\n  video: true,\n  audio: true,\n  onStream: (stream: MediaStream) => {\n    const screenVideo = document.getElementById('screenVideo') as HTMLVideoElement;\n    screenVideo.srcObject = stream;\n  }\n};\n\nconst screenShare = await webrtcUtils.startScreenShare(options);`
                 },
                 demo: true
             }
@@ -166,8 +287,13 @@ const moduleData = {
                     { name: 'options', type: 'WalletOptions', required: false, description: '钱包连接选项' }
                 ],
                 examples: {
-                    js: `// 连接 MetaMask 钱包\nconst wallet = await blockchainUtils.connectWallet({\n  provider: 'metamask',\n  chainId: 1 // 以太坊主网\n});\n\nconsole.log('钱包地址:', wallet.address);\nconsole.log('余额:', wallet.balance);\nconsole.log('网络:', wallet.network);\n\n// 连接 WalletConnect\nconst wcWallet = await blockchainUtils.connectWallet({\n  provider: 'walletconnect',\n  projectId: 'your-project-id'\n});`,
-                    ts: `import { blockchainUtils, WalletOptions } from 'general-method-utils';\n\n// 连接 MetaMask 钱包\nconst options: WalletOptions = {\n  provider: 'metamask',\n  chainId: 1 // 以太坊主网\n};\n\nconst wallet = await blockchainUtils.connectWallet(options);\nconsole.log('钱包地址:', wallet.address);\nconsole.log('余额:', wallet.balance);`
+                    js: `// 连接 MetaMask 钱包
+const wallet = await blockchainUtils.connectWallet({\n  provider: 'metamask',\n  chainId: 1 // 以太坊主网\n});\n\nconsole.log('钱包地址:', wallet.address);\nconsole.log('余额:', wallet.balance);\nconsole.log('网络:', wallet.network);\n\n// 连接 WalletConnect
+const wcWallet = await blockchainUtils.connectWallet({\n  provider: 'walletconnect',\n  projectId: 'your-project-id'\n});`,
+                    ts: `import { blockchainUtils, WalletOptions } from 'general-method-utils';
+
+// 连接 MetaMask 钱包
+const options: WalletOptions = {\n  provider: 'metamask',\n  chainId: 1 // 以太坊主网\n};\n\nconst wallet = await blockchainUtils.connectWallet(options);\nconsole.log('钱包地址:', wallet.address);\nconsole.log('余额:', wallet.balance);`
                 },
                 demo: false
             },
@@ -181,8 +307,13 @@ const moduleData = {
                     { name: 'params', type: 'any[]', required: false, description: '方法参数' }
                 ],
                 examples: {
-                    js: `// 调用 ERC-20 代币合约\nconst tokenBalance = await blockchainUtils.callContract(\n  '0x1234...', // 代币合约地址\n  tokenABI,\n  'balanceOf',\n  [wallet.address]\n);\n\nconsole.log('代币余额:', tokenBalance);\n\n// 调用自定义合约\nconst result = await blockchainUtils.callContract(\n  '0x5678...',\n  contractABI,\n  'getUserInfo',\n  [userId]\n);`,
-                    ts: `import { blockchainUtils } from 'general-method-utils';\n\n// 调用 ERC-20 代币合约\nconst tokenBalance = await blockchainUtils.callContract(\n  '0x1234...', // 代币合约地址\n  tokenABI,\n  'balanceOf',\n  [wallet.address]\n);\n\nconsole.log('代币余额:', tokenBalance);`
+                    js: `// 调用 ERC-20 代币合约
+const tokenBalance = await blockchainUtils.callContract(\n  '0x1234...', // 代币合约地址\n  tokenABI,\n  'balanceOf',\n  [wallet.address]\n);\n\nconsole.log('代币余额:', tokenBalance);\n\n// 调用自定义合约
+const result = await blockchainUtils.callContract(\n  '0x5678...',\n  contractABI,\n  'getUserInfo',\n  [userId]\n);`,
+                    ts: `import { blockchainUtils } from 'general-method-utils';
+
+// 调用 ERC-20 代币合约
+const tokenBalance = await blockchainUtils.callContract(\n  '0x1234...', // 代币合约地址\n  tokenABI,\n  'balanceOf',\n  [wallet.address]\n);\n\nconsole.log('代币余额:', tokenBalance);`
                 },
                 demo: false
             }
@@ -201,8 +332,13 @@ const moduleData = {
                     { name: 'appConfig', type: 'MicrofrontendConfig', required: true, description: '应用配置' }
                 ],
                 examples: {
-                    js: `// 注册用户中心应用\nmicrofrontendUtils.registerApp({\n  name: 'user-center',\n  entry: 'http://localhost:3001',\n  container: '#user-app',\n  activeWhen: '/user',\n  props: {\n    token: 'abc123',\n    theme: 'dark'\n  }\n});\n\n// 注册订单系统\nmicrofrontendUtils.registerApp({\n  name: 'order-system',\n  entry: 'http://localhost:3002',\n  container: '#order-app',\n  activeWhen: ['/order', '/cart']\n});`,
-                    ts: `import { microfrontendUtils, MicrofrontendConfig } from 'general-method-utils';\n\n// 注册用户中心应用\nconst userAppConfig: MicrofrontendConfig = {\n  name: 'user-center',\n  entry: 'http://localhost:3001',\n  container: '#user-app',\n  activeWhen: '/user',\n  props: {\n    token: 'abc123',\n    theme: 'dark'\n  }\n};\n\nmicrofrontendUtils.registerApp(userAppConfig);`
+                    js: `// 注册用户中心应用
+nmicrofrontendUtils.registerApp({\n  name: 'user-center',\n  entry: 'http://localhost:3001',\n  container: '#user-app',\n  activeWhen: '/user',\n  props: {\n    token: 'abc123',\n    theme: 'dark'\n  }\n});\n\n// 注册订单系统
+nmicrofrontendUtils.registerApp({\n  name: 'order-system',\n  entry: 'http://localhost:3002',\n  container: '#order-app',\n  activeWhen: ['/order', '/cart']\n});`,
+                    ts: `import { microfrontendUtils, MicrofrontendConfig } from 'general-method-utils';
+
+// 注册用户中心应用
+const userAppConfig: MicrofrontendConfig = {\n  name: 'user-center',\n  entry: 'http://localhost:3001',\n  container: '#user-app',\n  activeWhen: '/user',\n  props: {\n    token: 'abc123',\n    theme: 'dark'\n  }\n};\n\nmicrofrontendUtils.registerApp(userAppConfig);`
                 },
                 demo: false
             },
@@ -214,8 +350,15 @@ const moduleData = {
                     { name: 'message', type: 'any', required: true, description: '消息内容' }
                 ],
                 examples: {
-                    js: `// 发送用户登录消息\nmicrofrontendUtils.sendMessage('user-center', {\n  type: 'USER_LOGIN',\n  data: { userId: 123, username: 'john' }\n});\n\n// 发送导航消息\nmicrofrontendUtils.sendMessage('order-system', {\n  type: 'NAVIGATE',\n  path: '/order/123'\n});\n\n// 监听消息\nmicrofrontendUtils.onMessage((message) => {\n  console.log('收到消息:', message);\n  if (message.type === 'USER_LOGOUT') {\n    handleUserLogout();\n  }\n});`,
-                    ts: `import { microfrontendUtils } from 'general-method-utils';\n\n// 发送用户登录消息\nmicrofrontendUtils.sendMessage('user-center', {\n  type: 'USER_LOGIN',\n  data: { userId: 123, username: 'john' }\n});\n\n// 监听消息\nmicrofrontendUtils.onMessage((message: any) => {\n  console.log('收到消息:', message);\n  if (message.type === 'USER_LOGOUT') {\n    handleUserLogout();\n  }\n});`
+                    js: `// 发送用户登录消息
+nmicrofrontendUtils.sendMessage('user-center', {\n  type: 'USER_LOGIN',\n  data: { userId: 123, username: 'john' }\n});\n\n// 发送导航消息
+nmicrofrontendUtils.sendMessage('order-system', {\n  type: 'NAVIGATE',\n  path: '/order/123'\n});\n\n// 监听消息
+nmicrofrontendUtils.onMessage((message) => {\n  console.log('收到消息:', message);\n  if (message.type === 'USER_LOGOUT') {\n    handleUserLogout();\n  }\n});`,
+                    ts: `import { microfrontendUtils } from 'general-method-utils';
+
+// 发送用户登录消息
+nmicrofrontendUtils.sendMessage('user-center', {\n  type: 'USER_LOGIN',\n  data: { userId: 123, username: 'john' }\n});\n\n// 监听消息
+nmicrofrontendUtils.onMessage((message: any) => {\n  console.log('收到消息:', message);\n  if (message.type === 'USER_LOGOUT') {\n    handleUserLogout();\n  }\n});`
                 },
                 demo: false
             }
@@ -257,7 +400,8 @@ const userState = {
             loginBtn.onclick = () => this.logout();
         } else {
             loginBtn.textContent = '登录';
-            loginBtn.onclick = () => showModal('loginModal');
+            // 移除这行，让events.js处理点击事件
+            // loginBtn.onclick = () => showModal('loginModal');
         }
         
         if (this.isPremium) {
