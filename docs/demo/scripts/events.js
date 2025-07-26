@@ -14,7 +14,71 @@ class EventManager {
         this.bindGlobalEvents();
         this.bindKeyboardShortcuts();
         this.bindWindowEvents();
+        this.bindAuthEvents(); // 新增：绑定认证相关事件
         this.isInitialized = true;
+    }
+
+    // 绑定认证相关事件
+    bindAuthEvents() {
+        const loginBtn = document.getElementById('loginBtn'); // 修正：从 'login-btn' 改为 'loginBtn'
+        const loginModal = document.getElementById('loginModal'); // 修正：从 'login-modal' 改为 'loginModal'
+        const loginForm = document.getElementById('loginForm'); // 修正：从 'login-form' 改为 'loginForm'
+
+        const forgotPasswordLink = document.getElementById('forgot-password-link');
+        const forgotPasswordModal = document.getElementById('forgot-password-modal');
+
+        const registerLink = document.getElementById('register-link');
+        const registerModal = document.getElementById('register-modal');
+
+        const upgradeBtn = document.getElementById('upgradeBtn');
+        const upgradeBtnInner = document.getElementById('upgradeBtnInner');
+        const upgradeModal = document.getElementById('upgradeModal'); // 修正：从 'membership-modal' 改为 'upgradeModal'
+
+        // 打开登录模态框
+        if (loginBtn) {
+            loginBtn.addEventListener('click', () => {
+                if (window.app && window.app.authManager && window.app.authManager.isLoggedIn()) {
+                    window.app.authManager.logout();
+                } else {
+                    this.openModal(loginModal);
+                }
+            });
+        }
+
+        // 提交登录表单
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                if (window.app && window.app.authManager) {
+                    window.app.authManager.login(username);
+                    this.closeModal(loginModal);
+                }
+            });
+        }
+
+        // 打开忘记密码模态框
+        if (forgotPasswordLink) {
+            forgotPasswordLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.closeModal(loginModal);
+                this.openModal(forgotPasswordModal);
+            });
+        }
+
+        // 打开注册模态框
+        if (registerLink) {
+            registerLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.closeModal(loginModal);
+                this.openModal(registerModal);
+            });
+        }
+
+        // 打开升级模态框
+        const openUpgradeModal = () => this.openModal(upgradeModal);
+        if (upgradeBtn) upgradeBtn.addEventListener('click', openUpgradeModal);
+        if (upgradeBtnInner) upgradeBtnInner.addEventListener('click', openUpgradeModal);
     }
 
     // 绑定全局事件
@@ -112,10 +176,19 @@ class EventManager {
 
         // 模态框关闭事件
         document.addEventListener('click', (e) => {
+            // 点击模态框外部关闭
             if (e.target.classList.contains('modal')) {
                 this.closeModal(e.target);
             }
             
+            // 点击关闭按钮 (x)
+            if (e.target.classList.contains('close-btn')) {
+                const modal = e.target.closest('.modal');
+                if (modal) {
+                    this.closeModal(modal);
+                }
+            }
+
             if (e.target.classList.contains('modal-close')) {
                 const modal = e.target.closest('.modal');
                 if (modal) {
@@ -123,6 +196,15 @@ class EventManager {
                 }
             }
         });
+
+        // 新增：打开和关闭模态框的辅助函数
+        this.openModal = (modal) => {
+            if (modal) modal.style.display = 'flex';
+        };
+
+        this.closeModal = (modal) => {
+            if (modal) modal.style.display = 'none';
+        };
 
         // 复制按钮事件
         document.addEventListener('click', (e) => {

@@ -6,6 +6,7 @@ import { TabManager } from './tabs.js';
 import { ContentManager } from './content.js';
 import { SidebarManager } from './sidebar.js';
 import { EventManager } from './events.js';
+import { AuthManager } from './auth.js'; // 新增：导入 AuthManager
 
 // 主应用类
 class DemoApp {
@@ -24,6 +25,7 @@ class DemoApp {
             this.contentManager = new ContentManager();
             this.sidebarManager = new SidebarManager();
             this.eventManager = new EventManager();
+            this.authManager = new AuthManager(); // 新增：实例化 AuthManager
         } catch (error) {
             console.error('创建管理器实例时出错:', error);
             // 创建空对象以避免后续错误
@@ -33,6 +35,7 @@ class DemoApp {
             this.contentManager = {};
             this.sidebarManager = {};
             this.eventManager = {};
+            this.authManager = {}; // 新增：错误处理
         }
     }
 

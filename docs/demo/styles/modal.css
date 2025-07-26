@@ -89,6 +89,7 @@
     font-size: 14px;
     background: #0f172a;
     color: #e2e8f0;
+    box-sizing: border-box; /* 添加这行 */
 }
 
 .form-group input:focus {
@@ -121,6 +122,7 @@ body.light-theme .modal-close:hover {
 }
 
 body.light-theme .modal-body {
+  width:100%;
     color: var(--text-primary, #1e293b);
 }
 
@@ -133,6 +135,7 @@ body.light-theme .form-group input {
     border: 1px solid #e2e8f0;
     background: #ffffff;
     color: #1e293b;
+    box-sizing: border-box; /* 添加这行 */
 }
 
 body.light-theme .form-group input:focus {
