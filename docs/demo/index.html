@@ -123,23 +123,25 @@
     <div class="modal" id="loginModal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-body">
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label>用户名</label>
-                            <input type="text" id="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label>密码</label>
-                            <input type="password" id="password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">登录</button>
-                    </form>
-                    <div class="modal-links">
-                        <a href="#" id="forgot-password-link">忘记密码?</a>
-                        <span>|</span>
-                        <a href="#" id="register-link">注册新账号</a>
+                <h3>用户登录</h3>
+                <button class="modal-close" id="closeLogin">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" id="username" required>
                     </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">登录</button>
+                </form>
+                <div class="modal-links">
+                    <a href="#" id="forgot-password-link">忘记密码?</a>
+                    <span>|</span>
+                    <a href="#" id="register-link">注册新账号</a>
                 </div>
             </div>
         </div>
@@ -148,38 +150,52 @@
     <!-- 忘记密码模态框 -->
     <div id="forgot-password-modal" class="modal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>找回密码</h2>
-            <form id="forgot-password-form">
-                <div class="form-group">
-                    <label for="forgot-email">邮箱</label>
-                    <input type="email" id="forgot-email" name="email" required>
-                </div>
-                <button type="submit" class="btn btn-primary">发送重置链接</button>
-            </form>
+            <div class="modal-header">
+                <h3>找回密码</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="forgot-password-form">
+                    <div class="form-group">
+                        <label for="forgot-email">邮箱</label>
+                        <input type="email" id="forgot-email" name="email" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="back-to-login">返回登录</button>
+                        <button type="submit" class="btn btn-primary">发送重置链接</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
     <!-- 注册模态框 -->
     <div id="register-modal" class="modal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>创建账户</h2>
-            <form id="register-form">
-                <div class="form-group">
-                    <label for="register-username">用户名</label>
-                    <input type="text" id="register-username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-email">邮箱</label>
-                    <input type="email" id="register-email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-password">密码</label>
-                    <input type="password" id="register-password" name="password" required>
-                </div>
-                <button type="submit" class="btn btn-primary">注册</button>
-            </form>
+            <div class="modal-header">
+                <h3>创建账户</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-username">用户名</label>
+                        <input type="text" id="register-username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">邮箱</label>
+                        <input type="email" id="register-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">密码</label>
+                        <input type="password" id="register-password" name="password" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="back-to-login-from-register">返回登录</button>
+                        <button type="submit" class="btn btn-primary">注册</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 

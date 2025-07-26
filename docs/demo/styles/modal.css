@@ -142,3 +142,20 @@ body.light-theme .form-group input:focus {
     border-color: #2563eb;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
+
+/* 表单按钮组样式 */
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.form-actions .btn {
+    min-width: 80px;
+}
+
+/* 浅色主题按钮组样式 */
+body.light-theme .form-actions .btn {
+    /* 继承现有按钮样式 */
+}

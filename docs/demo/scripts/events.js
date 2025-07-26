@@ -20,9 +20,9 @@ class EventManager {
 
     // 绑定认证相关事件
     bindAuthEvents() {
-        const loginBtn = document.getElementById('loginBtn'); // 修正：从 'login-btn' 改为 'loginBtn'
-        const loginModal = document.getElementById('loginModal'); // 修正：从 'login-modal' 改为 'loginModal'
-        const loginForm = document.getElementById('loginForm'); // 修正：从 'login-form' 改为 'loginForm'
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const loginForm = document.getElementById('loginForm');
 
         const forgotPasswordLink = document.getElementById('forgot-password-link');
         const forgotPasswordModal = document.getElementById('forgot-password-modal');
@@ -32,7 +32,27 @@ class EventManager {
 
         const upgradeBtn = document.getElementById('upgradeBtn');
         const upgradeBtnInner = document.getElementById('upgradeBtnInner');
-        const upgradeModal = document.getElementById('upgradeModal'); // 修正：从 'membership-modal' 改为 'upgradeModal'
+        const upgradeModal = document.getElementById('upgradeModal');
+
+        // 返回登录按钮
+        // 删除这些行（第636-653行）：
+        // 在 bindAuthEvents 方法中添加
+        // const backToLoginBtn = document.getElementById('back-to-login');
+        // const backToLoginFromRegisterBtn = document.getElementById('back-to-login-from-register');
+        // 
+        // if (backToLoginBtn) {
+        //     backToLoginBtn.addEventListener('click', () => {
+        //         closeModal('forgot-password-modal');
+        //         openModal('loginModal');
+        //     });
+        // }
+        // 
+        // if (backToLoginFromRegisterBtn) {
+        //     backToLoginFromRegisterBtn.addEventListener('click', () => {
+        //         closeModal('register-modal');
+        //         openModal('loginModal');
+        //     });
+        // }
 
         // 打开登录模态框
         if (loginBtn) {
