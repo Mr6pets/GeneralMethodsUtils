@@ -159,3 +159,18 @@ body.light-theme .form-group input:focus {
 body.light-theme .form-actions .btn {
     /* 继承现有按钮样式 */
 }
+
+
+/* 确保按钮文字居中 */
+.modal-body .btn,
+.modal-body .btn-primary,
+.modal-body .btn-secondary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 价格卡片中的按钮容器样式 */
+.pricing-cards {
+    text-align: center;
+}

@@ -164,3 +164,175 @@ body {
         transform: translateY(-10px);
     }
 }
+
+
+/* 欢迎页面样式 */
+.welcome-page {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.welcome-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.welcome-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.welcome-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 欢迎页面优化样式 */
+.welcome-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    border-radius: 12px;  /* 增大圆角 */
+    padding: 1.5rem;
+    min-width: 200px;
+    text-align: center;
+    box-shadow: var(--shadow-md);  /* 使用中等阴影 */
+    transition: all 0.3s ease;  /* 添加平滑过渡效果 */
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);  /* 悬停上浮效果 */
+    box-shadow: var(--shadow-lg);  /* 悬停增强阴影 */
+}
+
+.stat-icon {
+    font-size: 2.5rem;  /* 增大图标尺寸 */
+    margin-bottom: 1rem;
+}
+
+.stat-value {
+    font-size: 2.5rem;  /* 增大数值尺寸 */
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.welcome-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;  /* 增加按钮间距 */
+    margin-bottom: 3rem;
+}
+
+.welcome-actions .btn {
+    padding: 1rem 2.5rem;  /* 增大按钮尺寸 */
+    font-size: 1.2rem;
+    border-radius: 50px;  /* 圆形按钮 */
+}
+
+.welcome-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.info-section {
+    padding: 1.5rem;
+    border-radius: 8px;
+    background: rgba(var(--card-bg-rgb), 0.7);
+}
+
+.info-section h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+    color: var(--primary);
+}
+
+.info-list li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.info-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--success);
+    font-weight: bold;
+}
+
+.usage-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.step-number {
+    min-width: 36px;
+    height: 36px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.step-content h4 {
+    margin-bottom: 0.3rem;
+    color: var(--text-primary);
+}
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+    .welcome-stats {
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        min-width: 160px;
+    }
+    
+    .welcome-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.welcome-actions {
+    text-align: center;
+}
+
+.welcome-actions .btn {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+}
