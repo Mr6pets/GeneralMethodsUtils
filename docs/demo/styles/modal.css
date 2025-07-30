@@ -173,4 +173,898 @@ body.light-theme .form-actions .btn {
 /* 价格卡片中的按钮容器样式 */
 .pricing-cards {
     text-align: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
+    align-items: stretch; /* 确保卡片高度一致 */
+}
+
+/* 价格卡片样式 */
+.pricing-card {
+    background: var(--bg-secondary, #1e293b);
+    border: 2px solid var(--border-color, #334155);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px; /* 设置最小高度确保一致性 */
+}
+
+.pricing-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-color, #3b82f6), var(--success-color, #10b981));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.pricing-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-color, #3b82f6);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.pricing-card:hover::before {
+    opacity: 1;
+}
+
+/* 推荐标签 */
+.pricing-card.featured {
+    border-color: var(--accent-color, #3b82f6);
+    position: relative;
+    transform: scale(1.05);
+}
+
+.pricing-card.featured::before {
+    opacity: 1;
+}
+
+.pricing-card.featured::after {
+    content: '推荐';
+    position: absolute;
+    top: 1rem;
+    right: -0.5rem;
+    background: var(--accent-color, #3b82f6);
+    color: white;
+    padding: 0.25rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 12px;
+    transform: rotate(15deg);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* 价格卡片标题 */
+.pricing-card h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary, #e2e8f0);
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+/* 价格显示 */
+.pricing-card .price {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--accent-color, #3b82f6);
+    margin-bottom: 1.5rem;
+    line-height: 1;
+}
+
+.pricing-card .price span {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-secondary, #94a3b8);
+    vertical-align: baseline;
+}
+
+/* 功能列表 */
+.pricing-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 auto 0; /* 使用 margin-bottom: auto 推送按钮到底部 */
+    text-align: left;
+    flex-grow: 1; /* 允许列表区域扩展 */
+}
+
+.pricing-card ul li {
+    padding: 0.75rem 0;
+    color: var(--text-secondary, #94a3b8);
+    position: relative;
+    padding-left: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+}
+
+.pricing-card ul li:last-child {
+    border-bottom: none;
+}
+
+.pricing-card ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0.75rem;
+    color: var(--success-color, #10b981);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.pricing-card ul li:hover {
+    color: var(--text-primary, #e2e8f0);
+    padding-left: 2.5rem;
+}
+
+/* 价格卡片按钮 - 关键：固定在底部 */
+.pricing-card .btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: 1.5rem; /* 确保与上方内容有间距 */
+    flex-shrink: 0; /* 防止按钮被压缩 */
+}
+
+.pricing-card .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.pricing-card .btn:hover::before {
+    left: 100%;
+}
+
+.pricing-card.featured .btn {
+    background: linear-gradient(135deg, var(--accent-color, #3b82f6), var(--accent-hover, #2563eb));
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+.pricing-card.featured .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4);
+}
+
+/* 浅色主题适配 */
+body.light-theme .pricing-card {
+    background: var(--bg-primary, #ffffff);
+    border-color: var(--border-color, #e2e8f0);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .pricing-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+body.light-theme .pricing-card h4 {
+    color: var(--text-primary, #1e293b);
+}
+
+body.light-theme .pricing-card ul li {
+    color: var(--text-secondary, #64748b);
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .pricing-card ul li:hover {
+    color: var(--text-primary, #1e293b);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .pricing-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .pricing-card.featured {
+        transform: none;
+        order: -1; /* 在移动端将推荐卡片置顶 */
+    }
+    
+    .pricing-card.featured::after {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.8rem;
+    }
+    
+    .pricing-card .price {
+        font-size: 2.5rem;
+    }
+    
+    .pricing-card {
+        min-height: 350px; /* 移动端稍微减少高度 */
+    }
+}
+
+/* 升级模态框特定样式 */
+#upgradeModal .modal-content {
+    max-width: 800px;
+    width: 95%;
+}
+
+#upgradeModal .modal-body {
+    padding: 2rem;
+}
+
+/* 动画效果 */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pricing-card {
+    animation: slideInUp 0.6s ease forwards;
+}
+
+.pricing-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+/* 选中状态样式 - 方案四：温和商务风默认选中 */
+.pricing-card.featured {
+    border: 2px solid #10b981;
+    background: linear-gradient(135deg, 
+                rgba(16, 185, 129, 0.05) 0%, 
+                var(--bg-secondary, #1e293b) 50%, 
+                rgba(16, 185, 129, 0.03) 100%);
+    transform: scale(1.02) translateY(-5px);
+    box-shadow: 0 15px 35px rgba(16, 185, 129, 0.2);
+    position: relative;
+}
+
+.pricing-card.featured::before {
+    opacity: 1;
+    background: linear-gradient(90deg, #10b981, #059669);
+    height: 5px;
+}
+
+.pricing-card.featured::after {
+    content: '💎 推荐选择';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #10b981;
+    color: white;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+    z-index: 10;
+}
+
+.pricing-card.featured h4 {
+    color: #10b981;
+}
+
+.pricing-card.featured .price {
+    color: #3b82f6;
+}
+
+.pricing-card.featured .btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+    font-weight: 600;
+}
+
+.pricing-card.featured::after {
+    content: '推荐';
+    position: absolute;
+    top: 1rem;
+    right: -0.5rem;
+    background: var(--accent-color, #3b82f6);
+    color: white;
+    padding: 0.25rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 12px;
+    transform: rotate(15deg);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* 价格卡片标题 */
+.pricing-card h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary, #e2e8f0);
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+/* 价格显示 */
+.pricing-card .price {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--accent-color, #3b82f6);
+    margin-bottom: 1.5rem;
+    line-height: 1;
+}
+
+.pricing-card .price span {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-secondary, #94a3b8);
+    vertical-align: baseline;
+}
+
+/* 功能列表 */
+.pricing-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 auto 0; /* 使用 margin-bottom: auto 推送按钮到底部 */
+    text-align: left;
+    flex-grow: 1; /* 允许列表区域扩展 */
+}
+
+.pricing-card ul li {
+    padding: 0.75rem 0;
+    color: var(--text-secondary, #94a3b8);
+    position: relative;
+    padding-left: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+}
+
+.pricing-card ul li:last-child {
+    border-bottom: none;
+}
+
+.pricing-card ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0.75rem;
+    color: var(--success-color, #10b981);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.pricing-card ul li:hover {
+    color: var(--text-primary, #e2e8f0);
+    padding-left: 2.5rem;
+}
+
+/* 价格卡片按钮 - 关键：固定在底部 */
+.pricing-card .btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: 1.5rem; /* 确保与上方内容有间距 */
+    flex-shrink: 0; /* 防止按钮被压缩 */
+}
+
+.pricing-card .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.pricing-card .btn:hover::before {
+    left: 100%;
+}
+
+.pricing-card.featured .btn {
+    background: linear-gradient(135deg, var(--accent-color, #3b82f6), var(--accent-hover, #2563eb));
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+.pricing-card.featured .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4);
+}
+
+/* 浅色主题适配 */
+body.light-theme .pricing-card {
+    background: var(--bg-primary, #ffffff);
+    border-color: var(--border-color, #e2e8f0);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .pricing-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+body.light-theme .pricing-card h4 {
+    color: var(--text-primary, #1e293b);
+}
+
+body.light-theme .pricing-card ul li {
+    color: var(--text-secondary, #64748b);
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .pricing-card ul li:hover {
+    color: var(--text-primary, #1e293b);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .pricing-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .pricing-card.featured {
+        transform: none;
+        order: -1;
+    }
+    
+    .pricing-card .price {
+        font-size: 2.5rem;
+    }
+    
+    .pricing-card {
+        min-height: 350px; /* 移动端稍微减少高度 */
+    }
+}
+
+/* 升级模态框特定样式 */
+#upgradeModal .modal-content {
+    max-width: 800px;
+    width: 95%;
+}
+
+#upgradeModal .modal-body {
+    padding: 2rem;
+}
+
+/* 动画效果 */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pricing-card {
+    animation: slideInUp 0.6s ease forwards;
+}
+
+.pricing-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+/* 选中状态样式 - 方案四：简约现代 */
+.pricing-card.selected {
+    border: 2px solid #3b82f6;
+    background: rgba(59, 130, 246, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
+}
+
+.pricing-card.selected h4 {
+    color: #3b82f6;
+}
+
+.pricing-card.selected .price {
+    color: #10b981;
+}
+
+.pricing-card.selected .btn {
+    background: #3b82f6;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.pricing-card.selected::after {
+    content: 'SELECTED';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #3b82f6;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    z-index: 10;
+}
+
+.pricing-card.selected::after {
+    content: '当前选择';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #10b981;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    z-index: 10;
+}
+
+/* 浅色主题选中状态适配 */
+body.light-theme .pricing-card.selected {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: #3b82f6;
+    box-shadow: 0 15px 30px rgba(59, 130, 246, 0.15);
+}
+
+body.light-theme .pricing-card.selected h4 {
+    color: #2563eb;
+}
+
+body.light-theme .pricing-card.selected .price {
+    color: #059669;
+}
+
+/* 浅色主题推荐卡片适配 */
+body.light-theme .pricing-card.featured {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: #3b82f6;
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+}
+
+body.light-theme .pricing-card.featured h4 {
+    color: #2563eb;
+}
+
+body.light-theme .pricing-card.featured .price {
+    color: #059669;
+}
+
+body.light-theme .pricing-card.featured::after {
+    background: #3b82f6;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+/* 推荐卡片默认选中样式 - 方案三 */
+.pricing-card.featured {
+    border: 2px solid transparent;
+    background: linear-gradient(var(--bg-secondary, #1e293b), var(--bg-secondary, #1e293b)) padding-box,
+                linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4, #10b981) border-box;
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.3),
+                0 20px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.pricing-card.featured::before {
+    opacity: 1;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4, #10b981);
+    height: 6px;
+    animation: rainbow-flow 3s linear infinite;
+}
+
+@keyframes rainbow-flow {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+.pricing-card.featured::after {
+    content: '⭐ 超值推荐';
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+    z-index: 10;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* 添加粒子效果背景 */
+.pricing-card.featured .pricing-card-content {
+    position: relative;
+    z-index: 2;
+}
+
+.pricing-card.featured .btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.pricing-card.featured .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shine 2s infinite;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+.pricing-card.featured h4 {
+    color: #3b82f6;
+    font-size: 1.6rem;
+}
+
+.pricing-card.featured .price {
+    color: #10b981;
+    font-size: 3.2rem;
+}
+
+.pricing-card.featured .btn {
+    background: #3b82f6;
+    color: white;
+    font-weight: 700;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+.pricing-card.featured .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4);
+}
+
+/* 浅色主题适配 */
+body.light-theme .pricing-card {
+    background: var(--bg-primary, #ffffff);
+    border-color: var(--border-color, #e2e8f0);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .pricing-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+body.light-theme .pricing-card h4 {
+    color: var(--text-primary, #1e293b);
+}
+
+body.light-theme .pricing-card ul li {
+    color: var(--text-secondary, #64748b);
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .pricing-card ul li:hover {
+    color: var(--text-primary, #1e293b);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .pricing-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .pricing-card.featured {
+        transform: none;
+        order: -1;
+    }
+    
+    .pricing-card .price {
+        font-size: 2.5rem;
+    }
+    
+    .pricing-card {
+        min-height: 350px; /* 移动端稍微减少高度 */
+    }
+}
+
+/* 升级模态框特定样式 */
+#upgradeModal .modal-content {
+    max-width: 800px;
+    width: 95%;
+}
+
+#upgradeModal .modal-body {
+    padding: 2rem;
+}
+
+/* 动画效果 */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pricing-card {
+    animation: slideInUp 0.6s ease forwards;
+}
+
+.pricing-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+/* 选中状态样式 - 方案四：简约现代 */
+.pricing-card.selected {
+    border: 2px solid #3b82f6;
+    background: rgba(59, 130, 246, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
+}
+
+.pricing-card.selected h4 {
+    color: #3b82f6;
+}
+
+.pricing-card.selected .price {
+    color: #10b981;
+}
+
+.pricing-card.selected .btn {
+    background: #3b82f6;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.pricing-card.selected::after {
+    content: 'SELECTED';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #3b82f6;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    z-index: 10;
+}
+
+.pricing-card.selected::after {
+    content: '当前选择';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #10b981;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    z-index: 10;
+}
+
+/* 浅色主题选中状态适配 */
+body.light-theme .pricing-card.selected {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: #3b82f6;
+    box-shadow: 0 15px 30px rgba(59, 130, 246, 0.15);
+}
+
+body.light-theme .pricing-card.selected h4 {
+    color: #2563eb;
+}
+
+body.light-theme .pricing-card.selected .price {
+    color: #059669;
+}
+
+/* 推荐卡片默认选中样式 - 方案一 */
+.pricing-card.featured {
+    border: 3px solid #3b82f6;
+    background: linear-gradient(135deg, 
+                rgba(59, 130, 246, 0.08) 0%, 
+                var(--bg-secondary, #1e293b) 30%, 
+                rgba(139, 92, 246, 0.06) 100%);
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.25),
+                0 0 0 1px rgba(59, 130, 246, 0.1);
+    position: relative;
+}
+
+.pricing-card.featured::before {
+    opacity: 1;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+    height: 6px;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+.pricing-card.featured::after {
+    content: '🔥 最受欢迎';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    z-index: 10;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    }
+    to {
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+    }
+}
+
+.pricing-card.featured .btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    animation: pulse-button 3s ease-in-out infinite;
+}
+
+@keyframes pulse-button {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 12px 35px rgba(16, 185, 129, 0.6);
+    }
 }

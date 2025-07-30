@@ -654,3 +654,34 @@ window.showModal = function(modalId) {
     }
 };
 
+// 在events.js中添加价格卡片选择逻辑
+document.addEventListener('DOMContentLoaded', function() {
+    const pricingCards = document.querySelectorAll('.pricing-card');
+    
+    pricingCards.forEach(card => {
+        const button = card.querySelector('.btn');
+        
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // 移除其他卡片的选中状态
+            pricingCards.forEach(c => c.classList.remove('selected'));
+            
+            // 添加当前卡片的选中状态
+            card.classList.add('selected');
+            
+            // 更新按钮文字
+            pricingCards.forEach(c => {
+                const btn = c.querySelector('.btn');
+                if (c === card) {
+                    btn.textContent = '已选择';
+                    btn.style.pointerEvents = 'none';
+                } else {
+                    btn.textContent = c.querySelector('h4').textContent.includes('月度') ? '选择月度' : '选择年度';
+                    btn.style.pointerEvents = 'auto';
+                }
+            });
+        });
+    });
+});
+
