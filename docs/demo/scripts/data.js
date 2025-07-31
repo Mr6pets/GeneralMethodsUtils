@@ -677,39 +677,39 @@ window.demoGenerators = demoGenerators;
 
 // 在文件开头添加全局配置
 const getEnvironmentConfig = () => {
-    const hostname = window.location.hostname;
-    
-    if (hostname === 'localhost' || hostname === '127.0.0.1') {
-        // 开发环境 - 显示所有按钮
-        return {
-            showLoginButton: false,
-            showUpgradeButton: false,
-            showThemeToggle: true
-        };
-    } else if (hostname.includes('demo')) {
-        // 演示环境 - 隐藏付费功能
-        return {
-            showLoginButton: true,
-            showUpgradeButton: false,
-            showThemeToggle: true
-        };
-    } else {
-        // 生产环境 - 显示所有功能
-        return {
-            showLoginButton: false,
-            showUpgradeButton: false,
-            showThemeToggle: true
-        };
-    }
+  const hostname = window.location.hostname;
+
+  if (hostname === "localhost" || hostname === "127.0.0.1") {
+    // 开发环境 - 显示所有按钮
+    return {
+      showLoginButton: true,
+      showUpgradeButton: true,
+      showThemeToggle: true,
+    };
+  } else if (hostname.includes("demo")) {
+    // 演示环境 - 隐藏付费功能
+    return {
+      showLoginButton: true,
+      showUpgradeButton: false,
+      showThemeToggle: true,
+    };
+  } else {
+    // 生产环境 - 显示所有功能
+    return {
+      showLoginButton: false,
+      showUpgradeButton: false,
+      showThemeToggle: true,
+    };
+  }
 };
 
 const globalConfig = {
-    ui: getEnvironmentConfig(),
-    features: {
-        enableAuth: true,
-        enablePremium: true,
-        enableDemo: true,
-    }
+  ui: getEnvironmentConfig(),
+  features: {
+    enableAuth: true,
+    enablePremium: true,
+    enableDemo: true,
+  },
 };
 
 // 在文件末尾添加
