@@ -34,7 +34,7 @@ class SidebarManager {
                         <i class="fas fa-tools"></i>
                         方法库
                     </h2>
-                    <div class="version-info">v2.0.0</div>
+                    <div class="version-info">v1.3.8</div>
                 </div>
             </div>
             

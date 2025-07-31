@@ -278,3 +278,42 @@ body.light-theme .theme-toggle:hover {
     color: var(--text-primary);
     transform: scale(1.05);
 }
+
+/* PC端大屏幕优化 (1200px+) */
+@media (min-width: 1920px) {
+    .header .container {
+        max-width: 1920px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        flex: 0 0 auto;
+        font-size: 22px;
+    }
+    
+    .logo i {
+        font-size: 26px;
+    }
+    
+    .nav {
+        flex: 0 0 auto;
+    }
+    
+    .user-actions {
+        gap: 16px;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 15px;
+    }
+    
+    .theme-toggle {
+        width: 40px;
+        height: 40px;
+    }
+}
