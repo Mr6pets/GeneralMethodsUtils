@@ -186,10 +186,27 @@ class ContentManager {
     // 渲染方法详情页
     renderMethodDetail(moduleKey, methodKey) {
         const content = document.querySelector('.content-body');
-        const module = moduleData[moduleKey];
-        const method = module.methods[methodKey];
         
-        if (!method || !content) return;
+        // 检查全局 moduleData 是否存在
+        if (!window.moduleData) {
+            console.warn('模块数据未加载，无法渲染方法详情');
+            Utils.showToast('模块数据未加载', 'error');
+            return;
+        }
+        
+        const module = window.moduleData[moduleKey];
+        if (!module || !module.methods) {
+            console.warn(`模块 '${moduleKey}' 不存在或数据不完整`);
+            Utils.showToast(`模块 '${moduleKey}' 不存在`, 'error');
+            return;
+        }
+        
+        const method = module.methods[methodKey];
+        if (!method || !content) {
+            console.warn(`方法 '${methodKey}' 在模块 '${moduleKey}' 中不存在`);
+            Utils.showToast(`方法 '${methodKey}' 不存在`, 'error');
+            return;
+        }
         
         this.currentMethod = { moduleKey, methodKey, method, module };
         
@@ -295,7 +312,12 @@ class ContentManager {
 
     // 渲染方法导航
     renderMethodNavigation(moduleKey, methodKey) {
-        const module = moduleData[moduleKey];
+        if (!window.moduleData || !window.moduleData[moduleKey] || !window.moduleData[moduleKey].methods) {
+            console.warn(`无法渲染方法导航：模块 '${moduleKey}' 数据不完整`);
+            return '<div class="method-nav"></div>';
+        }
+        
+        const module = window.moduleData[moduleKey];
         const methodKeys = Object.keys(module.methods);
         const currentIndex = methodKeys.indexOf(methodKey);
         
@@ -340,22 +362,48 @@ class ContentManager {
 
     // 获取总方法数
     getTotalMethodCount() {
-        return Object.values(moduleData).reduce((total, module) => {
+        if (!window.moduleData) {
+            console.warn('模块数据未加载，无法获取总方法数');
+            return 0;
+        }
+        
+        return Object.values(window.moduleData).reduce((total, module) => {
+            if (!module || !module.methods) {
+                return total;
+            }
             return total + Object.keys(module.methods).length;
         }, 0);
     }
 
     // 获取演示数量
     getDemoCount() {
-        return Object.values(moduleData).reduce((total, module) => {
+        if (!window.moduleData) {
+            console.warn('模块数据未加载，无法获取演示数量');
+            return 0;
+        }
+        
+        return Object.values(window.moduleData).reduce((total, module) => {
+            if (!module || !module.methods) {
+                return total;
+            }
             return total + Object.values(module.methods).filter(method => method.demo).length;
         }, 0);
     }
 
     // 显示模块方法列表
     showModuleMethods(moduleKey) {
-        const module = moduleData[moduleKey];
-        if (!module) return;
+        if (!window.moduleData) {
+            console.warn('模块数据未加载，无法显示模块方法');
+            Utils.showToast('模块数据未加载', 'error');
+            return;
+        }
+        
+        const module = window.moduleData[moduleKey];
+        if (!module || !module.methods) {
+            console.warn(`模块 '${moduleKey}' 不存在或数据不完整`);
+            Utils.showToast(`模块 '${moduleKey}' 不存在`, 'error');
+            return;
+        }
         
         // 展开对应模块
         if (window.app && window.app.sidebarManager) {
@@ -371,8 +419,14 @@ class ContentManager {
 
     // 显示快速开始
     showQuickStart() {
+        if (!window.moduleData) {
+            console.warn('模块数据未加载，无法显示快速开始');
+            Utils.showToast('模块数据未加载', 'error');
+            return;
+        }
+        
         // 选择第一个模块的第一个方法
-        const firstModuleKey = Object.keys(moduleData)[0];
+        const firstModuleKey = Object.keys(window.moduleData)[0];
         if (firstModuleKey) {
             this.showModuleMethods(firstModuleKey);
         }

@@ -183,6 +183,41 @@ class DemoApp {
     // 处理方法选择
     handleMethodSelection(moduleKey, methodKey) {
         try {
+            // 检查应用是否已初始化
+            if (!this.isInitialized) {
+                console.warn('应用尚未初始化完成，无法处理方法选择');
+                Utils.showToast('应用正在初始化，请稍后再试', 'warning');
+                return;
+            }
+            
+            // 检查模块数据是否存在
+            if (!this.moduleData) {
+                console.error('模块数据未加载');
+                Utils.showToast('模块数据未加载', 'error');
+                return;
+            }
+            
+            // 检查指定模块是否存在
+            if (!this.moduleData[moduleKey]) {
+                console.error(`模块 '${moduleKey}' 不存在`);
+                Utils.showToast(`模块 '${moduleKey}' 不存在`, 'error');
+                return;
+            }
+            
+            // 检查模块的方法数据是否存在
+            if (!this.moduleData[moduleKey].methods) {
+                console.error(`模块 '${moduleKey}' 的方法数据不存在`);
+                Utils.showToast(`模块 '${moduleKey}' 的方法数据不存在`, 'error');
+                return;
+            }
+            
+            // 检查指定方法是否存在
+            if (!this.moduleData[moduleKey].methods[methodKey]) {
+                console.error(`方法 '${methodKey}' 在模块 '${moduleKey}' 中不存在`);
+                Utils.showToast(`方法 '${methodKey}' 不存在`, 'error');
+                return;
+            }
+            
             // 渲染方法详情
             this.contentManager.renderMethodDetail(moduleKey, methodKey);
             
@@ -190,8 +225,8 @@ class DemoApp {
             this.tabManager.initTabs(moduleKey, methodKey);
             
             // 更新页面标题
-            const method = this.moduleData[moduleKey]?.methods[methodKey];
-            if (method) {
+            const method = this.moduleData[moduleKey].methods[methodKey];
+            if (method && method.name) {
                 document.title = `${method.name} - 通用方法库演示`;
             }
             
@@ -329,9 +364,19 @@ class DemoApp {
 
     // 获取应用统计信息
     getStats() {
+        if (!this.moduleData) {
+            return {
+                totalMethods: 0,
+                totalModules: 0,
+                demoCount: 0,
+                currentLanguage: this.currentLanguage,
+                isInitialized: this.isInitialized
+            };
+        }
+        
         return {
             totalMethods: this.getTotalMethodCount(),
-            totalModules: Object.keys(moduleData).length,
+            totalModules: Object.keys(this.moduleData).length,
             demoCount: this.getDemoCount(),
             currentLanguage: this.currentLanguage,
             isInitialized: this.isInitialized
@@ -340,18 +385,31 @@ class DemoApp {
 
     // 获取总方法数
     getTotalMethodCount() {
-        return Object.values(moduleData).reduce((total, module) => {
-            return total + Object.keys(module.methods).length;
+        if (!this.moduleData) {
+            return 0;
+        }
+        
+        return Object.values(this.moduleData).reduce((total, module) => {
+            if (module && module.methods) {
+                return total + Object.keys(module.methods).length;
+            }
+            return total;
         }, 0);
     }
 
     // 获取演示数量
     getDemoCount() {
+        if (!this.moduleData) {
+            return 0;
+        }
+        
         let count = 0;
-        Object.values(moduleData).forEach(module => {
-            Object.values(module.methods).forEach(method => {
-                if (method.demo) count++;
-            });
+        Object.values(this.moduleData).forEach(module => {
+            if (module && module.methods) {
+                Object.values(module.methods).forEach(method => {
+                    if (method && method.demo) count++;
+                });
+            }
         });
         return count;
     }

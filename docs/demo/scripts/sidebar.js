@@ -61,8 +61,18 @@ class SidebarManager {
 
     // 构建方法树
     buildMethodTree() {
+        if (!this.moduleData) {
+            console.warn('模块数据未加载，无法构建方法树');
+            return [];
+        }
+        
         return Object.keys(this.moduleData).map(moduleKey => {
             const module = this.moduleData[moduleKey];
+            if (!module || !module.methods) {
+                console.warn(`模块 '${moduleKey}' 数据不完整`);
+                return '';
+            }
+            
             const isExpanded = this.expandedModules.has(moduleKey);
             const methodCount = Object.keys(module.methods).length;
             
@@ -273,6 +283,12 @@ class SidebarManager {
 
     // 展开所有模块
     expandAllModules() {
+        if (!this.moduleData) {
+            console.warn('模块数据未加载，无法展开所有模块');
+            Utils.showToast('模块数据未加载', 'error');
+            return;
+        }
+        
         Object.keys(this.moduleData).forEach(moduleKey => {
             this.expandModule(moduleKey);
         });
@@ -281,6 +297,12 @@ class SidebarManager {
 
     // 收起所有模块
     collapseAllModules() {
+        if (!this.moduleData) {
+            console.warn('模块数据未加载，无法收起所有模块');
+            Utils.showToast('模块数据未加载', 'error');
+            return;
+        }
+        
         Object.keys(this.moduleData).forEach(moduleKey => {
             this.collapseModule(moduleKey);
         });
@@ -304,7 +326,7 @@ class SidebarManager {
         const hash = window.location.hash.slice(1);
         if (hash && hash.includes('.')) {
             const [moduleKey, methodKey] = hash.split('.');
-            if (this.moduleData[moduleKey] && this.moduleData[moduleKey].methods[methodKey]) {
+            if (this.moduleData && this.moduleData[moduleKey] && this.moduleData[moduleKey].methods && this.moduleData[moduleKey].methods[methodKey]) {
                 this.selectMethod(moduleKey, methodKey);
                 return true;
             }
@@ -314,7 +336,15 @@ class SidebarManager {
 
     // 获取总方法数
     getTotalMethodCount() {
+        if (!this.moduleData) {
+            console.warn('模块数据未加载，无法获取总方法数');
+            return 0;
+        }
+        
         return Object.values(this.moduleData).reduce((total, module) => {
+            if (!module || !module.methods) {
+                return total;
+            }
             return total + Object.keys(module.methods).length;
         }, 0);
     }
